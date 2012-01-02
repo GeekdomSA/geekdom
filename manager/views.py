@@ -396,20 +396,22 @@ def logout_page(request):
 
 
 def public_member_list(request):
+
     try: name_query = request.GET['name_query']
     except: name_query = ""
-    
     if name_query:
-        users = User.objects.all()
-        users = User.objects.filter(Q(first_name__icontains = name_query)|Q(last_name__icontains = name_query))
-        
+        users = User.objects.filter(Q(first_name__icontains = name_query)|Q(last_name__icontains = name_query)|Q(email__icontains = name_query))
         title = 'Members matching "' + name_query + '"'
-        subtitle = "Active members only"
+        subtitle = "Don't search both names at once... yet."
 
     try: skill_query = request.GET['skill_query']
     except: skill_query = ""
+    if skill_query:
+        users = User.objects.filter(Q(userprofile__skills__icontains = skill_query))
+        title = 'Members with skill: "' + skill_query + '"'
+        subtitle = "Active members only"
 
-    if not name_query or skill_query:
+    if not (name_query or skill_query):
         users = User.objects.all()
         title = 'All Geekdom Members'
         subtitle = "Active members only"
