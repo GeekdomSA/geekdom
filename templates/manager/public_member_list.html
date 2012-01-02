@@ -1,0 +1,55 @@
+{% extends "global/base.html" %}
+{% load thumbnail %}
+
+{% block content %}
+
+<ul class="user_photo_grid clearfix">
+    
+    {% for user in users|dictsort:"first_name" %}
+		<li>
+			<a href="/members/{{ user.id }}">
+				<span class="image" style="background-image:url({% if user.userprofile.image %}{% thumbnail user.userprofile.image 170x170 crop %}{% else %}http://localhost/~mocha/geekdom-media/img/Richard-Branson.jpg{% endif %});">
+					<span class="text"><p>{{ user.first_name }} {{ user.last_name }}</p></span>
+				</span>
+			</a>
+		</li>
+    {% endfor %}
+	
+	{% if not users %}
+		<p><em>No members matched your search terms.</em></p>
+	{% endif %}
+
+</ul>
+
+{% endblock %}
+
+{% block sidebar%}
+
+	<div class="section">
+		<h3>Search by name</h3>
+		
+		<form action="" method="GET" class="alt clearfix">
+			<input id="name_query" type="text" name="name_query" value="{{ name_query }}" />
+			<button type="submit">Search</button>
+			{% csrf_token %}
+		</form>
+	
+	</div>
+	
+	<div class="section">		
+		<h3>Search by skill</h3>
+		
+		<form action="" method="GET" class="alt clearfix">
+			<input id="skill_query" type="text" name="skill_query" value="{{ skill_query }}" />
+			<button type="submit">Search</button>
+			{% csrf_token %}
+		</form>
+		
+	</div>
+	
+	<div class="section">
+
+		<h3>Newest Members</h3>
+	</div>
+
+{% endblock %}

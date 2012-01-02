@@ -1,0 +1,39 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+
+<table class="billing_grid">
+    
+    <tr>
+        <th>Name</th>
+        <th>Member Since</th>
+        <th>Has Membership</th>
+        <th>Current Balance</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for user in users|dictsort:"first_name" %}
+        <tr>
+            <td><a href="/manager/members/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a></td>
+            <td>{{ user.date_joined|date:"m/d/y" }}</td>
+            <td>{{ user.userprofile.membership_is_current }}</td>
+            <td>${{ user.userprofile.account_balance }}</td>
+            <td><a href="/manager/members/{{ user.id }}">View</a> / <a href="/manager/members/{{ user.id }}/edit">Edit</a></td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+<hr />
+
+<p><a href="/billing/run">Run Billing Manually</a></p>
+
+{% endblock %}
+
+{% block sidebar%}
+
+<ul class="sidebar_menu">
+  <li><a href="/manager/members/email_all_members">Email all <em>active</em> members</a></li>
+</ul>
+
+{% endblock %}

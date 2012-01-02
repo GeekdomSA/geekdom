@@ -1,0 +1,24 @@
+planned features
+
+for users:
+
+    - view all public forums
+        - create thread
+        - view thread
+            - reply to thread
+
+    - view my forums / classes / workshops
+        - create thread
+        - view thread
+            - reply to thread
+        - sign up for class / workshop
+
+
+for admins:
+
+    - create public forum / class / workshop
+    
+    - view my classes
+        - enrollment stats
+        - add new event to calendar
+            - attach files to event

@@ -1,0 +1,22 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+
+<p>Name: {{ bill.user.userprofile.cname }}</p>
+<p>Date Created: {{ bill.date_created }}</p>
+<p>Amount: ${{ bill.amount }}</p>
+<p>Status: {% if bill.paid %}<span class="paid_text">PAID</span>{% else %}<span class="unpaid_text">UNPAID</a></span>{% endif%}</p>
+
+<p>{% if not bill.paid%}<a href="/manager/billing/{{ bill.id }}/mark_as_paid">Mark as Paid</a>{% else %}<a href="/manager/billing/{{ bill.id }}/mark_as_unpaid">Mark as Unpaid</a>{% endif %}
+</p>
+
+{% if bill.notes %}
+    <hr />
+    {{ bill.notes|linebreaks }}
+{% endif %}
+
+{% endblock %}
+
+{% block sidebar%}
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+
+<table class="billing_grid">
+    
+    <tr>
+        <th>Bill No.</th>
+        <th>Name</th>
+        <th>Date Created</th>
+        <th>Amount Due</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for bill in bills %}
+        <tr>
+            <td>{{ bill.id }}</td>
+            <td><a href="/manager/members/{{ bill.user.id }}">{{ bill.user.userprofile.cname }}</a></td>
+            <td>{{ bill.date_created|date:"m/d/y" }}</td>
+            <td>${{ bill.amount }}</td>
+            <td>{% if bill.paid %}<span class="paid_text">PAID</span>{% else %}<span class="unpaid_text">UNPAID</a></span>{% endif%}</td>
+            <td><a href="/manager/billing/{{ bill.id }}">View Bill</a> / {% if not bill.paid%}<a href="/manager/billing/{{ bill.id }}/mark_as_paid">Mark as Paid</a>{% else %}<a href="/manager/billing/{{ bill.id }}/mark_as_unpaid">Mark as Unpaid</a>{% endif %}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+<hr />
+
+<p><a href="/manager/billing/run">Run Billing Manually</a></p>
+
+{% endblock %}
+
+{% block sidebar%}
+
+{% endblock %}

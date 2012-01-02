@@ -1,0 +1,211 @@
+{% extends "global/base.html" %}
+{% load thumbnail %}
+
+{% block content-top %}
+
+	<img class="user_profilepic" src="
+		{% if user.userprofile.image %}
+			{% thumbnail user.userprofile.image 170x170 crop %}
+		{% else %}
+			http://localhost/~mocha/geekdom-media/img/Richard-Branson.jpg
+		{% endif %}
+		" alt="{{ user.userprofile.cname }}" />
+
+{% endblock %}
+
+{% block content %}
+
+<span class="user_companyname">
+	{% if user.userprofile.company_name %}{{ user.userprofile.company_name }}{% endif %}{% if user.userprofile.office_num and user.userprofile.company_name %}, {% endif %}
+	{% if user.userprofile.office_num %}
+		Office {{ user.userprofile.office_num }}
+	{% endif %}
+</span>
+
+{% if user.userprofile.skills %}
+	<p class="user_skills">Skills: {{ user.userprofile.skills }}</p>
+{% endif %}
+
+<p>
+	Available for office hours: {{ user.userprofile.available_for_office_hours }}<br />
+	Available for workshops: {{ user.userprofile.available_for_workshops }}
+</p>
+
+{% if request.user.is_superuser %}
+
+	<hr />
+
+	<span class="contactinfo">
+		<h3>Contact info:</h3>
+		
+		<p>
+			Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a><br />
+			Phone: {{ user.userprofile.phone_number }}<br />
+		</p>
+
+		<p>
+			Address:<br />
+			{{ user.first_name }} {{ user.last_name}}<br />
+			{{ user.userprofile.address }}<br />
+			{{ user.userprofile.city }}, {{ user.userprofile.state }} {{ user.userprofile.zipcode }}
+		</p>
+	</span>
+	
+	<hr />
+	
+	<h3>Misc:</h3>
+	
+	<p>
+		Has parking pass: {{ user.userprofile.has_parking_pass }}<br />
+		Has office key: {{ user.userprofile.has_office_key }}<br />
+		Has elevator fob: {{ user.userprofile.has_elevator_fob }}
+	</p>
+	
+
+
+	{% if user.userprofile.membership_starts_on %}
+
+	    <hr />
+    
+	    <h3>Memberships</h3>
+    
+	    <table class="billing_grid">
+
+	        <tr>
+	            <th>Membership Type</th>
+	            <th>Started on</th>
+	            <th>Ends on</th>
+	            <th>Price</th>
+	            <th>Bill Cycle</th>
+	            <th>Next Billing Date</th>
+	        </tr>
+	        <tr>
+	            <td>{{ user.userprofile.membership_type.name }}</td>
+	            <td>{{ user.userprofile.membership_starts_on|date:"m/d/y" }}</td>
+	            <td>{{ user.userprofile.membership_ends_on|date:"m/d/y" }}</td>
+	            <td>${{ user.userprofile.membership_type.price }}</td>
+	            <td>{{ user.userprofile.membership_type.duration }}</td>
+	            <td>{{ user.userprofile.next_billing_date|date:"m/d/y" }}</td>
+	        </tr>
+
+	    </table>
+    
+
+	{% endif %}
+
+
+	{% if user.userprofile.outstanding_bills %}
+
+	    <hr />
+
+	    <h3>Oustanding bills</h3>
+
+	    <table class="billing_grid">
+
+	        <tr>
+	            <th>No.</th>
+	            <th>Date Created</th>
+	            <th>Amount Due</th>
+	            <th>Status</th>
+	        </tr>
+
+	        {% for bill in user.userprofile.outstanding_bills %}
+	            <tr>
+	                <td>{{ bill.id }}</td>
+	                <td>{{ bill.date_created|date:"m/d/y" }}</td>
+	                <td>${{ bill.amount }}</td>
+	                <td>{% if bill.paid %}<span class="paid_text">PAID</span>{% else %}<span class="unpaid_text">UNPAID</a></span>{% endif%}</td>
+	            </tr>
+	        {% endfor %}
+
+	    </table>
+
+	{% endif %}
+
+	{% if user.userprofile.settled_bills %}
+
+	    <hr />
+
+	    <h3>Settled bills</h3>
+
+	    <table class="billing_grid">
+
+	        <tr>
+	            <th>No.</th>
+	            <th>Date Created</th>
+	            <th>Amount Due</th>
+	            <th>Status</th>
+	        </tr>
+
+	        {% for bill in user.userprofile.settled_bills %}
+	            <tr>
+	                <td>{{ bill.id }}</td>
+	                <td>{{ bill.date_created|date:"m/d/y" }}</td>
+	                <td>${{ bill.amount }}</td>
+	                <td>{% if bill.paid %}<span class="paid_text">PAID</span>{% else %}<span class="unpaid_text">UNPAID</a></span>{% endif%}</td>
+	            </tr>
+	        {% endfor %}
+
+	    </table>
+
+	    <p>Current balance: ${{ user.userprofile.account_balance }}</p>
+    
+	{% endif %}
+
+	
+	{% if user.userprofile.notes %}
+	
+		<hr />
+		
+		<h3>Notes:</h3>
+		
+		{{ user.userprofile.notes }}
+		
+	{% endif %}
+
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+{% block sidebar%}
+
+  <ul class="sidebar_menu">
+    {% if request.user.is_superuser %}
+      <li><a href="/manager/members/{{ user.id }}/edit">Edit this profile</a></li>
+    {% else %}
+      {% ifequal request.user user %}
+        <li><a href="/account/edit">Edit your profile</a></li>
+      {% endifequal %}
+    {% endif %}
+  </ul>
+    
+
+  <h2>Stats</h2>
+  
+  <p>Member since {{ user.date_joined|date:"m/d/y" }}</p>
+
+  <p>Replies posted: {{ user.reply_set.count }}</p>
+
+  <p>Threads created: {{ user.thread_set.count }}</p>
+
+  <p>Events attended:  {{ user.events_attending.count }}</p>
+
+  <p>Forums joined: {{ user.forums_joined.count }}</p>
+  
+  {% if user.forums_joined.all %}
+      
+      <hr />
+  
+      <h2>Member of:</h2>
+  
+      <ul>{% for forum in user.forums_joined.all %}
+          <li><a href="/forums/{{ forum.id }}">{{ forum.name }}</a></li>
+      {% endfor %}</ul>
+  
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "global/base.html" %}
+
+{% block content-top %}
+<div class="breadcrumb">
+    <a href="/forums">All Forums</a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<ul class="forum_list">
+
+    {% for thread in forum.thread_set.all %}
+        {% include "forum/_thread_compact.html" %}
+    {% endfor %}
+
+</ul>
+
+{% endblock content %}
+
+{% block sidebar %}
+    
+    <ul class="sidebar_menu">
+      
+      <li><a href="/forums/{{ forum.id }}/new_thread">Create a new thread</a></li>
+
+      {% if user in forum.members.all %}
+          <li><a href="/forums/{{ forum.id }}/unsubscribe">Un-subscribe from this forum</a></li>
+      {% else %}
+          <li><a href="/forums/{{ forum.id }}/subscribe">Subscribe to this forum</a></li>
+      {% endif %}
+
+      {% if request.user.is_superuser %}
+        {# <li><a href="/forums/{{ forum.id }}/edit">Edit this forum</a></li> #}
+        <li><a href="/forums/{{ forum.id }}/mail">Message forum members</a></li>
+      {% endif %}
+    
+    </ul>
+    
+    {% if forum.event_set.all %}
+
+        <hr />
+
+        <h2>Upcoming events:</h2>
+
+        {% for event in forum.event_set.all %}
+            {% include "forum/_event_compact.html" %}
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}

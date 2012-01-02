@@ -1,0 +1,29 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+
+<ul class="forum_list">
+    
+    {% for event in events|dictsort:"starts_at" %}
+        <li class="event_listing">
+            <h2 class="name"><a href="/events/{{ event.id }}">{{ event.name }}</a></h2>
+            <p class="dateinfo">{{ event.starts_at }} until {{ event.ends_at }}</p>
+            <p class="description">{{ event.description|truncatewords:40 }}</p>
+        </li>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}
+
+
+
+{% block sidebar %}
+
+<ul class="sidebar_menu">
+  {% if request.user.is_superuser %}
+    <li><a href="/events/new">Create a new event</a></li>
+  {% endif %}
+</ul>
+
+{% endblock %}
