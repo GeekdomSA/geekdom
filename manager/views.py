@@ -49,6 +49,10 @@ def my_account(request):
     }, 
     context_instance=RequestContext(request))
 
+
+
+
+
 # edit my account
 @login_required
 def edit_my_account(request):
@@ -259,9 +263,13 @@ def all_members(request):
 @login_required
 def view_member(request, user_id): 
   if not request.user.is_superuser: return HttpResponseNotFound()
-
-  # bills = Bill.objects.order_by('paid', 'date_created')
+  
   user = User.objects.get(id = user_id)
+
+  if request.user.is_superuser and user.userprofile.notes:
+    message = "Admin Note: " + user.userprofile.notes
+    messages.add_message(request, messages.WARNING, message)
+      
   return render_to_response(
     'manager/view_member.html',
     {
