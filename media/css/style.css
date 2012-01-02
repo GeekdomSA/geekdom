@@ -65,7 +65,7 @@ header a, a:visited, a:active {
 #container {
   max-width : 900px;
   margin: auto;
-  background: url(http://localhost/~mocha/geekdom-media/img/layout/black-80.png);
+  background: url(http://geekdom.awesomemonster.com/media/img/layout/black-80.png);
 }
 
 #content {
