@@ -7,7 +7,7 @@
 		{% if user.userprofile.image %}
 			{% thumbnail user.userprofile.image 170x170 crop %}
 		{% else %}
-			http://localhost/~mocha/geekdom-media/img/Richard-Branson.jpg
+			{{ MEDIA_URL }}img/Richard-Branson.jpg
 		{% endif %}
 		" alt="{{ user.userprofile.cname }}" />
 

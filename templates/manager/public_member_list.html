@@ -8,7 +8,7 @@
     {% for user in users|dictsort:"first_name" %}
 		<li>
 			<a href="/members/{{ user.id }}">
-				<span class="image" style="background-image:url({% if user.userprofile.image %}{% thumbnail user.userprofile.image 170x170 crop %}{% else %}http://localhost/~mocha/geekdom-media/img/Richard-Branson.jpg{% endif %});">
+				<span class="image" style="background-image:url({% if user.userprofile.image %}{% thumbnail user.userprofile.image 170x170 crop %}{% else %}{{ MEDIA_URL }}img/Richard-Branson.jpg{% endif %});">
 					<span class="text"><p>{{ user.first_name }} {{ user.last_name }}</p></span>
 				</span>
 			</a>
