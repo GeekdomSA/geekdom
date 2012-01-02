@@ -165,7 +165,7 @@ footer {
 }
 
 .messages li {
-  margin : 0px;
+  margin : 0 0 2px 0;
   padding : 10px 20px ;
   list-style: none;
   color : white;
