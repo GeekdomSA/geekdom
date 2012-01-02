@@ -16,8 +16,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    url(r'^search/', include('haystack.urls')),
-
     # homepage
     url(r'^$', homepage),
 

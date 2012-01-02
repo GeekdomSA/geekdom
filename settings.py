@@ -88,7 +88,6 @@ INSTALLED_APPS = (
     'geekdom.manager',
     'uni_form',
     'easy_thumbnails',
-    # 'haystack',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -115,9 +114,3 @@ LOGGING = {
 }
 
 AUTH_PROFILE_MODULE = 'geekdom.manager.UserProfile'
-
-# haystack search settings
-# HAYSTACK_SITECONF = 'geekdom.search_sites'
-# HAYSTACK_SEARCH_ENGINE = 'whoosh'
-# HAYSTACK_WHOOSH_PATH = '/Users/mocha/code/tmp/geekdom-whoosh'
-
