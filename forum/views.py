@@ -223,20 +223,19 @@ def new_event(request):
     if form.is_valid():
       event = form.save()
       
-      if event.forum:
+      if event.forum.members.count() > 0:
         count = 0
         for user in event.forum.members.all():
           subject = "[geekdom] New Event - " + event.name
 
-          message = """Hey you, """ + user.userprofile.cname() + """!
+          message = """Hey you, """ + user.get_full_name() + """!
             A new event has been posted to """ + event.forum.name + """.
-
 
             """ + event.name + """
             """ + str(event.starts_at) + """ until """ + str(event.ends_at) + """
             """ + event.description + """
 
-            Go to: http://localhost:8000/events/""" + str(event.id) + """ for more information.
+            Go to: http://geekdom.awesomemonster.com/events/""" + str(event.id) + """ for more information.
 
             --            
             The Geekdom Team
@@ -247,8 +246,8 @@ def new_event(request):
 
           count = count + 1
           
-      message = "Event successfully created! Notified " + str(count) + " users of the " + event.forum.name + " forum."
-      messages.add_message(request, messages.SUCCESS, message)
+        message = "Event successfully created! Notified " + str(count) + " users of the " + event.forum.name + " forum."
+        messages.add_message(request, messages.SUCCESS, message)
       return HttpResponseRedirect('/events/' + str(event.id))
 
       
