@@ -340,6 +340,10 @@ textarea {
 }
 
 
+ul.sidebar_menu {
+	display: block;
+	padding-bottom : 30px;
+}
 
 .sidebar_menu,
 .sidebar_menu li {

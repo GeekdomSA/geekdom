@@ -142,6 +142,20 @@ urlpatterns = patterns('',
 
     # send an email to all ACTIVE members
     url(r'^manager/members/email_all_members$', email_all_members),
+    
+    
+
+    ###########
+    # REPORTS #
+    ###########
+    
+    # members with incomplete profiles
+    url(r'^manager/members/incomplete$', members_with_incomplete_profiles),
+    url(r'^manager/members/missing_stuff$', members_who_are_missing_stuff),
+    url(r'^manager/members/office_num$', members_missing_office_num),
+    
+
+
 
 
 

@@ -170,9 +170,17 @@ def run_billing(request):
   return HttpResponseRedirect('/manager/billing/')
 
 
+
+
+
+
 # create bill
 @login_required
 def new_bill(request): return
+
+
+
+
 
 # view bill
 @login_required
@@ -188,9 +196,17 @@ def view_bill(request, bill_id):
     }, 
     context_instance=RequestContext(request))
 
+
+
+
+
 # edit bill
 @login_required
 def edit_bill(request, bill_id): return
+
+
+
+
 
 # mark bill as paid
 @login_required
@@ -203,7 +219,11 @@ def mark_bill_as_paid(request, bill_id):
   messages.add_message(request, messages.SUCCESS, message)
   return HttpResponseRedirect("/manager/billing/")
 
-# mark bill as paid
+
+
+
+
+# mark bill as unpaid
 @login_required
 def mark_bill_as_unpaid(request, bill_id):
   if not request.user.is_superuser: return HttpResponseNotFound()
@@ -213,6 +233,7 @@ def mark_bill_as_unpaid(request, bill_id):
   message = "Bill #" + str(bill.id) + " has been marked as unpaid."
   messages.add_message(request, messages.WARNING, message)
   return HttpResponseRedirect("/manager/billing/")
+
 
 
 
@@ -232,6 +253,9 @@ def all_members(request):
     context_instance=RequestContext(request))
 
 
+
+
+
 @login_required
 def view_member(request, user_id): 
   if not request.user.is_superuser: return HttpResponseNotFound()
@@ -245,6 +269,9 @@ def view_member(request, user_id):
       'user' : user
     }, 
     context_instance=RequestContext(request))
+
+
+
 
 
 def new_member(request): 
@@ -273,6 +300,10 @@ def new_member(request):
       'pform' : pform,
     }, 
     context_instance=RequestContext(request))
+
+
+
+
 
 def edit_member(request, user_id):
   user = User.objects.get(id = user_id)
@@ -355,6 +386,7 @@ def logout_page(request):
 
 
 
+
 def public_member_list(request):
     try: name_query = request.GET['name_query']
     except: name_query = ""
@@ -384,4 +416,97 @@ def public_member_list(request):
         'skill_query':skill_query,
       }, 
       context_instance=RequestContext(request))
+
+
+
+
+@login_required
+def members_with_incomplete_profiles(request):
+    if not request.user.is_superuser: return HttpResponseNotFound()
+    users = User.objects.filter(
+        Q(userprofile__skills = "") | 
+        Q(userprofile__phone_number = "") | 
+        Q(userprofile__address = "") |
+        Q(userprofile__available_for_office_hours = "") |
+        Q(userprofile__available_for_workshops = "")
+    )
+
+    return render_to_response(
+      'manager/list_members.html',
+      {
+        'title': "Incomplete profiles",
+        'subtitle': "Something is missing! Find it!",
+        'users': users,
+      }, 
+      context_instance=RequestContext(request))
+
     
+
+
+
+
+@login_required
+def members_who_are_missing_stuff(request):
+    if not request.user.is_superuser: return HttpResponseNotFound()
+    users = User.objects.filter(
+        (
+            # community members
+            Q(userprofile__membership_type = 1) & 
+            Q(userprofile__has_elevator_fob = 0)
+        )|(
+            # dedicated
+            Q(userprofile__membership_type = 2) & 
+            Q(userprofile__has_parking_pass = 0) & 
+            Q(userprofile__has_elevator_fob = 0) & 
+            Q(userprofile__has_office_key = 0)
+        )|(
+            # student
+            Q(userprofile__membership_type = 3) & 
+            Q(userprofile__has_elevator_fob = 0)
+        )|(
+            # business
+            Q(userprofile__membership_type = 4) & 
+            Q(userprofile__has_parking_pass = 0) & 
+            Q(userprofile__has_elevator_fob = 0) & 
+            Q(userprofile__has_office_key = 0)
+        )|(
+            # startup
+            Q(userprofile__membership_type = 5) & 
+            Q(userprofile__has_elevator_fob = 0) & 
+            Q(userprofile__has_parking_pass = 0) & 
+            Q(userprofile__has_office_key = 0)
+        )
+    )
+
+    return render_to_response(
+      'manager/list_members.html',
+      {
+        'title': "Members missing stuff",
+        'subtitle': "They need something from you, give it to them.",
+        'users': users,
+      }, 
+      context_instance=RequestContext(request))
+
+
+
+
+
+@login_required
+def members_missing_office_num(request):
+    if not request.user.is_superuser: return HttpResponseNotFound()
+    users = User.objects.filter(
+        (
+            Q(userprofile__membership_type = 2)|
+            Q(userprofile__membership_type = 4)|
+            Q(userprofile__membership_type = 5)
+        ) & Q(userprofile__office_num = "")        
+    )
+
+    return render_to_response(
+      'manager/list_members.html',
+      {
+        'title': "Members w/blank office",
+        'subtitle': "Where could they be?",
+        'users': users,
+      }, 
+      context_instance=RequestContext(request))
