@@ -328,7 +328,7 @@ def edit_member(request, user_id):
   return render_to_response(
     'global/modelform.html',
     {
-      'title': "Create a new user",
+      'title': "Editing " + user.get_full_name(),
       'uform' : uform,
       'pform' : pform,
     }, 
