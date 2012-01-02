@@ -111,7 +111,7 @@ urlpatterns = patterns('',
     url(r'^manager/billing/$', all_bills),
 
     # run billing update manually
-    url(r'^manager/billing/run/$', run_billing),
+    # url(r'^manager/billing/run/$', run_billing),
 
     # create bill
     url(r'^manager/billing/new/$', new_bill),
@@ -141,7 +141,7 @@ urlpatterns = patterns('',
     url(r'^manager/members/new$', new_member),
 
     # send an email to all ACTIVE members
-    url(r'^manager/members/email_all_members$', email_all_members),
+    # url(r'^manager/members/email_all_members$', email_all_members),
     
     
 
