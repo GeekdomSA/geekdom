@@ -8,18 +8,50 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
 from time import strftime
+from django.db.models import Q
 
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
+
+from urllib import urlopen
+import json
 
 def homepage(request):
-  return render_to_response(
-    'global/homepage.html', 
-    {
-      'title': "Homepage",
-      'subtitle': "Geekdom homepage extravaganza"
-    }, 
-    context_instance=RequestContext(request)
-  )
+
+    venue_id = "4e9700536da11364e6ee330d"
+    
+    # venue_id = "4b4f64eff964a520a40427e3"
+    # EZ's across the street, testing from home purposes only
+    
+    oauth_token = "ZZTN1TVTCWF0NBI12JW3PRFOHGT5PVWX4CI2SIBXZQ0UCNOB"
+    url = "https://api.foursquare.com/v2/venues/" + venue_id + "/herenow?oauth_token=" + oauth_token + "&v=20111212"
+
+    f = urlopen(url)
+    f = f.read()    
+    j = json.loads(f)
+    
+    members_herenow = []
+    fsusers_herenow = []
+
+    for item in j['response']['hereNow']['items']:
+        fname = item['user']['firstName']
+        lname = item['user']['lastName']
+        
+        try:
+            user = User.objects.get(Q(first_name = fname)&Q(last_name = lname))
+            members_herenow.append(user)
+        except:
+            fsusers_herenow.append(fname + " " + lname)
+
+    return render_to_response(
+        'global/homepage.html',
+        {
+            'title': "Welcome to Geekdom.",
+            'subtitle': "",
+            'members_herenow' : members_herenow,
+            'fsusers_herenow' : fsusers_herenow,
+        }, 
+        context_instance=RequestContext(request)
+    )
 
 
 
@@ -217,9 +249,13 @@ def events_recommended(request):
 
 @login_required
 def new_event(request):
-  if not request.user.is_superuser: return HttpResponseNotFound()
   if request.method == 'POST':
-    form = EventForm(request.POST)
+      
+    if request.user.is_superuser:
+        form = AdminEventForm(request.POST)
+    else:
+        form = EventForm(request.POST)
+        
     if form.is_valid():
       event = form.save()
       
@@ -252,8 +288,11 @@ def new_event(request):
 
       
   else:
-    form = EventForm()
-
+    if request.user.is_superuser:
+        form = AdminEventForm()
+    else:
+        form = EventForm()
+        
   return render_to_response(
     'global/modelform.html',
     {
@@ -324,3 +363,49 @@ def mail_forum_users(request, forum_id):
     context_instance=RequestContext(request))
 
   
+  
+  
+  
+def send_member_message(request, user_id):
+    
+    user = User.objects.get(id = user_id)
+    
+    instructions = "Send a message to a member. Your full name, phone number and email will be included as the signature of the message."
+    
+    if request.method == 'POST':
+        form = UserMailForm(request.POST)
+        if form.is_valid():
+            subject = "[geekdom] Message from " + request.user.get_full_name()
+            collected_message = request.POST.get('message') + """
+            --
+            """ + request.user.get_full_name() + """
+            """ + request.user.userprofile.phone_number + """
+            """ + request.user.email
+            
+            email = EmailMessage(
+                subject,
+                collected_message, 
+                "internal-mail@geekdom.com", 
+                [user.email], 
+                [],
+                headers = {'Reply-To': request.user.email}
+                ).send()
+            
+            message = "Message sent to " + user.get_full_name() + "."
+            messages.add_message(request, messages.SUCCESS, message)
+            return HttpResponseRedirect('/members/' + str(user.id))
+                
+    else:
+        form = UserMailForm()
+
+    return render_to_response(
+        'global/modelform.html',
+        {
+         'title': 'Mail: ' + user.get_full_name(),
+         'form' : form,
+         'instructions' : instructions,
+         }, 
+    context_instance=RequestContext(request))
+      
+      
+      

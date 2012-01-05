@@ -63,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'geekdom.urls'
@@ -88,6 +89,7 @@ INSTALLED_APPS = (
     'geekdom.manager',
     'uni_form',
     'easy_thumbnails',
+    'pagination',
 )
 
 # A sample logging configuration. The only tangible logging

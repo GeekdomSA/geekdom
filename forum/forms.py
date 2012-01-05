@@ -42,6 +42,14 @@ class EventForm(ModelForm):
     exclude = ('attendees','hosts')
 
 
+class AdminEventForm(ModelForm):
+  starts_at = DateTimeField(widget=widgets.AdminSplitDateTime)
+  ends_at = DateTimeField(widget=widgets.AdminSplitDateTime)
+
+  class Meta:
+    model = Event
+    exclude = ('attendees','hosts')
+
 class ForumMailForm(Form):
   subject = CharField(max_length=100)
   message = CharField(widget=forms.Textarea)
@@ -51,3 +59,10 @@ class ForumForm(ModelForm):
   class Meta:
     model = Forum
     exclude = ('locked', 'members', 'owners')
+
+
+class UserMailForm(Form):
+  message = CharField(widget=forms.Textarea)
+
+
+

@@ -24,32 +24,32 @@ urlpatterns = patterns('',
     # forum views #
     ###############
 
-    # view all forums
-    url(r'^forums/$', all_forums),
-
-    # create a new forum
-    url(r'^forums/new$', new_forum),
-
-    # view forum
-    url(r'^forums/(?P<forum_id>[\d]+)/$', view_forum),
-
-    # create thread
-    url(r'^forums/(?P<forum_id>[\d]+)/new_thread/$', create_thread),
-
-    # subscribe to forum
-    url(r'^forums/(?P<forum_id>[\d]+)/subscribe/$', subscribe_to_forum),
-
-    # unsubscribe from forum
-    url(r'^forums/(?P<forum_id>[\d]+)/unsubscribe/$', unsubscribe_from_forum),
-
-    # mail all users of this forum
-    url(r'^forums/(?P<forum_id>[\d]+)/mail/$', mail_forum_users),
-
-    # view thread
-    url(r'^forums/(?P<forum_id>[\d]+)/(?P<thread_id>[\d]+)/$', view_thread),
-
-    # create reply
-    url(r'^forums/(?P<forum_id>[\d]+)/(?P<thread_id>[\d]+)/reply/$', reply_to_thread),
+    # # view all forums
+    # url(r'^forums/$', all_forums),
+    # 
+    # # create a new forum
+    # url(r'^forums/new$', new_forum),
+    # 
+    # # view forum
+    # url(r'^forums/(?P<forum_id>[\d]+)/$', view_forum),
+    # 
+    # # create thread
+    # url(r'^forums/(?P<forum_id>[\d]+)/new_thread/$', create_thread),
+    # 
+    # # subscribe to forum
+    # url(r'^forums/(?P<forum_id>[\d]+)/subscribe/$', subscribe_to_forum),
+    # 
+    # # unsubscribe from forum
+    # url(r'^forums/(?P<forum_id>[\d]+)/unsubscribe/$', unsubscribe_from_forum),
+    # 
+    # # mail all users of this forum
+    # url(r'^forums/(?P<forum_id>[\d]+)/mail/$', mail_forum_users),
+    # 
+    # # view thread
+    # url(r'^forums/(?P<forum_id>[\d]+)/(?P<thread_id>[\d]+)/$', view_thread),
+    # 
+    # # create reply
+    # url(r'^forums/(?P<forum_id>[\d]+)/(?P<thread_id>[\d]+)/reply/$', reply_to_thread),
 
 
 
@@ -72,8 +72,8 @@ urlpatterns = patterns('',
     # events im attending
     url(r'^events/attending/$', events_attending),
 
-    # events from my forums
-    url(r'^events/recommended/$', events_recommended),
+    # # events from my forums
+    # url(r'^events/recommended/$', events_recommended),
 
     # create a new event
     url(r'^events/new/$', new_event),
@@ -87,6 +87,7 @@ urlpatterns = patterns('',
 
     url(r'^members/$', public_member_list),
     url(r'^members/(?P<user_id>[\d]+)/$', view_member),
+    url(r'^members/(?P<user_id>[\d]+)/message/$', send_member_message),
 
 
 

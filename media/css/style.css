@@ -15,7 +15,9 @@ body {
 	z-index: -1;
 }
 
-a, a:visited, a:active { color: white; }
+a { color: white; }
+
+a:hover, #container a:hover { color : red;}
 
 header {
   background: #c00;
@@ -439,4 +441,78 @@ ul.user_photo_grid li a span.text p {
 	display: inline;
 	padding : 0px;
 	line-height : 1.5em;
+}
+
+
+.new_member_list,
+.new_member_list li {
+	list-style : none;
+	padding : 0px;
+	margin : 0px;
+}
+
+.new_member_list li {
+	margin-bottom : 20px;
+}
+
+.new_member_list li .membername a {
+	font-weight: bold;
+	display: block;
+	text-decoration: none;
+	margin-bottom : 2px;
+}
+
+.new_member_list li .skills {
+	display: block;
+	font-size : .8em;
+	padding-bottom : .5em;
+}
+
+.new_member_list li .datejoined {
+	display: block;
+	font-size : .8em;
+	font-style: italic;
+	color : #999;
+	line-height : .8em;
+}
+
+
+
+
+
+.pagination {
+	text-align: center;
+	padding-top : 20px;
+	font-size: .9em;
+	font-weight: bold;
+	letter-spacing : 2px;
+}
+
+.pagination span, .pagination a {
+	display: inline-block;
+	padding : 5px;
+	text-decoration: none;
+}
+
+.pagination a:hover {
+	text-decoration: underline;
+}
+
+.pagination span.disabled {
+	color : #666;
+}
+
+.pagination .page.current {
+	color : red;
+}
+
+
+
+
+
+
+.form_instructions {
+	font-size : 1.2em;
+	font-style: italic;
+	margin-bottom : 20px;
 }

@@ -22,6 +22,8 @@
 	{% endif %}
 </span>
 
+<p>Member since {{ user.date_joined|date:"m/d/y" }}</p>
+
 {% if user.userprofile.skills %}
 	<p class="user_skills">Skills: {{ user.userprofile.skills }}</p>
 {% endif %}
@@ -165,26 +167,27 @@
 
   <ul class="sidebar_menu">
     {% if request.user.is_superuser %}
+      <li><a href="/members/{{ user.id }}/message">Send this member a message</a></li>
       <li><a href="/manager/members/{{ user.id }}/edit">Edit this profile</a></li>
     {% else %}
       {% ifequal request.user user %}
         <li><a href="/account/edit">Edit your profile</a></li>
-      {% endifequal %}
+      {% else %}
+        <li><a href="/members/{{ user.id }}/message">Send this member a message</a></li>
+	  {% endifequal %}
     {% endif %}
   </ul>
     
 
-  <h2>Stats</h2>
+  <!-- <h2>Stats</h2> -->
   
-  <p>Member since {{ user.date_joined|date:"m/d/y" }}</p>
-
-  <p>Replies posted: {{ user.reply_set.count }}</p>
+  <!-- <p>Replies posted: {{ user.reply_set.count }}</p>
 
   <p>Threads created: {{ user.thread_set.count }}</p>
 
   <p>Events attended:  {{ user.events_attending.count }}</p>
 
-  <p>Forums joined: {{ user.forums_joined.count }}</p>
+  <p>Forums joined: {{ user.forums_joined.count }}</p> -->
   
   {% if user.forums_joined.all %}
       

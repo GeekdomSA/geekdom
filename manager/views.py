@@ -59,9 +59,9 @@ def edit_my_account(request):
   if request.method == "POST":
     uform = UserForm(request.POST, request.FILES, instance=request.user)
     try:
-      pform = UserProfileForm(request.POST, instance=request.user.userprofile)
+      pform = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
     except:
-      pform = UserProfileForm(request.POST)
+      pform = UserProfileForm(request.POST, request.FILES)
       pform.instance.user = request.user
       
     if uform.is_valid() and pform.is_valid():
@@ -262,8 +262,7 @@ def all_members(request):
 
 @login_required
 def view_member(request, user_id): 
-  if not request.user.is_superuser: return HttpResponseNotFound()
-  
+
   user = User.objects.get(id = user_id)
 
   if request.user.is_superuser and user.userprofile.notes:
@@ -285,7 +284,7 @@ def view_member(request, user_id):
 def new_member(request): 
   if request.method == "POST":
     uform = UserForm(request.POST, request.FILES)
-    pform = UserProfileForm(request.POST)
+    pform = AdminUserProfileForm(request.POST)
 
     if uform.is_valid() and pform.is_valid():
       user = uform.save()
@@ -298,7 +297,7 @@ def new_member(request):
 
   else:
     uform = UserForm()
-    pform = UserProfileForm()
+    pform = AdminUserProfileForm()
 
   return render_to_response(
     'global/modelform.html',
@@ -400,21 +399,23 @@ def public_member_list(request):
     try: name_query = request.GET['name_query']
     except: name_query = ""
     if name_query:
-        users = User.objects.filter(Q(first_name__icontains = name_query)|Q(last_name__icontains = name_query)|Q(email__icontains = name_query))
+        users = User.objects.filter(Q(first_name__icontains = name_query)|Q(last_name__icontains = name_query)|Q(email__icontains = name_query)).order_by('first_name')
         title = 'Members matching "' + name_query + '"'
         subtitle = "Don't search both names at once... yet."
 
     try: skill_query = request.GET['skill_query']
     except: skill_query = ""
     if skill_query:
-        users = User.objects.filter(Q(userprofile__skills__icontains = skill_query))
+        users = User.objects.filter(Q(userprofile__skills__icontains = skill_query)).order_by('first_name')
         title = 'Members with skill: "' + skill_query + '"'
         subtitle = "Active members only"
 
     if not (name_query or skill_query):
-        users = User.objects.all()
+        users = User.objects.order_by('first_name')
         title = 'All Geekdom Members'
         subtitle = "Active members only"
+
+    newest_members = User.objects.order_by('-date_joined')[:5]
 
     return render_to_response(
       'manager/public_member_list.html',
@@ -424,6 +425,7 @@ def public_member_list(request):
         'users': users,
         'name_query':name_query,
         'skill_query':skill_query,
+        'newest_members':newest_members,
       }, 
       context_instance=RequestContext(request))
 

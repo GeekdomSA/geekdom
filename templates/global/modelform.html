@@ -8,6 +8,10 @@
     {{ uform.errors }}
     {{ pform.errors }}
 
+	{% if instructions %}
+		<div class="form_instructions">{{ instructions }}</div>
+	{% endif %}
+	
     <form action="" method="post" enctype="multipart/form-data">
 
     	<ul>

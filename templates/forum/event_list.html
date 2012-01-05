@@ -21,9 +21,7 @@
 {% block sidebar %}
 
 <ul class="sidebar_menu">
-  {% if request.user.is_superuser %}
-    <li><a href="/events/new">Create a new event</a></li>
-  {% endif %}
+    <li><a href="/events/new">Add Your Event</a></li>
 </ul>
 
 {% endblock %}

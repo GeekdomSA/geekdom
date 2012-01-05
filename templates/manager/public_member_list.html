@@ -1,11 +1,13 @@
 {% extends "global/base.html" %}
 {% load thumbnail %}
+{% load pagination_tags %}
 
 {% block content %}
 
 <ul class="user_photo_grid clearfix">
     
-    {% for user in users|dictsort:"first_name" %}
+	{% autopaginate users 9 %}
+    {% for user in users %}
 		<li>
 			<a href="/members/{{ user.id }}">
 				<span class="image" style="background-image:url({% if user.userprofile.image %}{% thumbnail user.userprofile.image 170x170 crop %}{% else %}{{ MEDIA_URL }}img/Richard-Branson.jpg{% endif %});">
@@ -20,6 +22,8 @@
 	{% endif %}
 
 </ul>
+
+{% paginate %}
 
 {% endblock %}
 
@@ -50,6 +54,17 @@
 	<div class="section">
 
 		<h3>Newest Members</h3>
+		
+		<ul class="new_member_list">
+			{% for member in newest_members %}
+				<li>
+					<span class="membername"><a href="/members/{{ member.id }}">{{ member.get_full_name }}</a></span>
+					<span class="skills">{{ member.userprofile.skills }}</span>
+					<span class="datejoined">Joined {{ member.date_joined|date:"m/d/y" }}</span>
+				</li>
+			{% endfor %}
+		</ul>
+		
 	</div>
 
 {% endblock %}
