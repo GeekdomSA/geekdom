@@ -16,42 +16,11 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
+    (r'^accounts/', include('userena.urls')),
+
+
     # homepage
     url(r'^$', homepage),
-
-
-    ###############
-    # forum views #
-    ###############
-
-    # # view all forums
-    # url(r'^forums/$', all_forums),
-    # 
-    # # create a new forum
-    # url(r'^forums/new$', new_forum),
-    # 
-    # # view forum
-    # url(r'^forums/(?P<forum_id>[\d]+)/$', view_forum),
-    # 
-    # # create thread
-    # url(r'^forums/(?P<forum_id>[\d]+)/new_thread/$', create_thread),
-    # 
-    # # subscribe to forum
-    # url(r'^forums/(?P<forum_id>[\d]+)/subscribe/$', subscribe_to_forum),
-    # 
-    # # unsubscribe from forum
-    # url(r'^forums/(?P<forum_id>[\d]+)/unsubscribe/$', unsubscribe_from_forum),
-    # 
-    # # mail all users of this forum
-    # url(r'^forums/(?P<forum_id>[\d]+)/mail/$', mail_forum_users),
-    # 
-    # # view thread
-    # url(r'^forums/(?P<forum_id>[\d]+)/(?P<thread_id>[\d]+)/$', view_thread),
-    # 
-    # # create reply
-    # url(r'^forums/(?P<forum_id>[\d]+)/(?P<thread_id>[\d]+)/reply/$', reply_to_thread),
-
-
 
     ###############
     # event views #
@@ -108,27 +77,6 @@ urlpatterns = patterns('',
     # admin views #
     ###############
 
-    # view all bills, oldest newest first
-    url(r'^manager/billing/$', all_bills),
-
-    # run billing update manually
-    # url(r'^manager/billing/run/$', run_billing),
-
-    # create bill
-    url(r'^manager/billing/new/$', new_bill),
-
-    # view bill
-    url(r'^manager/billing/(?P<bill_id>[\d]+)/$', view_bill),
-
-    # edit bill
-    url(r'^manager/billing/(?P<bill_id>[\d]+)/edit/$', edit_bill),
-
-    # mark bill as paid
-    url(r'^manager/billing/(?P<bill_id>[\d]+)/mark_as_paid/$', mark_bill_as_paid),
-
-    # mark bill as unpaid
-    url(r'^manager/billing/(?P<bill_id>[\d]+)/mark_as_unpaid/$', mark_bill_as_unpaid),
-
     # list all members
     url(r'^manager/members/$', all_members),
 
@@ -151,14 +99,12 @@ urlpatterns = patterns('',
     ###########
     
     # members with incomplete profiles
-    url(r'^manager/members/incomplete$', members_with_incomplete_profiles),
-    url(r'^manager/members/missing_stuff$', members_who_are_missing_stuff),
-    url(r'^manager/members/office_num$', members_missing_office_num),
+    url(r'^manager/members/incomplete/$', members_with_incomplete_profiles),
+    url(r'^manager/members/missing_stuff/$', members_who_are_missing_stuff),
+    url(r'^manager/members/office_num/$', members_missing_office_num),
+    url(r'^manager/members/email_list/$', member_email_list),
+    url(r'^manager/members/by_room/$', members_by_room),
     
-
-
-
-
 
 
     # user login
@@ -178,6 +124,21 @@ urlpatterns = patterns('',
 
     # added for django-admin-tools
     url(r'^admin_tools/', include('admin_tools.urls')),
+
+
+
+    ###############
+    # KIOSK VIEWS #
+    ###############
+
+    url(r'^kiosk1/$', kiosk1),
+
+    url(r'^kiosk1/(?P<user_id>[\d]+)/$', kiosk_user_view),
+    url(r'^kiosk1/(?P<user_id>[\d]+)/checkin/$', kiosk_user_checkin),
+    url(r'^kiosk1/(?P<user_id>[\d]+)/checkout/$', kiosk_user_checkout),
+
+    url(r'^kiosk2/$', kiosk2),
+
 
 
 )

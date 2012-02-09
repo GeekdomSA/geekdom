@@ -3,156 +3,70 @@
 
 {% block content-top %}
 
-	<img class="user_profilepic" src="
-		{% if user.userprofile.image %}
-			{% thumbnail user.userprofile.image 170x170 crop %}
-		{% else %}
-			{{ MEDIA_URL }}img/Richard-Branson.jpg
-		{% endif %}
-		" alt="{{ user.userprofile.cname }}" />
+	<img class="user_profilepic floatright" src="{{ user.my_profile.get_mugshot_url }}" alt="{{ user.get_full_name }}" />
 
 {% endblock %}
 
 {% block content %}
 
 <span class="user_companyname">
-	{% if user.userprofile.company_name %}{{ user.userprofile.company_name }}{% endif %}{% if user.userprofile.office_num and user.userprofile.company_name %}, {% endif %}
-	{% if user.userprofile.office_num %}
-		Office {{ user.userprofile.office_num }}
+	{% if user.get_profile.company_name %}{{ user.get_profile.company_name }}, {% endif %}
+	{% if user.get_profile.office_num %}
+		Office {{ user.get_profile.office_num }}
+	{% else %}
+		Community Member
 	{% endif %}
 </span>
 
-<p>Member since {{ user.date_joined|date:"m/d/y" }}</p>
+<p><em>Member since {{ user.date_joined|date:"m/d/y" }}</em></p>
 
-{% if user.userprofile.skills %}
-	<p class="user_skills">Skills: {{ user.userprofile.skills }}</p>
+{% if user.get_profile.bio %}<div class="well">{{ user.get_profile.bio|linebreaks }}</div>{% endif %}
+
+{% if user.get_profile.skills %}
+	<p class="user_skills"><strong>Skills:</strong> {{ user.get_profile.skills }}</p>
 {% endif %}
 
+
 <p>
-	Available for office hours: {{ user.userprofile.available_for_office_hours }}<br />
-	Available for workshops: {{ user.userprofile.available_for_workshops }}
+	{% if user.get_profile.available_for_office_hours %}<strong>Office hours:</strong> {{ user.get_profile.available_for_office_hours }}<br />{% endif %}
 </p>
 
+<hr />
+
+<div class="contactinfo">
+	<h3>Contact info:</h3>		
+
+	{% if user.email %}<p><strong>Email:</strong> <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>{% endif %}
+	{% if user.get_profile.phone_number %}<p><strong>Phone:</strong> {{ user.get_profile.phone_number }}</p>{% endif %}
+	{% if user.get_profile.gchat %}<p><strong>gChat:</strong> {{ user.get_profile.gchat }}</p>{% endif %}
+	{% if user.get_profile.skype %}<p><strong>Skype:</strong> {{ user.get_profile.skype }}</p>{% endif %}
+	{% if user.get_profile.twitter %}<p><strong>Twitter:</strong> <a href="{{ user.get_profile.twitter }}" target="_blank">{{ user.get_profile.twitter }}</a></p>{% endif %}
+	{% if user.get_profile.facebook %}<p><strong>Facebook:</strong> <a href="{{ user.get_profile.facebook }}" target="_blank">{{ user.get_profile.facebook }}</a></p>{% endif %}
+	{% if user.get_profile.linkedin %}<p><strong>LinkedIN:</strong>  <a href="{{ user.get_profile.linkedin }}" target="_blank">{{ user.get_profile.linkedin }}</a></p>{% endif %}
+	{% if user.get_profile.website %}<p><strong>Website:</strong>  <a href="{{ user.get_profile.website }}" target="_blank">{{ user.get_profile.website }}</a></p>{% endif %}
+
+</div>
+
 {% if request.user.is_superuser %}
-
-	<hr />
-
-	<span class="contactinfo">
-		<h3>Contact info:</h3>
-		
-		<p>
-			Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a><br />
-			Phone: {{ user.userprofile.phone_number }}<br />
-		</p>
-
-		<p>
-			Address:<br />
-			{{ user.first_name }} {{ user.last_name}}<br />
-			{{ user.userprofile.address }}<br />
-			{{ user.userprofile.city }}, {{ user.userprofile.state }} {{ user.userprofile.zipcode }}
-		</p>
-	</span>
 	
 	<hr />
-	
-	<h3>Misc:</h3>
+
+	{% if user.get_profile.available_for_workshops %}<p><strong>Available for workshops:</strong> {{ user.get_profile.available_for_workshops }}</p>{% endif %}
+
+	<h3>Mailing Address</h3>
+	<p>
+		{{ user.get_full_name }}<br />
+		{{ user.get_profile.address }}<br />
+		{{ user.get_profile.city }}, {{ user.get_profile.state }} {{ user.get_profile.zipcode }}<br />
+	</p>
+
+	<h3>Misc</h3>
 	
 	<p>
-		Has parking pass: {{ user.userprofile.has_parking_pass }}<br />
-		Has office key: {{ user.userprofile.has_office_key }}<br />
-		Has elevator fob: {{ user.userprofile.has_elevator_fob }}
+		Has parking pass: {{ user.get_profile.has_parking_pass }}<br />
+		Has office key: {{ user.get_profile.has_office_key }}<br />
+		Has elevator fob: {{ user.get_profile.has_elevator_fob }}
 	</p>
-	
-
-
-	{% if user.userprofile.membership_starts_on %}
-
-	    <hr />
-    
-	    <h3>Memberships</h3>
-    
-	    <table class="billing_grid">
-
-	        <tr>
-	            <th>Membership Type</th>
-	            <th>Started on</th>
-	            <th>Ends on</th>
-	            <th>Price</th>
-	            <th>Bill Cycle</th>
-	            <th>Next Billing Date</th>
-	        </tr>
-	        <tr>
-	            <td>{{ user.userprofile.membership_type.name }}</td>
-	            <td>{{ user.userprofile.membership_starts_on|date:"m/d/y" }}</td>
-	            <td>{{ user.userprofile.membership_ends_on|date:"m/d/y" }}</td>
-	            <td>${{ user.userprofile.membership_type.price }}</td>
-	            <td>{{ user.userprofile.membership_type.duration }}</td>
-	            <td>{{ user.userprofile.next_billing_date|date:"m/d/y" }}</td>
-	        </tr>
-
-	    </table>
-    
-
-	{% endif %}
-
-
-	{% if user.userprofile.outstanding_bills %}
-
-	    <hr />
-
-	    <h3>Oustanding bills</h3>
-
-	    <table class="billing_grid">
-
-	        <tr>
-	            <th>No.</th>
-	            <th>Date Created</th>
-	            <th>Amount Due</th>
-	            <th>Status</th>
-	        </tr>
-
-	        {% for bill in user.userprofile.outstanding_bills %}
-	            <tr>
-	                <td>{{ bill.id }}</td>
-	                <td>{{ bill.date_created|date:"m/d/y" }}</td>
-	                <td>${{ bill.amount }}</td>
-	                <td>{% if bill.paid %}<span class="paid_text">PAID</span>{% else %}<span class="unpaid_text">UNPAID</a></span>{% endif%}</td>
-	            </tr>
-	        {% endfor %}
-
-	    </table>
-
-	{% endif %}
-
-	{% if user.userprofile.settled_bills %}
-
-	    <hr />
-
-	    <h3>Settled bills</h3>
-
-	    <table class="billing_grid">
-
-	        <tr>
-	            <th>No.</th>
-	            <th>Date Created</th>
-	            <th>Amount Due</th>
-	            <th>Status</th>
-	        </tr>
-
-	        {% for bill in user.userprofile.settled_bills %}
-	            <tr>
-	                <td>{{ bill.id }}</td>
-	                <td>{{ bill.date_created|date:"m/d/y" }}</td>
-	                <td>${{ bill.amount }}</td>
-	                <td>{% if bill.paid %}<span class="paid_text">PAID</span>{% else %}<span class="unpaid_text">UNPAID</a></span>{% endif%}</td>
-	            </tr>
-	        {% endfor %}
-
-	    </table>
-
-	    <p>Current balance: ${{ user.userprofile.account_balance }}</p>
-    
-	{% endif %}
 
 {% endif %}
 
@@ -165,39 +79,17 @@
 
 {% block sidebar%}
 
-  <ul class="sidebar_menu">
+  <div class="sidebar_menu">
     {% if request.user.is_superuser %}
-      <li><a href="/members/{{ user.id }}/message">Send this member a message</a></li>
-      <li><a href="/manager/members/{{ user.id }}/edit">Edit this profile</a></li>
+      <a href="/members/{{ user.id }}/message" class="btn btn-primary span4">Send this member a message</a>
+      <a href="/manager/members/{{ user.id }}/edit" class="btn btn-warning span4">Edit this profile</a>
     {% else %}
       {% ifequal request.user user %}
-        <li><a href="/account/edit">Edit your profile</a></li>
+        <a href="/account/edit" class="btn btn-warning span4">Edit your profile</a></li>
       {% else %}
-        <li><a href="/members/{{ user.id }}/message">Send this member a message</a></li>
+        <a href="/members/{{ user.id }}/message" class="btn btn-primary span4">Send this member a message</a>
 	  {% endifequal %}
     {% endif %}
   </ul>
-    
 
-  <!-- <h2>Stats</h2> -->
-  
-  <!-- <p>Replies posted: {{ user.reply_set.count }}</p>
-
-  <p>Threads created: {{ user.thread_set.count }}</p>
-
-  <p>Events attended:  {{ user.events_attending.count }}</p>
-
-  <p>Forums joined: {{ user.forums_joined.count }}</p> -->
-  
-  {% if user.forums_joined.all %}
-      
-      <hr />
-  
-      <h2>Member of:</h2>
-  
-      <ul>{% for forum in user.forums_joined.all %}
-          <li><a href="/forums/{{ forum.id }}">{{ forum.name }}</a></li>
-      {% endfor %}</ul>
-  
-  {% endif %}
 {% endblock %}

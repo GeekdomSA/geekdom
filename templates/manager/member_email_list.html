@@ -1,0 +1,15 @@
+{# member e-mail list #}
+
+{% extends "global/base.html" %}
+
+{% block content %}
+
+{% for user in users %}{% if user.email %}{{ user.email }}{% if not forloop.last %}, {% endif%}{% endif %}{% endfor %}
+
+{% endblock %}
+
+{% block sidebar%}
+
+{% include "manager/admin_sidebar.html" %}
+
+{% endblock %}

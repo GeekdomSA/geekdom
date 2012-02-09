@@ -1,0 +1,460 @@
+/* kiosk_style.css */
+
+body {
+	color : white;
+	margin : 0px;
+	padding : 0px;
+	background: black url(http://localhost/~mocha/geekdom-media/img/layout/sidebar_bg.gif) repeat-y top right;
+	/*overflow: hidden;*/
+	font-size: 12pt;
+}
+
+body .container, body .row {
+	width : 100%;
+	margin : 0px;
+	padding : 0px;
+}
+
+#content_body {
+	width : 80%;
+	float: left;
+	margin : 0px;
+	padding : 0px;
+}
+
+#content_sidebar {
+	position: fixed;
+	top : 0px;
+	right: 0px;
+	float: right;
+	width : 380px;
+	margin : 0px;
+	padding : 0px;
+}
+
+.inner {
+	padding : 40px;
+}
+
+
+
+#content_body h1 {
+	color : white;
+	font-size : 40pt;
+	letter-spacing : -1px;
+}
+
+h1 em, h2 em, h3 em, h4 em, h5 em, h6 em {
+	font-style: normal;
+	color : red;
+}
+
+ul, li {
+	margin : 0px;
+	padding : 0px;
+}
+
+.bigmembergrid li {	
+	float: left;
+	background: #333;
+	display: block;
+	margin: 10px 10px 0 0;
+	width: 310px;
+	height: 60px;
+	padding: 20px;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.bigmembergrid li img {
+	float: left;
+	height : 60px;
+	width : 60px;
+	margin-right : 10px;
+	border-radius: 5px;
+}
+
+.bigmembergrid li span {
+	display: block;
+}
+
+.bigmembergrid li span.membername {
+	font-size : 1.3em;
+	font-weight: bold;
+	letter-spacing: -1px;
+	margin-bottom : 5px;
+}
+
+.bigmembergrid li span.membercompanyname {
+	color : red;
+	display: block;
+	font-style: italic;
+	word-wrap: normal;
+	overflow: hidden;
+	font-weight: bold;
+	font-size : .8em;
+	line-height: 1em;
+	margin-bottom : 3px;
+}
+
+.bigmembergrid li span.memberofficenum {
+	float: right;
+	font-size: 0.6em;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #999;
+}
+
+.bigmembergrid li span.memberskills {
+	color: #999;
+	font-size: .8em;
+	line-height: 1em;
+	font-style: italic;
+}
+
+.bigmembergrid a,
+.bigmembergrid a:hover {
+	color : white;
+	text-decoration: none;
+}
+
+#header {
+	width : 80%;
+}
+
+#header h1 {
+	color : white;
+	font-size : 40pt;
+	letter-spacing : -1px;
+	margin-bottom : 30px;
+}
+
+#header.userprofile_page h1 {
+	margin-bottom : 10px;
+}
+
+.floatright {
+	float: right;
+	margin: 0 0 30px 30px;
+}
+
+.floatleft {
+	float: left;
+	margin: 0 30px 0px 0;
+}
+
+#header-fixed img.floatleft {
+	margin : 30px;
+}
+
+.profilepage_subheader {
+	font-size : 1.5em;
+	color : red;
+	font-weight: bold;
+	letter-spacing: -1px;
+}
+
+.profilepage_membersince {
+	font-weight: bold;
+	text-transform: uppercase;
+	color : #999;
+	display: block;
+	font-size : .8em;
+}
+
+hr {
+	clear: both;
+	margin : 30px 0;
+	border: none;
+	border-bottom : 1px solid #666;
+}
+
+.profilepage_bio p {
+	font-size: 1.2em;
+	line-height: 1.2em;
+	font-weight: bold;
+}
+
+.user_skills {
+	font-size: 1.2em;
+	line-height: 1.2em;
+	font-weight: bold;
+	color : red;
+}
+
+.profilepage_officehours {
+	font-size: 1.2em;
+	line-height: 1.2em;
+	font-weight: bold;
+	color : #ccc;	
+}
+
+h3 {
+	color : #ccc;
+}
+
+.profilepage_contactinfo p {
+	font-size : 1.3em;
+	margin-bottom : 1em;
+}
+
+.profilepage_contactinfo,
+.profilepage_contactinfo a {
+	color : white;
+	font-weight: bold;
+}
+
+.profilepage_contactinfo strong {
+	color : #666;
+	width : 110px;
+	display: inline-block;
+}
+
+#pageactions,
+#pageactions li {
+	margin : 0px;
+	padding : 0px;
+	list-style: none;
+}
+
+#pageactions li {
+	display: inline;
+}
+
+.sidebarmemberlist {
+	font-size : .9em;
+}
+
+.sidebarmemberlist,
+.sidebarmemberlist li {
+	margin : 0px;
+	padding : 0px;
+	list-style: none;
+}
+
+.sidebarmemberlist li {
+	margin-bottom : 1em;
+}
+
+.sidebarmemberlist a {
+	color : #ccc;
+}
+
+.sidebarmemberlist li .membername {
+	display: block;
+	font-size : 1.2em;
+	font-weight: bold;
+	color : white;
+	line-height : 13px;
+	margin-bottom : 5px;
+}
+
+.sidebarmemberlist li .memberofficenum {
+	float: right;
+	font-size : .7em;
+	font-weight: bold;
+	color : #ccc;
+	text-transform: uppercase;
+}
+
+.sidebarmemberlist li .membercompanyname {
+	display: block;
+	color : #999;
+	font-weight: bold;
+	font-size: .8em;
+	line-height: 1em;
+}
+
+.sidebarmemberlist li .memberskills {
+	display: block;
+	margin-top : 2px;
+	font-size : .8em;
+	line-height: 1.1em;
+	font-style: italic;
+	color : #999;
+}
+
+ul.sidebarmemberlist li a:hover {
+	display: block;
+	background : black;
+}
+
+#content_sidebar h2 {
+	color : #ccc;
+	letter-spacing: -1px;
+}
+
+.filterbox {
+}
+
+#cta-banner {
+	background : url(http://localhost/~mocha/geekdom-media/img/layout/ribbon-bg.png) no-repeat center left;
+	position : fixed;
+	right : 0;
+	bottom : 100px;
+	z-index: 10;
+	padding : 15px 20px 15px 40px;
+	box-shadow : 5px 2px 5px 0px black;
+}
+
+#cta-banner p {
+	line-height: 1em;
+	color : #ffcccc;
+	font-size : 1.2em;
+	font-weight: bold;
+	text-shadow: 2px 2px 2px #a40000;
+	margin : 0;
+	padding : 0;
+	display: block;
+	padding-bottom : 4px;
+}
+
+#cta-banner p em {
+	color : white;
+}
+
+ul#pageactions {
+	margin-bottom : 30px;
+	clear: both;
+}
+
+ul#pageactions .btn.btn-success em {
+	color : #bfdbba;
+	font-size: 1em;
+}
+
+ul#pageactions .btn.btn-warning em {
+	color : #f3e6d4;
+	font-size: 1em;
+}
+
+ul#pageactions .btn {
+	margin-right : 5px;
+}
+
+ul#pageactions .spacer {
+	display: inline-block;
+	font-style: italic;
+	color : #999;
+	font-size : .8em;
+}
+
+.userstatus {
+	float: right;
+	font-size: 2em;
+	line-height: 1em;
+	color : #00d500;
+	letter-spacing: -1px;
+	font-weight: bold;
+	padding-left : 40px;
+	background: url(http://localhost/~mocha/geekdom-media/img/layout/bigcrown.gif) no-repeat center left;
+}
+
+.sidebarmemberlist li.herenow {
+	padding-left: 22px;
+	margin-left : -22px;
+	background: url(http://localhost/~mocha/geekdom-media/img/layout/tinycrown.png) no-repeat top left;
+}
+
+#headeralert_container {
+	position: absolute;
+	text-align: center;
+	width : 400px;
+	left : 50%;
+	margin-left : -200px;
+}
+
+#headeralert.alert {
+	padding: 15px 10px 10px 10px;
+	margin: -8px auto 0px auto;
+}
+
+
+
+
+.tweet {
+	display: block;
+	margin-top : 20px;
+}
+
+.tweet .content {
+	font-weight: bold;
+	color: white;
+}
+
+.tweet .meta {
+	font-weight: bold;
+	font-size: .8em;
+	color: #999;
+}
+
+
+
+
+
+<ul class="bigeventgrid">{% for event in events %}
+	<li class="event">
+		<span class="name">{{ event.name }}</span>
+		<span class="startsat">{{ event.starts_at }}</span>
+		<span class="endsat">{{ event.ends_at }}</span>
+		<span class="description">{{ event.description }}</span>
+		<span class="hosted_by">{{ event.added_by }}</span>
+	</li>
+
+
+.bigeventgrid, 
+.bigeventgrid .event {
+	margin : 0px;
+	padding : 0px;
+	list-style: none;
+}
+
+.bigeventgrid {font-weight: normal;}
+
+.bigeventgrid .event {
+	width: 415px;
+	float: left;
+	padding: 20px;
+	background: #333;
+	margin: 0 30px 30px 0;
+	list-style: none;
+	height: 200px;
+}
+
+.bigeventgrid .event .name {
+	font-weight: bold;
+	letter-spacing: -1px;
+	margin-bottom: 5px;
+	line-height: 1em;
+	font-size: 1.5em;
+	display: block;
+}
+
+.bigeventgrid .event .dateinfo {
+	font-weight: bold;
+	color: #CCC;
+	display: block;
+	margin-bottom: 5px;
+}
+
+.bigeventgrid .event .description {
+	font-size: 0.9em;
+	line-height: 17px;
+	display: block;
+	color: #999;
+	font-style: italic;
+}
+
+.bigeventgrid .event .hosted_by {
+	font-weight: bold;
+	color: red;
+	text-align: right;
+	float: right;
+	font-size: .8em;
+	display: block;
+	margin-top : 5px;
+}
+
+
+
+

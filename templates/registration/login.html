@@ -1,37 +1,18 @@
 {% extends "global/base.html" %}
+{% load bootstrap %}
 
 {% block content %}
 {{ request.GET.mode }}
 
 	<h1 id="page-title">Welcome Back.</h1>
     <hr />
-	
-    {% if form.errors %}    
-        <ul class="messages"><li class="error">Your email and password didn't match. Please try again.</li></ul>
-    {% endif %}	
 
 	<form method="post" action="." class="clearfix"  target="_parent">
-		
-		<ul>
-
-		<li class="form-item bigfield">
-			<label for="id_username">Email Address:</label>
-            {{ form.username }}
-            {# <input id="id_username" type="text" name="username" maxlength="75"> #}
-		</li>
-
-		<li class="form-item bigfield">
-			<label for="id_password">Password:</label>
-			{{ form.password }}
-		</li>
-
-		</ul>
-
-		<input type="hidden" name="next" value="/" />
-		<input type="submit" value="login" />
-
+		{{ form|bootstrap }}
+		<br />
+		<input type="hidden" name="next" value="/" />		
+        <button type="submit" class="btn btn-primary">Login</button>
 		{% csrf_token %}
-
 	</form>
 
 {% endblock %}

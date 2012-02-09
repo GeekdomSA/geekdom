@@ -1,4 +1,5 @@
 {% extends "global/base.html" %}
+{% load bootstrap %}
 
 {% load uni_form_tags %}
 
@@ -7,22 +8,18 @@
     {{ form.errors }}
     {{ uform.errors }}
     {{ pform.errors }}
-
-	{% if instructions %}
-		<div class="form_instructions">{{ instructions }}</div>
-	{% endif %}
 	
-    <form action="" method="post" enctype="multipart/form-data">
-
-    	<ul>
-    		{{ form|as_uni_form }}
-    		{{ uform|as_uni_form }}
-    		{{ pform|as_uni_form }}
-    	</ul>
-	
+    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+		
+		<fieldset class="control-group">
+			{{ form|bootstrap }}
+			{{ uform|bootstrap  }}
+			{{ pform|bootstrap  }}
+		</fieldset>
 	
     	{% csrf_token %}
-    	<input type="submit" value="Submit" />
+		
+        <button type="submit" class="btn btn-primary btn-large">Submit</button>
 
     </form>
 

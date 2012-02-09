@@ -90,7 +90,12 @@ INSTALLED_APPS = (
     'uni_form',
     'easy_thumbnails',
     'pagination',
+    'geekdom.userena',
+    'guardian',
+    'bootstrapform',
 )
+
+AUTH_PROFILE_MODULE = 'manager.UserProfile'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -115,4 +120,20 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'geekdom.manager.UserProfile'
+
+# required userena settings
+
+
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
+LOGIN_URL = '/accounts/signin/'
+LOGOUT_URL = '/accounts/signout/'
+
+ANONYMOUS_USER_ID = 1

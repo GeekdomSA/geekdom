@@ -1,14 +1,10 @@
-{% load adminmedia %}
-
-<!doctype html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
   <!-- Use the .htaccess and remove these lines to avoid edge case issues.
        More info: h5bp.com/b/378 -->
@@ -18,32 +14,9 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <link rel="stylesheet" href="{{ MEDIA_URL }}css/base.css">
+  <!-- html5 boilerplate reset stylesheet -->
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/style.css">
-  <!-- end CSS-->
-  
-  <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css"/>
-  <link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
-
-  <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css" />
-  <script type="text/javascript" src="/admin/jsi18n/"></script>
-  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
-  <script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
-  <script type="text/javascript" src="/static/admin/js/core.js"></script>
-  <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
-  <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
-  <script type="text/javascript" src="/static/admin/js/actions.min.js"></script>
-
-	{% include "uni_form/includes.html" %}
-	
-  <script type="text/javascript">
-  (function($) {
-      $(document).ready(function($) {
-          $("tr input.action-select").actions();
-      });
-  })(django.jQuery);
-  </script>
 
   {{ form.media }}
   
@@ -55,92 +28,110 @@
 
   <div id="container">
 
-    <header class="clearfix">
-        <span id="page-title"><a href="/">home.geekdom.com</a></span>
-        
-        <ul id="menu">
-            {% if request.user.is_authenticated %}
-	            <li><a href="/members">Members</a></li>				
-	            <!-- <li><a href="/forums">Forums</a></li> -->
-	            <li><a href="/events">Events</a></li>
-                <li><a href="/account">My Account</a></li>
-                <li><a href="/logout">Logout</a></li>
-            {% else %}
-                <li><a href="/login">Login</a></li>
-            {% endif %}
-                        
-        </ul>
+    <header class="clearfix">        
+		<div class="navbar navbar-fixed-top">
+		  <div class="navbar-inner">
+		    <div class="container">				
+				<a class="brand" href="#">gkdm</a>
+				<ul class="nav">
+					{% if request.user.is_authenticated %}
+					<li><a href="/members">Members</a></li>				
+					<!-- <li><a href="/forums">Forums</a></li> -->
+					<li><a href="/events">Events</a></li>
+					<li><a href="/account">My Account</a></li>
+					
+				    {% if request.user.is_superuser %}
+						<li class="dropdown" id="admin-menu">
+							<a href="#admin-menu" class="dropdown-toggle" data-toggle="dropdown">
+								Admin
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+							    <li><a href="/manager/members/">All Members</a></li>
+							    <li><a href="/manager/members/new">New Member</a></li>
+							    <li><a href="/admin">Django Admin</a></li>
+							</ul>
+						</li>
+				    {% endif %}
+					{% endif %}
+				</ul>
+				
+				<ul class="nav pull-right">
+					{% if request.user.is_authenticated %}
+						<li><a href="/logout">Logout</a></li>
+					{% else %}
+						<li><a href="/login">Login</a></li>
+					{% endif %}
+				</ul>
+				
+		    </div>
+		  </div>
+		</div>
         
     </header>
 
-    {% if request.user.is_superuser %}
-        <ul id="submenu">
-            <li>Admin:</li>
-            <li><a href="/manager/billing/">All Bills</a></li>
-            <li><a href="/manager/members/">All Members</a></li>
-            <li><a href="/manager/members/new">New Member</a></li>
-            <li><a href="/admin">Django Admin</a></li>
-        </ul>
-    {% endif %}
 
     
-    <div id="content" class="clearfix">
-    
+    <div class="container clearfix">
+		
         {% if messages %}{% autoescape off %}
-    	    <div class="message_container"><ul class="messages">
-    	        {% for message in messages %}
-    	        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|urlize }}</li>
-    	        {% endfor %}
-    	    </ul></div>
+	        {% for message in messages %}
+			<div class="row">
+				<div class="span12 alert alert-{% if message.tags %}{{ message.tags }}{% else %}block{% endif %}">
+					{{ message|urlize }}
+				</div>
+			</div>
+	        {% endfor %}
     	{% endautoescape %}{% endif %}
 	    
-        <div id="main" role="main">
+		
+		<div class="row">
+		    <div id="main" role="main" class="span8">
 		    
-			{% block content-top %}{% endblock %}
+				{% block content-top %}{% endblock %}
             
-			<div class="titlebox">
-                <h1 id="page-title">{{ title }}</h1>
-                <p id="page-subtitle">{{ subtitle }}</p>
-            </div>
+				<div class="titlebox">
+		            <h1 id="page-title">{{ title }}</h1>
+		            <p id="page-subtitle">{{ subtitle }}</p>
+		        </div>
         
-            {% block content %}{% endblock %}
+		        {% block content %}{% endblock %}
 
-        </div>
+		    </div>
 
-        <div id="sidebar">        
-            {% block sidebar %}{% endblock %}
-        </div>
+		    <div id="sidebar" class="span4">        
+		        {% block sidebar %}{% endblock %}
+		    </div>
+		
+		</div>
+		
+
+	    <div class="row">
+			<div class="copyright span12">
+			    &copy; Geekdom 2012
+			</div>
+	    </div>
+		
     
     </div>
-
-    <footer>
-        <p class="copyright">Blah ~</p>
-    </footer>
 
   </div> <!--! end of #container -->
 
 
   <!-- JavaScript at the bottom for fast page loading -->
 
-  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
-
-
-  <!-- scripts concatenated and minified via ant build script-->
-  <script defer src="js/plugins.js"></script>
-  <script defer src="js/script.js"></script>
-  <!-- end scripts-->
-
-	
-  <!-- Change UA-XXXXX-X to be your site's ID -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap-dropdown.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.quicksearch.js"></script>
+  
   <script>
-    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-    Modernizr.load({
-      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-    });
+	$(document).ready(function () {
+	  $('.dropdown-toggle').dropdown();
+	});
+	  
+	$('input#search').quicksearch('table tbody tr', {});    
   </script>
-
 
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->

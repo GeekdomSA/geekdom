@@ -1,0 +1,38 @@
+{# screen 1 #}
+
+{% extends "kiosk/base.html" %}
+
+{% block custom_headings %}
+	<meta http-equiv="refresh" content="600" />
+{% endblock %}
+
+{% block content %}
+
+<div id="header"><h1>Upcoming events at <em>Geekdom</em></h1></div>
+
+<ul class="bigeventgrid">{% for event in events %}
+	<li class="event">
+		<span class="name">{{ event.name }}</span>
+		<span class="dateinfo ">{{ event.starts_at|date:"l, F jS \f\r\o\m P" }} - {{ event.ends_at|date:"P" }}</span>
+		<span class="description">{{ event.description|truncatewords:75 }}</span>
+		<span class="hosted_by">Hosted by {{ event.added_by.get_full_name }}</span>
+	</li>
+{% endfor %}</ul>
+
+{% endblock content %}
+
+
+{% block sidebar %}
+
+<h2>@geekdomsa</h2>
+
+<ul class="tweetfeed">{% for tweet in tweets %}
+
+	<li class="tweet">
+		<span class="content">{{ tweet.title }}</span>
+		<span class="meta">{{ tweet.author }} @ {{ tweet.pp }}</span>
+	</li>
+
+{% endfor %}</li>
+
+{% endblock sidebar %}

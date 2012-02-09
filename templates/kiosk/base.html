@@ -1,0 +1,109 @@
+{# kiosk base #}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    {% block custom_headings %}{% endblock %}
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+         More info: h5bp.com/b/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Geekdom Kiosk</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- html5 boilerplate reset stylesheet -->
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/kiosk_style.css">
+
+</head>
+
+<body class="kiosk">
+
+{% if messages %}{% autoescape off %}
+  <div id="headeralert_container">
+    <div id="headeralert" class="span4 alert alert-{% if message.tags %}{{ message.tags }}{% else %}block{% endif %}">
+      {% for message in messages %}
+        {{ message|urlize }}
+      {% endfor %}
+    </div>
+  </div>
+{% endautoescape %}{% endif %}
+
+<div id="cta-banner">
+  <p>Not a member yet? <em>Sign up today at geekdom.com!</em></p>
+</div>
+
+<div id="background-frame" style="background-image:url({{ background_image }});"></div>
+    
+    <div class="container clearfix">	    
+		
+		<div class="row">
+
+			<div id="content_body" class="span8"><div class="inner">
+
+				{% block content %}{% endblock content %}
+
+			</div></div>
+
+			<div id="content_sidebar" class="span4"><div class="inner">
+
+				{% block sidebar %}{% endblock sidebar %}
+
+			</div></div>
+
+		</div>
+			    
+    </div>
+
+</div> <!--! end of #container -->
+
+
+  <!-- JavaScript at the bottom for fast page loading -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/bootstrap-dropdown.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.quicksearch.js"></script>
+  
+  <script>
+      $(document).ready(function () {
+          $('.dropdown-toggle').dropdown();
+      });
+	  
+	  $('input#search').quicksearch('table tbody tr', {});	  
+  </script>
+
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
+  <!--<script type="text/javascript" src="http://use.typekit.com/zpa2qby.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
+
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.quicksearch.js"></script>
+  
+  <script>
+      $(document).ready(function () {
+          $('.dropdown-toggle').dropdown();
+      });
+    
+    $('input#search').quicksearch('.sidebarmemberlist li', {});
+
+    $('#headeralert_container').delay(5000).slideUp();
+
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{# screen 1 #}
+
+{% extends "kiosk/base.html" %}
+
+{% block content %}
+
+{% block custom_headings %}
+	<meta http-equiv="refresh" content="300;url=http://localhost:8000/kiosk1/"/>
+{% endblock %}
+
+<div id="header"><h1>Currently here: <em>{{ users.count }} Members</em></h1></div>
+
+<ul class="bigmembergrid">{% for user in users %}
+	<li><a href="/kiosk1/{{ user.id }}">
+		{% if user.get_profile.office_num %}
+			<span class="memberofficenum">Office {{ user.get_profile.office_num }}</span>
+		{% endif %}
+		<img class="user_profilepic floatleft" src="{{ user.my_profile.get_mugshot_url }}" alt="{{ user.get_full_name }}" />
+		<span class="membername">{{ user.get_full_name }}</span>
+
+		{% if user.get_profile.company_name %}
+			<span class="membercompanyname">{{ user.get_profile.company_name }}</span>
+		{% endif %}
+
+		{% if user.get_profile.skills %}
+			<span class="memberskills">{{ user.get_profile.skills }}</span>
+		{% endif %}
+			
+	</a></li>
+{% endfor %}</ul>
+
+{% endblock content %}
+
+
+{% block sidebar %}{% include "kiosk/sidebar.html" %}{% endblock sidebar %}

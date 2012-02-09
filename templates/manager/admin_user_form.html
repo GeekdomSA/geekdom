@@ -1,0 +1,35 @@
+{# admin user form #}
+
+{% extends "global/base.html" %}
+{% load bootstrap %}
+
+{% load uni_form_tags %}
+
+{% block content %}
+
+    {{ form.errors }}
+    {{ uform.errors }}
+    {{ pform.errors }}
+	
+    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+		
+		<fieldset class="control-group">
+			{{ form|bootstrap }}
+			{{ uform|bootstrap  }}
+			{{ pform|bootstrap  }}
+		</fieldset>
+	
+    	{% csrf_token %}
+		
+        <button type="submit" class="btn btn-primary btn-large">Submit</button>
+
+    </form>
+
+{% endblock %}
+
+
+{% block sidebar %}
+
+	{% include "manager/admin_sidebar.html" %}
+
+{% endblock sidebar %}

@@ -1,6 +1,6 @@
-from forum.models import *
+# from forum.models import *
 from manager.forms import *
-from forum.forms import *
+# from forum.forms import *
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, Http404, HttpResponseNotFound, HttpResponseForbidden
 from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
@@ -44,7 +44,7 @@ def my_account(request):
   return render_to_response(
     'manager/view_member.html',
     {
-      'title': request.user.userprofile.cname(),
+      'title': request.user.get_full_name(),
       'user' : request.user,
     }, 
     context_instance=RequestContext(request))
@@ -59,7 +59,7 @@ def edit_my_account(request):
   if request.method == "POST":
     uform = UserForm(request.POST, request.FILES, instance=request.user)
     try:
-      pform = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+      pform = UserProfileForm(request.POST, request.FILES, instance=request.user.get_profile())
     except:
       pform = UserProfileForm(request.POST, request.FILES)
       pform.instance.user = request.user
@@ -76,7 +76,7 @@ def edit_my_account(request):
   else:
     uform = UserForm(instance = request.user)
     try:
-      pform = UserProfileForm(instance=request.user.userprofile)
+      pform = UserProfileForm(instance=request.user.get_profile())
     except:
       pform = UserProfileForm
   
@@ -96,163 +96,19 @@ def edit_my_account(request):
 # admin views #
 ###############
 
-# view all bills, oldest newest first
-@login_required
-def all_bills(request): 
-  if not request.user.is_superuser: return HttpResponseNotFound()
-
-  # bills = Bill.objects.order_by('paid', 'date_created')
-  bills = Bill.objects.order_by('-id')
-  return render_to_response(
-    'manager/all_bills.html',
-    {
-      'title': "All Bills",
-      'bills' : bills
-    }, 
-    context_instance=RequestContext(request))
-
-
-
-
-# run billing update manually
-@login_required
-def run_billing(request):
-  
-  if not request.user.is_superuser: return HttpResponseNotFound()
-  
-  today = datetime.date.today()
-  userprofiles = UserProfile.objects.filter(Q(membership_starts_on__lte = today)|Q(membership_ends_on__gte = today))
-  
-  count = 0
-  
-  for userprofile in userprofiles:
-    
-    if not userprofile.membership_type.price == 0:
-    
-      bill = Bill()
-      bill.user = userprofile.user
-      bill.collected_for = "Membership Dues"
-      bill.amount = userprofile.membership_type.price
-      bill.save()
-    
-      count = count + 1
-
-      if userprofile.membership_type.duration == "mo": timedelta = datetime.timedelta(days=30)
-      if userprofile.membership_type.duration == "dy": timedelta = datetime.timedelta(days=1)
-      if userprofile.membership_type.duration == "wk": timedelta = datetime.timedelta(days=14)
-      if userprofile.membership_type.duration == "qu": timedelta = datetime.timedelta(days=90)
-      if userprofile.membership_type.duration == "ba": timedelta = datetime.timedelta(days=182)
-      if userprofile.membership_type.duration == "yr": timedelta = datetime.timedelta(days=365)
-
-      userprofile.next_billing_date = userprofile.next_billing_date + timedelta
-      userprofile.save()
-    
-      subject = "Invoice #" + str(bill.id) + " - Geekdom Billing"
-
-      message = """Hey """ + bill.user.userprofile.cname() + """!
-
-        A new invoice has been generated.
-
-        You owe: """ + str(bill.amount) + """ for """ + bill.collected_for + """
-
-        Your total account balance is now: """ + str(bill.user.userprofile.account_balance()) + """
-
-        Please swing by at your earliest convenience to take care of this. Thanks!
-
-        """
-    
-      send_mail(subject, message, 'billing@geekdom.com', [bill.user.email], fail_silently=False)
-    
-  if count > 0:
-    message = "Billing has been run successfully. " + str(count) + " new bills generated."
-    messages.add_message(request, messages.SUCCESS, message)
-
-  else:
-    message = "Billing has been run successfully, but no new bills were generated."
-    messages.add_message(request, messages.WARNING, message)
-    
-  return HttpResponseRedirect('/manager/billing/')
-
-
-
-
-
-
-# create bill
-@login_required
-def new_bill(request): return
-
-
-
-
-
-# view bill
-@login_required
-def view_bill(request, bill_id):
-  if not request.user.is_superuser: return HttpResponseNotFound()
-
-  bill = Bill.objects.get(id = bill_id)
-  return render_to_response(
-    'manager/view_bill.html',
-    {
-      'title': "Bill #" + str(bill.id),
-      'bill' : bill
-    }, 
-    context_instance=RequestContext(request))
-
-
-
-
-
-# edit bill
-@login_required
-def edit_bill(request, bill_id): return
-
-
-
-
-
-# mark bill as paid
-@login_required
-def mark_bill_as_paid(request, bill_id):
-  if not request.user.is_superuser: return HttpResponseNotFound()
-  bill = Bill.objects.get(id = bill_id)
-  bill.paid = True
-  bill.save()
-  message = "Bill #" + str(bill.id) + " has been marked as paid."
-  messages.add_message(request, messages.SUCCESS, message)
-  return HttpResponseRedirect("/manager/billing/")
-
-
-
-
-
-# mark bill as unpaid
-@login_required
-def mark_bill_as_unpaid(request, bill_id):
-  if not request.user.is_superuser: return HttpResponseNotFound()
-  bill = Bill.objects.get(id = bill_id)
-  bill.paid = False
-  bill.save()
-  message = "Bill #" + str(bill.id) + " has been marked as unpaid."
-  messages.add_message(request, messages.WARNING, message)
-  return HttpResponseRedirect("/manager/billing/")
-
-
-
 
 
 @login_required
 def all_members(request): 
   if not request.user.is_superuser: return HttpResponseNotFound()
 
-  # bills = Bill.objects.order_by('paid', 'date_created')
-  users = User.objects.all()
+  users = User.objects.filter(is_active = True)
   return render_to_response(
     'manager/list_members.html',
     {
       'title': "All Members",
-      'users' : users
+      'users' : users,
+      'tabsection':'allmembers',
     }, 
     context_instance=RequestContext(request))
 
@@ -265,14 +121,14 @@ def view_member(request, user_id):
 
   user = User.objects.get(id = user_id)
 
-  if request.user.is_superuser and user.userprofile.notes:
-    message = "Admin Note: " + user.userprofile.notes
-    messages.add_message(request, messages.WARNING, message)
+  if request.user.is_superuser and user.get_profile().notes:
+    message = "Admin Note: " + user.get_profile().notes
+    messages.add_message(request, messages.INFO, message)
       
   return render_to_response(
     'manager/view_member.html',
     {
-      'title': user.userprofile.cname(),
+      'title': user.get_full_name(),
       'user' : user
     }, 
     context_instance=RequestContext(request))
@@ -300,11 +156,12 @@ def new_member(request):
     pform = AdminUserProfileForm()
 
   return render_to_response(
-    'global/modelform.html',
+    'manager/admin_user_form.html',
     {
-      'title': "Create a new user",
+      'title': "New Member",
       'uform' : uform,
       'pform' : pform,
+      'tabsection':'newmember',
     }, 
     context_instance=RequestContext(request))
 
@@ -317,23 +174,23 @@ def edit_member(request, user_id):
 
   if request.method == "POST":
     uform = UserForm(request.POST, request.FILES, instance=user)
-    pform = AdminUserProfileForm(request.POST, request.FILES, instance=user.userprofile)
+    pform = AdminUserProfileForm(request.POST, request.FILES, instance=user.get_profile())
 
     if uform.is_valid() and pform.is_valid():
       user = uform.save()
       profile = pform.save(commit = False)
       profile.user = user
       profile.save()
-      message = "User " + user.userprofile.cname() + " has been updated."
+      message = "User " + user.get_full_name() + " has been updated."
       messages.add_message(request, messages.SUCCESS, message)
       return HttpResponseRedirect('/manager/members/' + str(user.id))
 
   else:
     uform = UserForm(instance = user)
-    pform = AdminUserProfileForm(instance = user.userprofile)
+    pform = AdminUserProfileForm(instance = user.get_profile())
 
   return render_to_response(
-    'global/modelform.html',
+    'manager/admin_user_form.html',
     {
       'title': "Editing " + user.get_full_name(),
       'uform' : uform,
@@ -351,9 +208,9 @@ def email_all_members(request):
   
   users = User.objects.filter(
     (
-      Q(userprofile__membership_starts_on__lte = today)&Q(userprofile__membership_ends_on__gte = today)
+      Q(my_profile__membership_starts_on__lte = today)&Q(my_profile__membership_ends_on__gte = today)
     )|(
-      Q(userprofile__membership_starts_on__lte = today)&Q(userprofile__membership_ends_on = None)
+      Q(my_profile__membership_starts_on__lte = today)&Q(my_profile__membership_ends_on = None)
     )
   )
   
@@ -406,7 +263,7 @@ def public_member_list(request):
     try: skill_query = request.GET['skill_query']
     except: skill_query = ""
     if skill_query:
-        users = User.objects.filter(Q(userprofile__skills__icontains = skill_query)).order_by('first_name')
+        users = User.objects.filter(Q(my_profile__skills__icontains = skill_query)).order_by('first_name')
         title = 'Members with skill: "' + skill_query + '"'
         subtitle = "Active members only"
 
@@ -436,19 +293,20 @@ def public_member_list(request):
 def members_with_incomplete_profiles(request):
     if not request.user.is_superuser: return HttpResponseNotFound()
     users = User.objects.filter(
-        Q(userprofile__skills = "") | 
-        Q(userprofile__phone_number = "") | 
-        Q(userprofile__address = "") |
-        Q(userprofile__available_for_office_hours = "") |
-        Q(userprofile__available_for_workshops = "")
+        Q(my_profile__skills = "") | 
+        Q(my_profile__phone_number = "") | 
+        Q(my_profile__address = "") |
+        Q(my_profile__available_for_office_hours = "") |
+        Q(my_profile__available_for_workshops = "")
     )
 
     return render_to_response(
       'manager/list_members.html',
       {
         'title': "Incomplete profiles",
-        'subtitle': "Something is missing! Find it!",
+        'subtitle': str(users.count()) + " profiles have missing information.",
         'users': users,
+        'tabsection':'membersincompleteprofiles',
       }, 
       context_instance=RequestContext(request))
 
@@ -463,30 +321,30 @@ def members_who_are_missing_stuff(request):
     users = User.objects.filter(
         (
             # community members
-            Q(userprofile__membership_type = 1) & 
-            Q(userprofile__has_elevator_fob = 0)
+            Q(my_profile__membership_type = 1) & 
+            Q(my_profile__has_elevator_fob = 0)
         )|(
             # dedicated
-            Q(userprofile__membership_type = 2) & 
-            Q(userprofile__has_parking_pass = 0) & 
-            Q(userprofile__has_elevator_fob = 0) & 
-            Q(userprofile__has_office_key = 0)
+            Q(my_profile__membership_type = 2) & 
+            Q(my_profile__has_parking_pass = 0) & 
+            Q(my_profile__has_elevator_fob = 0) & 
+            Q(my_profile__has_office_key = 0)
         )|(
             # student
-            Q(userprofile__membership_type = 3) & 
-            Q(userprofile__has_elevator_fob = 0)
+            Q(my_profile__membership_type = 3) & 
+            Q(my_profile__has_elevator_fob = 0)
         )|(
             # business
-            Q(userprofile__membership_type = 4) & 
-            Q(userprofile__has_parking_pass = 0) & 
-            Q(userprofile__has_elevator_fob = 0) & 
-            Q(userprofile__has_office_key = 0)
+            Q(my_profile__membership_type = 4) & 
+            Q(my_profile__has_parking_pass = 0) & 
+            Q(my_profile__has_elevator_fob = 0) & 
+            Q(my_profile__has_office_key = 0)
         )|(
             # startup
-            Q(userprofile__membership_type = 5) & 
-            Q(userprofile__has_elevator_fob = 0) & 
-            Q(userprofile__has_parking_pass = 0) & 
-            Q(userprofile__has_office_key = 0)
+            Q(my_profile__membership_type = 5) & 
+            Q(my_profile__has_elevator_fob = 0) & 
+            Q(my_profile__has_parking_pass = 0) & 
+            Q(my_profile__has_office_key = 0)
         )
     )
 
@@ -494,8 +352,9 @@ def members_who_are_missing_stuff(request):
       'manager/list_members.html',
       {
         'title': "Members missing stuff",
-        'subtitle': "They need something from you, give it to them.",
+        'subtitle': str(users.count()) + " members are missing a fob, a key or a parking pass.",
         'users': users,
+        'tabsection':'membersmissingstuff',
       }, 
       context_instance=RequestContext(request))
 
@@ -508,17 +367,118 @@ def members_missing_office_num(request):
     if not request.user.is_superuser: return HttpResponseNotFound()
     users = User.objects.filter(
         (
-            Q(userprofile__membership_type = 2)|
-            Q(userprofile__membership_type = 4)|
-            Q(userprofile__membership_type = 5)
-        ) & Q(userprofile__office_num = "")        
+            Q(my_profile__membership_type = 2)|
+            Q(my_profile__membership_type = 4)|
+            Q(my_profile__membership_type = 5)
+        ) & Q(my_profile__office_num = "")        
     )
 
     return render_to_response(
       'manager/list_members.html',
       {
         'title': "Members w/blank office",
-        'subtitle': "Where could they be?",
+        'subtitle': str(users.count()) + " office-bound members don't have office letters.",
         'users': users,
+        'tabsection':'membersofficenum',
       }, 
       context_instance=RequestContext(request))
+
+
+@login_required
+def member_email_list(request):
+    users = User.objects.all()
+
+    return render_to_response(
+      'manager/member_email_list.html',
+      {
+        'title': "All member email list",
+        'subtitle': "For sending out mass-emails",
+        'users': users,
+        'tabsection':'membersemaillist',
+      }, 
+      context_instance=RequestContext(request))
+
+
+
+@login_required
+def members_by_room(request):
+    users = User.objects.exclude(my_profile__office_num = "").order_by('my_profile__office_num')
+
+    return render_to_response(
+      'manager/list_members.html',
+      {
+        'title': "Members by office #",
+        'subtitle': "",
+        'users': users,
+        'tabsection':'membersbyroom',
+      }, 
+      context_instance=RequestContext(request))
+
+
+
+
+
+
+def kiosk1(request):
+  now = datetime.datetime.now()
+  users = User.objects.filter(my_profile__checkin__expires_at__gte = now).order_by('first_name')
+  all_users = User.objects.filter(is_active = True).order_by('first_name')
+
+  return render_to_response(
+    'kiosk/screen1.html',
+    { 'users': users, 'all_users':all_users, }, 
+    context_instance=RequestContext(request))
+
+
+
+def kiosk_user_view(request, user_id):
+
+  user = User.objects.get(id = user_id)
+  all_users = User.objects.filter(is_active = True).order_by('first_name')
+
+  return render_to_response(
+    'kiosk/memberscreen.html',
+    { 'user': user, 'all_users':all_users, }, 
+    context_instance=RequestContext(request))
+
+
+
+def kiosk_user_checkin(request, user_id):
+  user = User.objects.get(id = user_id)
+  checkin = Checkin.objects.get_or_create(userprofile = user.my_profile, expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8))
+  message = "Thanks for checking in, " + user.first_name + "!"
+  messages.add_message(request, messages.SUCCESS, message)
+  return HttpResponseRedirect("/kiosk1/")
+
+
+def kiosk_user_checkout(request, user_id):
+  user = User.objects.get(id = user_id)
+  now = datetime.datetime.now()
+  checkins = Checkin.objects.filter(userprofile = user.my_profile).filter(expires_at__gte = now)
+  for checkin in checkins:
+    checkin.expires_at = now - datetime.timedelta(hours = 1)
+    checkin.save()
+  message = "Thanks for checking out, " + user.first_name + "! Drive safe!"
+  messages.add_message(request, messages.SUCCESS, message)
+  return HttpResponseRedirect("/kiosk1/")
+  
+
+
+
+from dateutil import parser
+import feedparser
+def kiosk2(request):
+  today = datetime.date.today()
+  now = datetime.datetime.now()
+  events = Event.objects.filter(ends_at__gte = now)
+
+  twitterfeed = feedparser.parse("http://search.twitter.com/search.atom?q=geekdomsa")
+  tweets = []
+  for tweet in twitterfeed.entries: tweets.append(tweet)
+  for tweet in tweets: tweet.pp = parser.parse(tweet.published).strftime("%m/%d/%y %H:%M:%S")
+
+  return render_to_response(
+    'kiosk/screen2.html',
+    { 'events': events, 'today': today, 'tweets':tweets }, 
+    context_instance=RequestContext(request))
+

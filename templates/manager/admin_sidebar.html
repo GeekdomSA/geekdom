@@ -1,0 +1,42 @@
+{# admin_sidebar #}
+
+<!-- <div class="sidebar_menu">
+  <h3>Mail</h3>
+  <a href="/manager/members/email_all_members">Email all <em>active</em> members</a>
+</div>
+ -->
+
+
+<ul class="nav nav-list well" style="padding: 20px 15px;">
+
+  <li class="nav-header">Admin Pages</li>
+  <li{% ifequal tabsection "allmembers" %} class="active"{% endifequal%}>
+  	<a href="/manager/members/"><i class="icon-list"></i> All Members</a></li>
+  <li{% ifequal tabsection "newmember" %} class="active"{% endifequal%}>
+  	<a href="/manager/members/new"><i class="icon-plus-sign"></i> New Member</a></li>
+  <li><a href="/admin"><i class="icon-cog"></i> Django Admin</a></li>
+
+  <li class="nav-header">Member Reports</li>
+	<li{% ifequal tabsection "membersincompleteprofiles" %} class="active"{% endifequal%}>
+		<a href="/manager/members/incomplete"><i class="icon-list-alt"></i> Members with incomplete profiles</a></li>
+	<li{% ifequal tabsection "membersmissingstuff" %} class="active"{% endifequal%}>
+		<a href="/manager/members/missing_stuff"><i class="icon-list-alt"></i> Members who are missing stuff</a></li>
+	<li{% ifequal tabsection "membersofficenum" %} class="active"{% endifequal%}>
+		<a href="/manager/members/office_num"><i class="icon-list-alt"></i> Members w/blank office</a></li>
+  <li{% ifequal tabsection "membersemaillist" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list"><i class="icon-list-alt"></i> Member email list</a></li>
+
+  <li{% ifequal tabsection "membersbyroom" %} class="active"{% endifequal%}>
+    <a href="/manager/members/by_room"><i class="icon-list-alt"></i> Members by room</a></li>
+
+  <li class="nav-header">External Tools</li>
+  <li><a href="http://geekdom.freshbooks.com" target="_blank"><i class="icon-share"></i> Freshbooks</a></li>
+  <li><a href="http://geekdom.com/admin/" target="_blank"><i class="icon-share"></i> Silverstripe</a></li>
+
+	<li class="nav-header"></li>
+
+  <li><a href="http://geekdom.com" target="_blank"><i class="icon-home"></i>Geekdom Website</a></li>
+  <li><a href="http://geekdom.awesomemonster.com" target="_blank"><i class="icon-home"></i>Member Portal</a></li>
+  <li><a href="http://forums.geekdom.com" target="_blank"><i class="icon-home"></i>Forums</a></li>
+
+</ul>
