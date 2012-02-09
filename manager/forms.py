@@ -1,7 +1,7 @@
 from django.forms import *
 from manager.models import *
 from django.contrib.admin import widgets
-from bootstrap.forms import BootstrapForm, Fieldset
+# from bootstrap.forms import BootstrapForm, Fieldset
 
 class UserForm(ModelForm):
     class Meta:
