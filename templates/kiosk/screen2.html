@@ -13,8 +13,9 @@
 <ul class="bigeventgrid">{% for event in events %}
 	<li class="event">
 		<span class="name">{{ event.name }}</span>
-		<span class="dateinfo ">{{ event.starts_at|date:"l, F jS \f\r\o\m P" }} - {{ event.ends_at|date:"P" }}</span>
-		<span class="description">{{ event.description|truncatewords:75 }}</span>
+		<span class="dateinfo1">{{ event.starts_at|date:"l, F jS" }}</span>
+		<span class="dateinfo2">from {{ event.starts_at|date:"P" }} - {{ event.ends_at|date:"P" }}</span>
+		<span class="description">{{ event.description|truncatewords:20 }}</span>
 		<span class="hosted_by">Hosted by {{ event.added_by.get_full_name }}</span>
 	</li>
 {% endfor %}</ul>
@@ -24,7 +25,7 @@
 
 {% block sidebar %}
 
-<h2>@geekdomsa</h2>
+<h2>@geekdomsa/#geekdom</h2>
 
 <ul class="tweetfeed">{% for tweet in tweets %}
 

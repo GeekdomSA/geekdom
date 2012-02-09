@@ -4,9 +4,15 @@ body {
 	color : white;
 	margin : 0px;
 	padding : 0px;
-	background: black url(/media/img/layout/sidebar_bg.gif) repeat-y top right;
+	background: black;
+	/*background: black url(/media/img/layout/sidebar_bg.gif) repeat-y top right;*/
+	/*background: black url(/media/img/layout/big_bg_2.gif) no-repeat center right;*/
 	/*overflow: hidden;*/
-	font-size: 12pt;
+	background: black url(/media/img/layout/med_bg.gif) no-repeat top right;
+	font-size: 9pt;
+	
+	width: 1280px;
+	height: 720px;
 }
 
 body .container, body .row {
@@ -16,7 +22,7 @@ body .container, body .row {
 }
 
 #content_body {
-	width : 80%;
+	width : 77%;
 	float: left;
 	margin : 0px;
 	padding : 0px;
@@ -27,13 +33,14 @@ body .container, body .row {
 	top : 0px;
 	right: 0px;
 	float: right;
-	width : 380px;
+	width : 300px;
 	margin : 0px;
 	padding : 0px;
+/*	background: #444;*/
 }
 
 .inner {
-	padding : 40px;
+	padding : 20px;
 }
 
 
@@ -59,9 +66,9 @@ ul, li {
 	background: #333;
 	display: block;
 	margin: 10px 10px 0 0;
-	width: 310px;
+	width: 285px;
 	height: 60px;
-	padding: 20px;
+	padding: 10px;
 	overflow: hidden;
 	border-radius: 5px;
 }
@@ -92,22 +99,22 @@ ul, li {
 	word-wrap: normal;
 	overflow: hidden;
 	font-weight: bold;
-	font-size : .8em;
+	font-size : 1em;
 	line-height: 1em;
 	margin-bottom : 3px;
 }
 
 .bigmembergrid li span.memberofficenum {
 	float: right;
-	font-size: 0.6em;
+	font-size: 0.8em;
 	font-weight: bold;
 	text-transform: uppercase;
-	color: #999;
+	color: red;
 }
 
 .bigmembergrid li span.memberskills {
 	color: #999;
-	font-size: .8em;
+	font-size: .9em;
 	line-height: 1em;
 	font-style: italic;
 }
@@ -124,9 +131,9 @@ ul, li {
 
 #header h1 {
 	color : white;
-	font-size : 40pt;
+	font-size : 28pt;
 	letter-spacing : -1px;
-	margin-bottom : 30px;
+	margin-bottom : 15px;
 }
 
 #header.userprofile_page h1 {
@@ -228,16 +235,24 @@ h3 {
 .sidebarmemberlist,
 .sidebarmemberlist li {
 	margin : 0px;
-	padding : 0px;
 	list-style: none;
+	padding : 0 10px;
 }
 
 .sidebarmemberlist li {
-	margin-bottom : 1em;
+	margin-bottom : 1.5em;
 }
 
 .sidebarmemberlist a {
 	color : #ccc;
+}
+
+.sidebarmemberlist li.herenow {
+/*	padding-left: 22px;
+	margin-left : -22px;
+*/	background: url(/media/img/layout/tinycrown.png) no-repeat top left;
+	margin-left: -15px;
+	padding-left: 25px;
 }
 
 .sidebarmemberlist li .membername {
@@ -245,13 +260,13 @@ h3 {
 	font-size : 1.2em;
 	font-weight: bold;
 	color : white;
-	line-height : 13px;
+	line-height : 10px;
 	margin-bottom : 5px;
 }
 
 .sidebarmemberlist li .memberofficenum {
 	float: right;
-	font-size : .7em;
+	font-size : .8em;
 	font-weight: bold;
 	color : #ccc;
 	text-transform: uppercase;
@@ -261,14 +276,14 @@ h3 {
 	display: block;
 	color : #999;
 	font-weight: bold;
-	font-size: .8em;
+	font-size: 1em;
 	line-height: 1em;
 }
 
 .sidebarmemberlist li .memberskills {
 	display: block;
-	margin-top : 2px;
-	font-size : .8em;
+	margin-top : 4px;
+	font-size : .9em;
 	line-height: 1.1em;
 	font-style: italic;
 	color : #999;
@@ -291,7 +306,7 @@ ul.sidebarmemberlist li a:hover {
 	background : url(/media/img/layout/ribbon-bg.png) no-repeat center left;
 	position : fixed;
 	right : 0;
-	bottom : 100px;
+	bottom : 65px;
 	z-index: 10;
 	padding : 15px 20px 15px 40px;
 	box-shadow : 5px 2px 5px 0px black;
@@ -342,18 +357,12 @@ ul#pageactions .spacer {
 .userstatus {
 	float: right;
 	font-size: 2em;
-	line-height: 1em;
+	line-height: 1.5em;
 	color : #00d500;
 	letter-spacing: -1px;
 	font-weight: bold;
 	padding-left : 40px;
 	background: url(/media/img/layout/bigcrown.gif) no-repeat center left;
-}
-
-.sidebarmemberlist li.herenow {
-	padding-left: 22px;
-	margin-left : -22px;
-	background: url(/media/img/layout/tinycrown.png) no-repeat top left;
 }
 
 #headeralert_container {
@@ -378,29 +387,18 @@ ul#pageactions .spacer {
 }
 
 .tweet .content {
+	display: block;
 	font-weight: bold;
 	color: white;
+	font-size : 1em;
 }
 
 .tweet .meta {
+	display: block;
 	font-weight: bold;
 	font-size: .8em;
 	color: #999;
 }
-
-
-
-
-
-<ul class="bigeventgrid">{% for event in events %}
-	<li class="event">
-		<span class="name">{{ event.name }}</span>
-		<span class="startsat">{{ event.starts_at }}</span>
-		<span class="endsat">{{ event.ends_at }}</span>
-		<span class="description">{{ event.description }}</span>
-		<span class="hosted_by">{{ event.added_by }}</span>
-	</li>
-
 
 .bigeventgrid, 
 .bigeventgrid .event {
@@ -412,13 +410,13 @@ ul#pageactions .spacer {
 .bigeventgrid {font-weight: normal;}
 
 .bigeventgrid .event {
-	width: 415px;
+	width: 206px;
+	height: 130px;
 	float: left;
-	padding: 20px;
+	padding: 10px;
 	background: #333;
-	margin: 0 30px 30px 0;
+	margin: 0 10px 10px 0;
 	list-style: none;
-	height: 200px;
 }
 
 .bigeventgrid .event .name {
@@ -426,22 +424,25 @@ ul#pageactions .spacer {
 	letter-spacing: -1px;
 	margin-bottom: 5px;
 	line-height: 1em;
-	font-size: 1.5em;
+	font-size: 1.2em;
 	display: block;
 }
 
-.bigeventgrid .event .dateinfo {
+.bigeventgrid .event .dateinfo1,
+.bigeventgrid .event .dateinfo2 {
 	font-weight: bold;
 	color: #CCC;
 	display: block;
 	margin-bottom: 5px;
+	font-size: .9em;
+	line-height: 1em;
 }
 
 .bigeventgrid .event .description {
 	font-size: 0.9em;
-	line-height: 17px;
+	line-height: 1.2em;
 	display: block;
-	color: #999;
+	color: #aaa;
 	font-style: italic;
 }
 
