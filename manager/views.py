@@ -470,7 +470,7 @@ import feedparser
 def kiosk2(request):
   today = datetime.date.today()
   now = datetime.datetime.now()
-  events = Event.objects.filter(ends_at__gte = now)
+  events = Event.objects.filter(ends_at__gte = now).order_by('starts_at')
 
   twitterfeed = feedparser.parse("http://search.twitter.com/search.atom?q=geekdomsa")
   tweets = []

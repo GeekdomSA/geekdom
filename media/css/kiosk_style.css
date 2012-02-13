@@ -5,10 +5,7 @@ body {
 	margin : 0px;
 	padding : 0px;
 	background: black;
-	/*background: black url(/media/img/layout/sidebar_bg.gif) repeat-y top right;*/
-	/*background: black url(/media/img/layout/big_bg_2.gif) no-repeat center right;*/
-	/*overflow: hidden;*/
-	background: black url(/media/img/layout/med_bg.gif) no-repeat top right;
+	background: black url(http://members.geekdom.com/media/img/layout/crown_bg.png) no-repeat top right;
 	font-size: 9pt;
 	
 	width: 1280px;
@@ -250,7 +247,7 @@ h3 {
 .sidebarmemberlist li.herenow {
 /*	padding-left: 22px;
 	margin-left : -22px;
-*/	background: url(/media/img/layout/tinycrown.png) no-repeat top left;
+*/	background: url(http://members.geekdom.com/media/img/layout/tinycrown.png) no-repeat top left;
 	margin-left: -15px;
 	padding-left: 25px;
 }
@@ -297,13 +294,15 @@ ul.sidebarmemberlist li a:hover {
 #content_sidebar h2 {
 	color : #ccc;
 	letter-spacing: -1px;
+	line-height: 1em;
+	margin-bottom: 15px;
 }
 
 .filterbox {
 }
 
 #cta-banner {
-	background : url(/media/img/layout/ribbon-bg.png) no-repeat center left;
+	background : url(http://members.geekdom.com/media/img/layout/ribbon-bg.png) no-repeat center left;
 	position : fixed;
 	right : 0;
 	bottom : 65px;
@@ -362,7 +361,7 @@ ul#pageactions .spacer {
 	letter-spacing: -1px;
 	font-weight: bold;
 	padding-left : 40px;
-	background: url(/media/img/layout/bigcrown.gif) no-repeat center left;
+	background: url(http://members.geekdom.com/media/img/layout/bigcrown.gif) no-repeat center left;
 }
 
 #headeralert_container {
