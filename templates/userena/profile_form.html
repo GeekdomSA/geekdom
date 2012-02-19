@@ -1,0 +1,28 @@
+{% extends 'kiosk/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Account setup" %}{% endblock %}
+
+{% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+
+{% block content %}
+
+<h1>Edit Your Profile</h1>
+
+<form action="" enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  <fieldset>
+    {{ form.as_p }}
+  </fieldset>
+  <input type="submit" value="{% trans "Save changes" %}" />
+</form>
+
+{% include "userena/user_actions.html" %}
+
+
+{% endblock %}
+
+{% block sidebar %}
+  {% include "kiosk/member_sidebar.html" %}
+{% endblock sidebar %}
+

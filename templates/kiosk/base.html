@@ -1,11 +1,9 @@
-{# kiosk base #}
+{% spaceless %}
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     {% block custom_headings %}{% endblock %}
-  
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -14,18 +12,36 @@
          More info: h5bp.com/b/378 -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>Geekdom Kiosk</title>
+    <title>{% if title %}{{ title|striptags }}{% else %}{% block title %}{% endblock %}{% endif %} // members.geekdom.com</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- html5 boilerplate reset stylesheet -->
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ MEDIA_URL }}css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="{{ MEDIA_URL }}css/kiosk_style.css">
 
 </head>
 
-<body class="kiosk">
+<body class="{% if kiosk %}kiosk{% else %}desktop{% endif %}">
+{% endspaceless %}
+
+{% if needs_to_check_in %}
+
+  <div class="modal hide fade" id="checkinModal">
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">×</a>
+      <h3>Hey {{ request.user.first_name }}, check in!</h3>
+    </div>
+    <div class="modal-body">
+      <p>You're not currently checked in as being at Geekdom! Are you here?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Close</a>
+      <a href="/check_me_in/" class="btn btn-primary">I'm at Geekdom, Check me in!</a>
+    </div>
+  </div>
+
+{% endif %}
 
 {% if messages %}{% autoescape off %}
   <div id="headeralert_container">
@@ -37,17 +53,63 @@
   </div>
 {% endautoescape %}{% endif %}
 
-<div id="cta-banner">
-  <p>Not a member yet? <em>Sign up today at geekdom.com!</em></p>
+<div id="body_container" class="container">
+
+{% if not kiosk %}
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="/">members.geekdom.com</a>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li><a href="/">Members</a></li>
+          <li><a href="/events">Events</a></li>
+          <li><a href="http://forums.geekdom.com" target="blank">Forums</a></li>
+          {% if request.user.is_superuser %}
+            <li><a href="/manager/">Admin</a></li>
+          {% endif %}
+        </ul>
+
+        <ul class="nav pull-right">
+          {% if request.user.is_authenticated %}
+            <li><a href="/accounts/{{ request.user.username }}">{{ request.user.get_full_name }}</a></li>
+            <li><a href="/logout/">Logout</a></li>
+          {% else %}
+            <li><a href="/accounts/signin/">Login</a></li>
+          {% endif %}
+        </ul>
+
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
 </div>
 
-<div id="background-frame" style="background-image:url({{ background_image }});"></div>
+{% endif %}
+
+{% if not request.user.is_authenticated %}
+
+  <div id="cta-banner">
+    <p>Not a member yet? <em>Sign up today at <a href="http://geekdom.com">geekdom.com</a>!</em></p>
+  </div>
+
+{% endif %}
     
     <div class="container clearfix">	    
 		
 		<div class="row">
 
 			<div id="content_body" class="span8"><div class="inner">
+
+        <div id="header">
+          <h1>{% autoescape off %}{{ title }}{% endautoescape %}</h1>
+          {% if subtitle %}<span class="profilepage_subheader">{{ subtitle }}</span>{% endif %}
+        </div>
 
 				{% block content %}{% endblock content %}
 
@@ -101,6 +163,8 @@
     $('input#search').quicksearch('.sidebarmemberlist li', {});
 
     $('#headeralert_container').delay(5000).slideUp();
+
+    $('#checkinModal').delay(1000).modal('show')
 
   </script>
 

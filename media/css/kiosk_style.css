@@ -1,51 +1,72 @@
 /* kiosk_style.css */
 
 body {
-	color : white;
+	color : #eee;
 	margin : 0px;
 	padding : 0px;
 	background: black;
-	background: black url(http://members.geekdom.com/media/img/layout/crown_bg.png) no-repeat top right;
 	font-size: 9pt;
-	
-	width: 1280px;
-	height: 720px;
+	min-width: 960px;
 }
 
-body .container, body .row {
+body.kiosk {
+	background: black url(http://members.geekdom.com/media/img/layout/crown_bg.png) no-repeat top right;
+
+}
+
+body.kiosk .container, 
+body.kiosk .row {
 	width : 100%;
 	margin : 0px;
 	padding : 0px;
 }
 
-#content_body {
+body.kiosk #content_body {
 	width : 77%;
 	float: left;
 	margin : 0px;
 	padding : 0px;
 }
 
-#content_sidebar {
+body.kiosk #content_sidebar {
 	position: fixed;
 	top : 0px;
 	right: 0px;
 	float: right;
-	width : 300px;
-	margin : 0px;
-	padding : 0px;
-/*	background: #444;*/
+}
+
+body.desktop {
+	padding-top : 40px;
+	background: #909090 url(http://localhost/~mocha/geekdom-media/img/layout/desktop_bg.gif) repeat-y top center;
+}
+
+body.desktop #body_container {
+	padding-bottom: 40px;
+}
+
+body.desktop #content_sidebar {
+	position: fixed;
+	right: 50%;
+	margin-right: -470px;
 }
 
 .inner {
 	padding : 20px;
 }
 
+.navbar .brand {
+	margin-left : 0px;
+}
 
 
 #content_body h1 {
 	color : white;
 	font-size : 40pt;
 	letter-spacing : -1px;
+}
+
+h2 {
+	color : #ccc;
 }
 
 h1 em, h2 em, h3 em, h4 em, h5 em, h6 em {
@@ -58,12 +79,16 @@ ul, li {
 	padding : 0px;
 }
 
+.bigmembergrid {
+	margin-right: -30px;
+}
+
 .bigmembergrid li {	
 	float: left;
 	background: #333;
 	display: block;
 	margin: 10px 10px 0 0;
-	width: 285px;
+	width: 275px;
 	height: 60px;
 	padding: 10px;
 	overflow: hidden;
@@ -327,6 +352,12 @@ ul.sidebarmemberlist li a:hover {
 	color : white;
 }
 
+#cta-banner a {
+	color : white;
+	text-decoration: underline;
+}
+
+
 ul#pageactions {
 	margin-bottom : 30px;
 	clear: both;
@@ -355,8 +386,8 @@ ul#pageactions .spacer {
 
 .userstatus {
 	float: right;
-	font-size: 2em;
-	line-height: 1.5em;
+	font-size: 1.4em;
+	line-height: 2em;
 	color : #00d500;
 	letter-spacing: -1px;
 	font-weight: bold;
@@ -409,8 +440,8 @@ ul#pageactions .spacer {
 .bigeventgrid {font-weight: normal;}
 
 .bigeventgrid .event {
-	width: 206px;
-	height: 130px;
+	width: 310px;
+	height: 160px;
 	float: left;
 	padding: 10px;
 	background: #333;
@@ -425,6 +456,10 @@ ul#pageactions .spacer {
 	line-height: 1em;
 	font-size: 1.2em;
 	display: block;
+}
+
+.bigeventgrid .event .name a {
+	color : white;
 }
 
 .bigeventgrid .event .dateinfo1,
@@ -455,6 +490,137 @@ ul#pageactions .spacer {
 	margin-top : 5px;
 }
 
+body.desktop .bigeventgrid .event {
+	width: 580px;
+	height: auto;
+}
+
+body.desktop .bigeventgrid .event .name {
+	font-size: 1.6em;
+	line-height: 1em;
+}
+
+body.desktop .bigeventgrid .event .dateinfo1,
+body.desktop .bigeventgrid .event .dateinfo2 {
+	font-size: .9em;
+	line-height: 1em;
+}
+
+body.desktop .bigeventgrid .event .description {
+	font-size: 0.9em;
+	line-height: 1.2em;
+}
+
+body.desktop .bigeventgrid .event .hosted_by {
+	font-style: italic;
+}
 
 
 
+
+/* customized navbar color scheme */
+
+div.navbar-inner {
+	background-color: #E00;
+	background-image: -moz-linear-gradient(top, #E00, #A00);
+	background-image: -ms-linear-gradient(top, #E00, #A00);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#E00), to(#A00));
+	background-image: -webkit-linear-gradient(top, #E00, #A00);
+	background-image: -o-linear-gradient(top, #E00, #A00);
+	background-image: linear-gradient(top, #E00, #A00);
+}
+
+.navbar .nav > li > a { color : #fcc; }
+
+
+/*
+#body_container {
+	width : 100%;
+}
+
+body #content_body {
+	width : 75%;
+	min-width: 670px;
+}
+
+body #content_sidebar {
+	background: #333;
+	width : 25%;
+	min-width : 240px;
+}
+
+
+*/
+
+
+ /* user form styles */
+
+label {
+	color: #ccc;
+	margin-top : 10px;
+	margin-bottom : 0;
+}
+
+hr {
+	margin : 20px 0;
+	clear: both;
+}
+
+
+
+.eventwelcome .name {
+	font-size: 10em;
+	line-height: 1em;
+	font-weight: bold;
+	letter-spacing: -4px;
+	display: block;
+}
+
+.eventwelcome .hosted_by {
+	font-size: 3em;
+	line-height: .8em;
+	font-weight: bold;
+	letter-spacing: -2px;
+	display: block;
+	color : #999;
+	margin-top : .7em;
+}
+
+
+
+
+.modal-body { color : #333; }
+
+
+
+
+.eventfeed,
+.eventfeed li {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.eventfeed li {
+	border-top : 1px solid #666;
+	margin-top : 1em;
+	padding-top : 1em;
+}
+
+.eventfeed .event .name a {
+	font-size : 1.2em;
+	font-weight: bold;
+	display: block;
+	color : #ccc;
+	text-decoration: none;
+}
+
+.eventfeed .event .name a:hover {
+	color : white;
+	text-decoration: underline;
+}
+
+.eventfeed .event .dateinfo1 {
+	font-style: italic;
+	color : #999;
+}

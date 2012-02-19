@@ -1,13 +1,15 @@
-{% extends 'userena/base_userena.html' %}
+{% extends 'kiosk/base.html' %}
 {% load i18n %}
 
 {% block title %}{% trans "Signin" %}{% endblock %}
 
 {% block content %}
+
+<h1>Sign in</h1>
+
 <form action="" method="post">
   {% csrf_token %}
   <fieldset>
-    <legend>{% trans "Signin" %}</legend>
     {{ form.non_field_errors }}
     {% for field in form %}
     {{ field.errors }}
@@ -24,10 +26,18 @@
     {% endif %}
     {% endfor %}
   </fieldset>
-  <input type="submit" value="{% trans "Signin" %}" />
-  <p class="forgot-password"><a href="{% url userena_password_reset %}" title="{% trans "Forgot your password?" %}">{% trans "Forgot your password?" %}</a></p>
+
+  <button type="submit" class="btn btn-primary btn-large">Sign in</button>
+
+  <hr />
+
+ <a href="{% url userena_password_reset %}" title="Forgot your password?" class="btn btn-small">Forgot your password?</a>
+
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
-asdf
 {% endblock %}
+
+{% block sidebar %}
+  {% include "kiosk/member_sidebar.html" %}
+{% endblock sidebar %}

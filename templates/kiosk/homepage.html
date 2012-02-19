@@ -1,0 +1,37 @@
+{# screen 1 #}
+
+{% extends "kiosk/base.html" %}
+
+{% block custom_headings %}
+	{% if kiosk %}
+		<meta http-equiv="refresh" content="300;url=http://members.geekdom.com/kiosk1/"/>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<ul class="bigmembergrid">{% for user in users %}
+	<li><a href="/accounts/{{ user.username }}">
+		{% if user.get_profile.office_num %}
+			<span class="memberofficenum">Office {{ user.get_profile.office_num }}</span>
+		{% endif %}
+		<img class="user_profilepic floatleft" src="{{ user.my_profile.get_mugshot_url }}" alt="{{ user.get_full_name }}" />
+		<span class="membername">{{ user.get_full_name }}</span>
+
+		{% if user.get_profile.company_name %}
+			<span class="membercompanyname">{{ user.get_profile.company_name }}</span>
+		{% endif %}
+
+		{% if user.get_profile.skills %}
+			<span class="memberskills">{{ user.get_profile.skills }}</span>
+		{% endif %}
+			
+	</a></li>
+{% endfor %}</ul>
+
+{% endblock content %}
+
+
+{% block sidebar %}
+	{% include "kiosk/member_sidebar.html" %}
+{% endblock sidebar %}

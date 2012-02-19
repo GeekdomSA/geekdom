@@ -1,0 +1,54 @@
+{% extends 'kiosk/base.html' %}
+{% load i18n %}
+
+{% block content_title %}<h2>{% trans 'Profiles' %}</h2>{% endblock %}
+
+{% block content %}
+<ul class="bigmembergrid clearfix">
+  {% for profile in profile_list %}
+  <li>{% if request.user.is_authenticated %}<a href="/accounts/{{ profile.user.username }}">{% endif %}
+    {% if profile.user.get_profile.office_num %}
+      <span class="memberofficenum">Office {{ profile.user.get_profile.office_num }}</span>
+    {% endif %}
+    <img class="profile.user_profilepic floatleft" src="{{ profile.user.my_profile.get_mugshot_url }}" alt="{{ profile.user.get_full_name }}" />
+    <span class="membername">{{ profile.user.get_full_name }}</span>
+
+    {% if profile.user.get_profile.company_name %}
+      <span class="membercompanyname">{{ profile.user.get_profile.company_name }}</span>
+    {% endif %}
+
+    {% if profile.user.get_profile.skills %}
+      <span class="memberskills">{{ profile.user.get_profile.skills }}</span>
+    {% endif %}
+      
+  {% if request.user.is_authenticated %}</a>{% endif %}</li>
+  {% endfor %}
+
+</ul>
+
+<hr />
+
+{% if is_paginated %}
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+    <a href="{% url userena_profile_list_paginated page_obj.previous_page_number %}">{% trans 'previous' %}</a>
+    {% endif %}
+
+    <span class="current">
+      {% blocktrans with page_obj.number as page and page_obj.paginator.num_pages as num_pages %}
+      Page {{ page }} of {{ num_pages }}
+      {% endblocktrans %}
+    </span>
+
+    {% if page_obj.has_next %}
+    <a href="{% url userena_profile_list_paginated  page_obj.next_page_number %}">{% trans 'next' %}</a>
+    {% endif %}
+  </span>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block sidebar %}
+  {% include "kiosk/member_sidebar.html" %}
+{% endblock sidebar %}

@@ -1,0 +1,24 @@
+{% extends "kiosk/base.html" %}
+
+{% block content %}
+
+<span class="description">{{ event.description|urlize|linebreaks }}</span>
+<p><span class="hosted_by">Hosted by <a href="/accounts/{{ event.added_by.username }}">{{ event.added_by.get_full_name }}</a></span></p>
+
+{% endblock content %}
+
+
+{% block sidebar %}
+
+<h2>Other Events</h2>
+
+<ul class="eventfeed">{% for event in events %}
+
+	<li class="event">
+		<span class="name"><a href="/events/{{ event.id }}">{{ event.name }}</a></span>
+		<span class="dateinfo1">{{ event.starts_at|date:"l, F jS" }}</span>
+	</li>
+
+{% endfor %}</ul>
+
+{% endblock sidebar %}

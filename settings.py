@@ -54,7 +54,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
-    'geekdom.manager.processors.flickr_background',
+    # 'geekdom.manager.processors.flickr_background',
+    'geekdom.manager.processors.all_users',
+    'geekdom.manager.processors.check_for_checkin_cookie',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    'manager.middleware.CheckinChecker',
 )
 
 ROOT_URLCONF = 'geekdom.urls'
@@ -85,7 +88,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'geekdom.forum',
     'geekdom.manager',
     'uni_form',
     'easy_thumbnails',

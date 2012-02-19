@@ -16,6 +16,7 @@
   	<a href="/manager/members/new"><i class="icon-plus-sign"></i> New Member</a></li>
   <li><a href="/admin"><i class="icon-cog"></i> Django Admin</a></li>
 
+
   <li class="nav-header">Member Reports</li>
 	<li{% ifequal tabsection "membersincompleteprofiles" %} class="active"{% endifequal%}>
 		<a href="/manager/members/incomplete"><i class="icon-list-alt"></i> Members with incomplete profiles</a></li>
@@ -23,20 +24,51 @@
 		<a href="/manager/members/missing_stuff"><i class="icon-list-alt"></i> Members who are missing stuff</a></li>
 	<li{% ifequal tabsection "membersofficenum" %} class="active"{% endifequal%}>
 		<a href="/manager/members/office_num"><i class="icon-list-alt"></i> Members w/blank office</a></li>
-  <li{% ifequal tabsection "membersemaillist" %} class="active"{% endifequal%}>
-    <a href="/manager/members/email_list"><i class="icon-list-alt"></i> Member email list</a></li>
-
+  <li{% ifequal tabsection "membersgeneralstats" %} class="active"{% endifequal%}>
+    <a href="/manager/members/general_stats"><i class="icon-list-alt"></i> Member general stats</a></li>
   <li{% ifequal tabsection "membersbyroom" %} class="active"{% endifequal%}>
     <a href="/manager/members/by_room"><i class="icon-list-alt"></i> Members by room</a></li>
+
+
+  <li class="nav-header">Email Lists</li>
+  <li{% ifequal tabsection "membersemaillist" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list"><i class="icon-list-alt"></i> All Members</a></li>
+  
+  <li{% ifequal tabsection "membersemaillist-1" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/1"><i class="icon-list-alt"></i> Community Members</a></li>
+  
+  <li{% ifequal tabsection "membersemaillist-2" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/2"><i class="icon-list-alt"></i> Dedicated Members</a></li>
+  
+  <li{% ifequal tabsection "membersemaillist-3" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/3"><i class="icon-list-alt"></i> Students</a></li>
+  
+  <li{% ifequal tabsection "membersemaillist-4" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/4"><i class="icon-list-alt"></i> Businesses</a></li>
+
+  <li{% ifequal tabsection "membersemaillist-5" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/5"><i class="icon-list-alt"></i> Startups</a></li>
+
+  <li{% ifequal tabsection "membersemaillist-6" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/6"><i class="icon-list-alt"></i> Community Groups</a></li>
+
+  <li{% ifequal tabsection "membersemaillist-7" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/7"><i class="icon-list-alt"></i> Nonresident</a></li>
+
+  <li{% ifequal tabsection "membersemaillist-9" %} class="active"{% endifequal%}>
+    <a href="/manager/members/email_list/9"><i class="icon-list-alt"></i> Rackspace</a></li>
+
 
   <li class="nav-header">External Tools</li>
   <li><a href="http://geekdom.freshbooks.com" target="_blank"><i class="icon-share"></i> Freshbooks</a></li>
   <li><a href="http://geekdom.com/admin/" target="_blank"><i class="icon-share"></i> Silverstripe</a></li>
 
+
 	<li class="nav-header"></li>
 
+
   <li><a href="http://geekdom.com" target="_blank"><i class="icon-home"></i>Geekdom Website</a></li>
-  <li><a href="http://geekdom.awesomemonster.com" target="_blank"><i class="icon-home"></i>Member Portal</a></li>
+  <li><a href="http://members.geekdom.com" target="_blank"><i class="icon-home"></i>Member Portal</a></li>
   <li><a href="http://forums.geekdom.com" target="_blank"><i class="icon-home"></i>Forums</a></li>
 
 </ul>

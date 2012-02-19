@@ -1,4 +1,0 @@
-{{ object.user.email }}
-{{ object.user.get_full_name }}
-{{ object.skills }}
-

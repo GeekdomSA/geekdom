@@ -1,0 +1,26 @@
+{# member e-mail list #}
+
+{% extends "global/base.html" %}
+
+{% block content %}
+
+	{# general_member_report.html #}	
+
+	<hr />
+
+	<h2>Members by Membership Type</h2>
+
+	<ul class="membershiptype_list">{% for mt in mts %}
+		<li>{{ mt.name }} - {{ mt.total_membership }} members - ${{ mt.total_revenue }}</li>
+	{% endfor %}</ul>
+
+	<p>Total Revenue: ${{ total_revenue }}/mo</p>
+
+
+{% endblock %}
+
+{% block sidebar%}
+
+{% include "manager/admin_sidebar.html" %}
+
+{% endblock %}

@@ -1,6 +1,0 @@
-<li class="thread_listing">
-    <h2 class="name"><a href="/forums/{{ forum.id }}/{{ thread.id }}">{{ thread.subject }}</a></h2>
-    <p class="posted_by">{{ thread.user.userprofile.cname }} on {{ thread.created_on|date:"m/d/Y @ P" }}</p>
-    <p class="description">{{ thread.body|truncatewords:40 }}</p>
-    <p class="metainfo">{{ thread.postcount }} Replies</p>
-</li>

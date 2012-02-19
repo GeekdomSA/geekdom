@@ -1,0 +1,22 @@
+{% extends 'kiosk/base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>Change your email address</h1>
+
+<form action="" method="post">
+  {% csrf_token %}
+  <fieldset>
+    {{ form.as_p }}
+  </fieldset>
+  <input type="submit" value="{% trans "Change email" %}" />
+</form>
+
+{% include "userena/user_actions.html" %}
+
+{% endblock %}
+
+{% block sidebar %}
+  {% include "kiosk/member_sidebar.html" %}
+{% endblock sidebar %}

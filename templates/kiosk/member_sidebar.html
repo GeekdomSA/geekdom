@@ -1,0 +1,31 @@
+<h2>Find members <br />by name or skill</h2>
+
+<div class="filterbox">
+	<form action="/search/" method="get" class="form form-inline">
+	    <input type="text" id="search" name="query" placeholder="Search...">
+        <button type="submit" class="btn btn-success">go</button>
+	</form>
+</div>
+
+<ul class="sidebarmemberlist">{% for user in all_users %}
+
+	<li class="clearfix{% if user.my_profile.is_checked_in %} herenow{% endif %}">		{% if user.get_profile.office_num %}
+			<span class="memberofficenum">Office {{ user.get_profile.office_num }}</span>
+		{% endif %}
+		
+
+<a href="/accounts/{{ user.username }}" class="clearfix">
+
+		<span class="membername">{{ user.get_full_name }}</span>
+
+		{% if user.get_profile.company_name %}
+			<span class="membercompanyname">{{ user.get_profile.company_name }}</span>
+		{% endif %}
+
+		{% if user.get_profile.skills %}
+			<span class="memberskills">{{ user.get_profile.skills }}</span>
+		{% endif %}
+			
+	</a></li>
+
+{% endfor %}</ul>

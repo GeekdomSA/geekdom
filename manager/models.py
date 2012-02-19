@@ -61,6 +61,8 @@ class MembershipType(models.Model):
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)
+  def total_membership(self): return self.userprofile_set.all().count()
+  def total_revenue(self): return self.userprofile_set.all().count() * self.price
 
 
 
@@ -78,6 +80,7 @@ class Checkin(models.Model):
     ('1', 'Kiosk'),
     ('2', 'Foursquare'),
     ('3', 'Flomio'),
+    ('4', 'Desktop'),
   )
   method = models.IntegerField(default = 1, choices=METHOD_CHOICES)
  

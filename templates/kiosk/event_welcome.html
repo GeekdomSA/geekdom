@@ -1,0 +1,34 @@
+{# event_welcome.html #}
+
+{% extends "kiosk/base.html" %}
+
+{% block custom_headings %}
+	<meta http-equiv="refresh" content="60" />
+{% endblock %}
+
+{% block content %}
+
+<div class="eventwelcome">
+
+	<span class="name">{{ event.name }}</span>
+	<span class="hosted_by">Hosted by {{ event.added_by.get_full_name }}</span>
+
+</div>
+
+{% endblock content %}
+
+
+{% block sidebar %}
+
+<h2><em>tweet</em>@geekdom</h2>
+
+<ul class="tweetfeed">{% for tweet in tweets %}
+
+	<li class="tweet">
+		<span class="content">{{ tweet.title }}</span>
+		<span class="meta">{{ tweet.author }} @ {{ tweet.pp }}</span>
+	</li>
+
+{% endfor %}</li>
+
+{% endblock sidebar %}

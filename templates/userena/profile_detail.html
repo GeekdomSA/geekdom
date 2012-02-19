@@ -1,0 +1,85 @@
+{% extends 'kiosk/base.html' %}
+{% load i18n %}
+
+{% block title %}{{ profile.user.get_full_name }}{% endblock %}
+
+{% block content %}
+
+{% if profile.user.my_profile.is_checked_in %}
+  <div class="userstatus">Here now!</div>
+{% endif %}
+
+
+<div id="header" class="userprofile_page">
+  <img class="user_profilepic floatleft" src="{{ profile.user.my_profile.get_mugshot_url }}" alt="{{ profile.user.get_full_name }}" />
+  <h1>{{ profile.user.get_full_name }}</h1>
+</div>
+
+<span class="profilepage_subheader">
+  {% if profile.user.get_profile.company_name %}{{ profile.user.get_profile.company_name }}, {% endif %}
+  {% if profile.user.get_profile.office_num %}
+    Office {{ profile.user.get_profile.office_num }}
+  {% else %}
+    Community Member
+  {% endif %}
+</span>
+
+<span class="profilepage_membersince">Member since {{ profile.user.date_joined|date:"m/d/y" }}</span>
+
+<hr />
+
+{% if profile.user.get_profile.bio %}
+  <div class="profilepage_bio">{{ profile.user.get_profile.bio|linebreaks }}</div>
+{% endif %}
+
+{% if profile.user.get_profile.skills %}
+  <p class="profile.user_skills"><strong>Skills:</strong> {{ profile.user.get_profile.skills }}</p>
+{% endif %}
+
+{% if profile.user.get_profile.available_for_office_hours %}
+  <p class="profilepage_officehours"><strong>Office hours:</strong> {{ profile.user.get_profile.available_for_office_hours }}</p>
+{% endif %}
+
+<hr />
+
+<h2>Contact Information:</h2>
+
+{% if request.user.is_authenticated %}
+
+<div class="profilepage_contactinfo">
+  {% if profile.user.email %}<p><strong>Email:</strong> {{ profile.user.email }}</p>{% endif %}
+  {% if profile.user.get_profile.phone_number %}<p><strong>Phone:</strong> {{ profile.user.get_profile.phone_number }}</p>{% endif %}
+  {% if profile.user.get_profile.gchat %}<p><strong>gChat:</strong> {{ profile.user.get_profile.gchat }}</p>{% endif %}
+  {% if profile.user.get_profile.skype %}<p><strong>Skype:</strong> {{ profile.user.get_profile.skype }}</p>{% endif %}
+  {% if profile.user.get_profile.twitter %}<p><strong>Twitter:</strong> <a href="{{ profile.user.get_profile.twitter }}" target="_blank">{{ profile.user.get_profile.twitter }}</a></p>{% endif %}
+  {% if profile.user.get_profile.facebook %}<p><strong>Facebook:</strong> <a href="{{ profile.user.get_profile.facebook }}" target="_blank">{{ profile.user.get_profile.facebook }}</a></p>{% endif %}
+  {% if profile.user.get_profile.linkedin %}<p><strong>LinkedIN:</strong>  <a href="{{ profile.user.get_profile.linkedin }}" target="_blank">{{ profile.user.get_profile.linkedin }}</a></p>{% endif %}
+  {% if profile.user.get_profile.website %}<p><strong>Website:</strong>  <a href="{{ profile.user.get_profile.website }}" target="_blank">{{ profile.user.get_profile.website }}</a></p>{% endif %}
+</div>
+
+{% else %}
+
+<p><em>Only available to members.</em></p>
+
+{% endif %}
+
+
+{% if request.user.username == profile.user.username %}
+  {% include "userena/user_actions.html" %}
+{% else %}
+  <hr />
+  <ul id="pageactions">
+    <li><a href="/" class="btn btn-primary"><i class="icon-white icon-arrow-left"></i> Back to the member list</a>
+  </ul>
+{% endif %}
+
+
+{% endblock %}
+
+
+
+{% block sidebar %}
+  {% include "kiosk/member_sidebar.html" %}
+{% endblock sidebar %}
+
+
