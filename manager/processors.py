@@ -19,7 +19,7 @@ def all_users(request):
 def check_for_checkin_cookie(request):
 
 	if request.user.is_authenticated():
-		if not request.user.userprofile.is_checked_in():
+		if not request.user.my_profile.is_checked_in():
 			try: 
 				test = request.COOKIES['asked_for_checkin']
 				return {'needs_to_check_in': False}
