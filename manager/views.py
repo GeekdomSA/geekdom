@@ -56,9 +56,15 @@ def homepage(request, kiosk=False):
 
 
 def user_checkin(request):
-  checkin = Checkin.objects.get_or_create(userprofile = request.user.my_profile, expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8))
-  message = "Thanks for checking in, " + request.user.first_name + "! Welcome to Geekdom."
-  messages.add_message(request, messages.SUCCESS, message)
+  now = datetime.datetime.now()
+  checkins = Checkin.objects.filter(userprofile = request.user.my_profile).filter(expires_at__gte = now)
+  if checkins.count() > 0:
+    message = "You were already checked in, but thanks anyway!"
+    messages.add_message(request, messages.SUCCESS, message)  
+  else:
+    checkin = Checkin.objects.get_or_create(userprofile = request.user.my_profile, expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8))
+    message = "Thanks for checking in, " + request.user.first_name + "! Welcome to Geekdom."
+    messages.add_message(request, messages.SUCCESS, message)
   return HttpResponseRedirect("/")
 
 
@@ -67,11 +73,16 @@ def user_checkin(request):
 def user_checkout(request):
   now = datetime.datetime.now()
   checkins = Checkin.objects.filter(userprofile = request.user.my_profile).filter(expires_at__gte = now)
-  for checkin in checkins:
-    checkin.expires_at = now
-    checkin.save()
-  message = "Thanks for checking out, " + request.user.first_name + "! Come back soon!"
-  messages.add_message(request, messages.SUCCESS, message)
+  if checkins.count() > 0:
+    for checkin in checkins:
+      checkin.expires_at = now - datetime.timedelta(minutes = 1)
+      checkin.save()
+      message = "Thanks for checking out, " + request.user.first_name + "! Come back soon!"
+      messages.add_message(request, messages.SUCCESS, message)
+  else:
+    message = "That was weird, you weren't checked in!"
+    messages.add_message(request, messages.ERROR, message)
+
   return HttpResponseRedirect("/")
 
 

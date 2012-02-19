@@ -12,7 +12,7 @@
 		<span class="dateinfo1">{{ event.starts_at|date:"l, F jS" }}</span>
 		<span class="dateinfo2">from {{ event.starts_at|date:"P" }} - {{ event.ends_at|date:"P" }}</span>
 		{% if kiosk %}
-			<span class="description">{{ event.description|truncatewords:65 }}</span>
+			<span class="description">{{ event.description|truncatewords:60 }}</span>
 		{% else %}
 			<span class="description">{{ event.description|truncatewords:200 }}</span>
 		{% endif %}
