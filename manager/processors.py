@@ -19,10 +19,11 @@ def all_users(request):
 def check_for_checkin_cookie(request):
 
 	if request.user.is_authenticated():
-		try: 
-			test = request.COOKIES['asked_for_checkin']
-			return {'needs_to_check_in': False}
-		except:
-			return {'needs_to_check_in': True}
+		if not request.user.userprofile.is_checked_in():
+			try: 
+				test = request.COOKIES['asked_for_checkin']
+				return {'needs_to_check_in': False}
+			except:
+				return {'needs_to_check_in': True}
 	else:
 		return {'needs_to_check_in': False}
