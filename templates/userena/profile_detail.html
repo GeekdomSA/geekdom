@@ -1,6 +1,12 @@
 {% extends 'kiosk/base.html' %}
 {% load i18n %}
 
+{% block custom_headings %}
+  {% if kiosk %}
+    <meta http-equiv="refresh" content="300;url=http://members.geekdom.com/kiosk/"/>
+  {% endif %}
+{% endblock %}
+
 {% block title %}{{ profile.user.get_full_name }}{% endblock %}
 
 {% block content %}
@@ -69,7 +75,7 @@
 {% else %}
   <hr />
   <ul id="pageactions">
-    <li><a href="/" class="btn btn-primary"><i class="icon-white icon-arrow-left"></i> Back to the member list</a>
+    <li><a href="{% if kiosk %}/kiosk/{% else %}/{% endif %}" class="btn btn-primary"><i class="icon-white icon-arrow-left"></i> Back to the member list</a>
   </ul>
 {% endif %}
 

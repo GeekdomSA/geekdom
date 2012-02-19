@@ -21,23 +21,23 @@ urlpatterns = patterns('',
     url(r'^$', homepage, {'kiosk':False}),
 
     # member views
-    url(r'^members/$', homepage, {'kiosk':False}),
+    url(r'^members/$', homepage),
     url(r'^check_me_in/$', user_checkin),
     url(r'^check_me_out/$', user_checkout),
     url(r'^logout/$', logout_user),
 
-    url(r'^search/$', search, {'kiosk':False}),
-    url(r'^kiosk/search/$', search, {'kiosk':True}),
+    url(r'^search/$', search),
 
     # event views
-    url(r'^events/$', all_events, {'kiosk':False,}),
+    url(r'^events/$', all_events),
     url(r'^events/(?P<event_id>[\d]+)/$', view_event),
 
 
     # kiosk views
-    url(r'^kiosk1/$', homepage, {'kiosk':True,}),
-    url(r'^kiosk2/$', all_events, {'kiosk':True,}),
-
+    url(r'^kiosk/$', homepage, {'kiosk':True,}),
+    url(r'^kiosk/(?P<user_id>[\d]+)/$', kiosk_user_view),
+    url(r'^kiosk/events/$', all_events, {'kiosk':True,}),
+    url(r'^kiosk/search/$', search, {'kiosk':True}),
 
     ###############
     # admin views #

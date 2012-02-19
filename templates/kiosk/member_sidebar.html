@@ -1,7 +1,7 @@
 <h2>Find members <br />by name or skill</h2>
 
 <div class="filterbox">
-	<form action="/search/" method="get" class="form form-inline">
+	<form action="{% if kiosk %}/kiosk/search/{% else %}/search/{% endif %}" method="get" class="form form-inline">
 	    <input type="text" id="search" name="query" placeholder="Search...">
         <button type="submit" class="btn btn-success">go</button>
 	</form>
@@ -14,7 +14,7 @@
 		{% endif %}
 		
 
-<a href="/accounts/{{ user.username }}" class="clearfix">
+<a href="{% if kiosk %}/kiosk/{{ user.id }}{% else %}/accounts/{{ user.username }}{% endif %}" class="clearfix">
 
 		<span class="membername">{{ user.get_full_name }}</span>
 

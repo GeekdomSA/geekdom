@@ -4,14 +4,14 @@
 
 {% block custom_headings %}
 	{% if kiosk %}
-		<meta http-equiv="refresh" content="300;url=http://members.geekdom.com/kiosk1/"/>
+		<meta http-equiv="refresh" content="300;url=http://members.geekdom.com/kiosk/"/>
 	{% endif %}
 {% endblock %}
 
 {% block content %}
 
 <ul class="bigmembergrid">{% for user in users %}
-	<li><a href="/accounts/{{ user.username }}">
+	<li><a href="{% if kiosk %}/kiosk/{{ user.id }}{% else %}/accounts/{{ user.username }}{% endif %}">
 		{% if user.get_profile.office_num %}
 			<span class="memberofficenum">Office {{ user.get_profile.office_num }}</span>
 		{% endif %}
@@ -23,7 +23,7 @@
 		{% endif %}
 
 		{% if user.get_profile.skills %}
-			<span class="memberskills">{{ user.get_profile.skills }}</span>
+			<span class="memberskills">{{ user.get_profile.skills|truncatewords:10 }}</span>
 		{% endif %}
 			
 	</a></li>

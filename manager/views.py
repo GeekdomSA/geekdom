@@ -182,6 +182,7 @@ def search(request, kiosk=False):
           'title': "Search: " + query,
           'subtitle': str(users.count()) + " members found.",
           'users' : users,
+          'kiosk': kiosk,
       }, 
       context_instance=RequestContext(request)
   )
@@ -214,6 +215,20 @@ def view_event(request, event_id):
             " until " + django_date_filter(event.ends_at, ("P")),
           'event' : event,
           'events':events,
+      }, 
+      context_instance=RequestContext(request)
+  )
+
+
+def kiosk_user_view(request, user_id):
+
+  user = User.objects.get(id = user_id)
+
+  return render_to_response(
+      'userena/profile_detail.html',
+      {
+          'profile' : user.my_profile,
+          'kiosk': True,
       }, 
       context_instance=RequestContext(request)
   )

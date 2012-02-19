@@ -37,7 +37,7 @@ body.kiosk #content_sidebar {
 
 body.desktop {
 	padding-top : 40px;
-	background: #909090 url(http://localhost/~mocha/geekdom-media/img/layout/desktop_bg.gif) repeat-y top center;
+	background: #909090 url(http://members.geekdom.com/media/img/layout/desktop_bg.gif) repeat-y top center;
 }
 
 body.desktop #body_container {
