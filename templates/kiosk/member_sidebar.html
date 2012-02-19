@@ -9,12 +9,12 @@
 
 <ul class="sidebarmemberlist">{% for user in all_users %}
 
-	<li class="clearfix{% if user.my_profile.is_checked_in %} herenow{% endif %}">		{% if user.get_profile.office_num %}
+	<li class="{% if user.my_profile.is_checked_in %} herenow{% endif %}">		{% if user.get_profile.office_num %}
 			<span class="memberofficenum">Office {{ user.get_profile.office_num }}</span>
 		{% endif %}
 		
 
-<a href="{% if kiosk %}/kiosk/{{ user.id }}{% else %}/accounts/{{ user.username }}{% endif %}" class="clearfix">
+<a href="{% if kiosk %}/kiosk/{{ user.id }}{% else %}/accounts/{{ user.username }}{% endif %}" class="">
 
 		<span class="membername">{{ user.get_full_name }}</span>
 

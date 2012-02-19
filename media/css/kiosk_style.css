@@ -10,7 +10,7 @@ body {
 }
 
 body.kiosk {
-	background: black url(http://members.geekdom.com/media/img/layout/crown_bg.png) no-repeat top right;
+	background: black url(http://members.geekdom.com/media/img/layout/crown_bg.png) no-repeat top right fixed;
 
 }
 
@@ -440,7 +440,7 @@ ul#pageactions .spacer {
 .bigeventgrid {font-weight: normal;}
 
 .bigeventgrid .event {
-	width: 310px;
+	width: 300px;
 	height: 160px;
 	float: left;
 	padding: 10px;
@@ -566,6 +566,7 @@ hr {
 	clear: both;
 }
 
+hr.spacer { border : none; }
 
 
 .eventwelcome .name {
@@ -623,4 +624,13 @@ hr {
 .eventfeed .event .dateinfo1 {
 	font-style: italic;
 	color : #999;
+}
+
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }

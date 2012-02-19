@@ -2,15 +2,11 @@
 
 {% extends "kiosk/base.html" %}
 
-{% block custom_headings %}
-	{% if kiosk %}
-		<meta http-equiv="refresh" content="300;url=http://members.geekdom.com/kiosk/"/>
-	{% endif %}
-{% endblock %}
+{% block custom_headings %}{% if kiosk %}<meta http-equiv="refresh" content="300;url=http://members.geekdom.com/kiosk/"/>{% endif %}{% endblock %}
 
 {% block content %}
 
-<ul class="bigmembergrid">{% for user in users %}
+<ul class="bigmembergrid clearfix">{% for user in users %}
 	<li><a href="{% if kiosk %}/kiosk/{{ user.id }}{% else %}/accounts/{{ user.username }}{% endif %}">
 		{% if user.get_profile.office_num %}
 			<span class="memberofficenum">Office {{ user.get_profile.office_num }}</span>
@@ -29,6 +25,11 @@
 	</a></li>
 {% endfor %}</ul>
 
+{% ifnotequal request.path "/" %}
+	<hr class="spacer" />
+	<ul id="pageactions">
+	<li><a href="{% if kiosk %}/kiosk/{% else %}/{% endif %}" class="btn btn-primary"><i class="icon-white icon-arrow-left"></i> Back to the member list</a>
+	</ul>{% endifnotequal %}
 {% endblock content %}
 
 
