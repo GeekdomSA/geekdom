@@ -113,7 +113,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 LOGIN_REDIRECT_URL = '/accounts/%(username)s/'
 LOGIN_URL = '/accounts/signin/'
