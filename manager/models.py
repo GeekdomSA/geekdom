@@ -50,6 +50,26 @@ class UserProfile(UserenaBaseProfile):
     else:
       return False
 
+  def check_in(self):
+    now = datetime.datetime.now()
+    checkins = Checkin.objects.filter(userprofile = self).filter(expires_at__gte = now)
+    if checkins.count() == 0:
+      checkin = Checkin.objects.get_or_create(userprofile = self, expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8))
+      return True
+    else:
+      return False
+
+  def check_out(self):
+    now = datetime.datetime.now()
+    checkins = Checkin.objects.filter(userprofile = self).filter(expires_at__gte = now)
+    if checkins.count() > 0:
+      for checkin in checkins:
+        checkin.expires_at = now - datetime.timedelta(minutes = 1)
+        checkin.save()
+      return True
+    else:
+      return False
+
 
 
 
@@ -89,13 +109,13 @@ class Checkin(models.Model):
 
 
 
-
 class Event(models.Model):
   name = models.CharField(max_length=200)
   description = models.TextField()
   starts_at = models.DateTimeField()
   ends_at = models.DateTimeField()
   added_by = models.ForeignKey(User)
+  link = models.URLField(max_length=200, blank=True)
 
   publish_to_site = models.BooleanField()
 
@@ -104,5 +124,9 @@ class Event(models.Model):
 
 
 
+
+class CtaBanner(models.Model):
+  text = models.CharField(max_length=200)
+  link = models.URLField(max_length=200, blank=True)
 
 

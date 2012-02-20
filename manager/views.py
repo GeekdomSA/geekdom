@@ -56,31 +56,23 @@ def homepage(request, kiosk=False):
 
 
 def user_checkin(request):
-  now = datetime.datetime.now()
-  checkins = Checkin.objects.filter(userprofile = request.user.my_profile).filter(expires_at__gte = now)
-  if checkins.count() > 0:
-    message = "You were already checked in, but thanks anyway!"
-    messages.add_message(request, messages.SUCCESS, message)  
-  else:
-    checkin = Checkin.objects.get_or_create(userprofile = request.user.my_profile, expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8))
+  if request.user.my_profile.check_in():
     message = "Thanks for checking in, " + request.user.first_name + "! Welcome to Geekdom."
     messages.add_message(request, messages.SUCCESS, message)
+  else:
+    message = "You were already checked in, but thanks anyway!"
+    messages.add_message(request, messages.SUCCESS, message)  
   return HttpResponseRedirect("/")
 
 
 
 
 def user_checkout(request):
-  now = datetime.datetime.now()
-  checkins = Checkin.objects.filter(userprofile = request.user.my_profile).filter(expires_at__gte = now)
-  if checkins.count() > 0:
-    for checkin in checkins:
-      checkin.expires_at = now - datetime.timedelta(minutes = 1)
-      checkin.save()
+  if request.user.my_profile.check_out():
       message = "Thanks for checking out, " + request.user.first_name + "! Come back soon!"
       messages.add_message(request, messages.SUCCESS, message)
   else:
-    message = "That was weird, you weren't checked in!"
+    message = "That was weird, you probably weren't checked in!"
     messages.add_message(request, messages.ERROR, message)
 
   return HttpResponseRedirect("/")
@@ -130,49 +122,6 @@ def all_events(request, kiosk=False):
     }, 
     context_instance=RequestContext(request))
 
-
-
-
-from urllib import urlopen
-import json
-
-def foursquare_check(request):
-
-    venue_id = "4e9700536da11364e6ee330d"
-    
-    # venue_id = "4b4f64eff964a520a40427e3"
-    # EZ's across the street, testing from home purposes only
-    
-    oauth_token = "ZZTN1TVTCWF0NBI12JW3PRFOHGT5PVWX4CI2SIBXZQ0UCNOB"
-    url = "https://api.foursquare.com/v2/venues/" + venue_id + "/herenow?oauth_token=" + oauth_token + "&v=20111212"
-
-    f = urlopen(url)
-    f = f.read()    
-    j = json.loads(f)
-    
-    members_herenow = []
-    fsusers_herenow = []
-
-    for item in j['response']['hereNow']['items']:
-        fname = item['user']['firstName']
-        lname = item['user']['lastName']
-        
-        try:
-            user = User.objects.get(Q(first_name = fname)&Q(last_name = lname))
-            members_herenow.append(user)
-        except:
-            fsusers_herenow.append(fname + " " + lname)
-
-    return render_to_response(
-        'global/homepage.html',
-        {
-            'title': "Welcome to Geekdom.",
-            'subtitle': "",
-            'members_herenow' : members_herenow,
-            'fsusers_herenow' : fsusers_herenow,
-        }, 
-        context_instance=RequestContext(request)
-    )
 
 
 
