@@ -223,7 +223,16 @@ class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = get_profile_model()
-        exclude = ['user']
+        exclude = [
+            'user', 
+            'notes', 
+            "membership_starts_on", 
+            'membership_ends_on', 
+            'membership_type', 
+            'has_parking_pass', 
+            'has_office_key', 
+            'has_elevator_fob',
+            'privacy',]
 
     def save(self, force_insert=False, force_update=False, commit=True):
         profile = super(EditProfileForm, self).save(commit=commit)

@@ -7,6 +7,9 @@ def i18n_javascript(request):
 from django.contrib import admin
 from geekdom.manager.views import *
 
+from geekdom.manager.forms import HackedProfileForm
+from userena.views import profile_edit
+
 handler403 = 'manager.views.error_403handler'
 handler404 = 'manager.views.error_404handler'
 handler500 = 'manager.views.error_500handler'
@@ -15,7 +18,11 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-    (r'^accounts/', include('userena.urls')),
+    url(r'^accounts/', include('userena.urls')),
+
+    url(r'^accounts/(?P<username>[\.\w]+)/edit/$',
+       profile_edit,
+       {'edit_profile_form' : HackedProfileForm}),
 
     # homepage
     url(r'^$', homepage, {'kiosk':False}),
