@@ -50,11 +50,21 @@ class UserProfile(UserenaBaseProfile):
     else:
       return False
 
-  def check_in(self):
+  def check_in(self, method=False):
     now = datetime.datetime.now()
     checkins = Checkin.objects.filter(userprofile = self).filter(expires_at__gte = now)
+
+    if method == "kiosk": method = 1
+    if method == "foursquare": method = 2
+    if method == "flomio": method = 3
+    if method == "desktop": method = 4
+
     if checkins.count() == 0:
-      checkin = Checkin.objects.get_or_create(userprofile = self, expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8))
+      checkin = Checkin.objects.get_or_create(
+        userprofile = self, 
+        expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8),
+        method = method,
+        )
       return True
     else:
       return False

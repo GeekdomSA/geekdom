@@ -56,7 +56,7 @@ def homepage(request, kiosk=False):
 
 
 def user_checkin(request):
-  if request.user.my_profile.check_in():
+  if request.user.my_profile.check_in(method = "desktop"):
     message = "Thanks for checking in, " + request.user.first_name + "! Welcome to Geekdom."
     messages.add_message(request, messages.SUCCESS, message)
   else:

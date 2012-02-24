@@ -29,7 +29,7 @@ class Command(NoArgsCommand):
             try:
                 user = User.objects.get(first_name__icontains = fname, last_name__icontains = lname)
                 print "matched with user #" + str(user.id)
-                if user.my_profile.check_in():
+                if user.my_profile.check_in(method="foursquare"):
                     print user.username + " is now checked in."
                     count = count + 1
                 else:
