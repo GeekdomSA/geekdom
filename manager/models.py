@@ -38,8 +38,9 @@ class UserProfile(UserenaBaseProfile):
 
   notes = models.TextField(blank=True, help_text="These notes are not visible to members.")
 
-  def __str__(self): return self.user.username
-  def __unicode__(self): return u'%s' % (self.user.username)  
+  def __str__(self): return self.user.get_full_name()
+  def __unicode__(self): return u'%s' % (self.user.get_full_name())  
+  class Meta: ordering = ["user__first_name"]
       
   def get_absolute_url(self): return "/members/" + str(self.user.id)  
   def title(self): return self.user.get_full_name()
