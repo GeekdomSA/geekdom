@@ -232,7 +232,9 @@ class EditProfileForm(forms.ModelForm):
             'has_parking_pass', 
             'has_office_key', 
             'has_elevator_fob',
-            'privacy',]
+            'privacy',
+            'custom_membership_price',
+            ]
 
     def save(self, force_insert=False, force_update=False, commit=True):
         profile = super(EditProfileForm, self).save(commit=commit)

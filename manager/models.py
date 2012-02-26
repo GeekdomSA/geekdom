@@ -34,6 +34,7 @@ class UserProfile(UserenaBaseProfile):
   has_elevator_fob = models.BooleanField()
   
   membership_type = models.ForeignKey("MembershipType", blank=True, null=True)
+  custom_membership_price = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2)
 
   notes = models.TextField(blank=True, help_text="These notes are not visible to members.")
 

@@ -71,8 +71,6 @@ urlpatterns = patterns('',
 
     url(r'^admin/jsi18n', i18n_javascript),
     url(r'^admin/', include(admin.site.urls)),
-
-    # added for django-admin-tools
     url(r'^admin_tools/', include('admin_tools.urls')),
 
 
