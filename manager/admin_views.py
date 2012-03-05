@@ -55,6 +55,11 @@ def new_member(request):
       profile = pform.save(commit = False)
       profile.user = user
       profile.save()
+
+      # add member to mailchimp list
+      list = mailchimp.utils.get_connection().get_list_by_id("8bd90b528f")
+      list.subscribe(profile.user.email, {'EMAIL':profile.user.email})
+
       message = "User successfully created!"
       messages.add_message(request, messages.SUCCESS, message)
       return HttpResponseRedirect('/manager/members/' + str(user.id))

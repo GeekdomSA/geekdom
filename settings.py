@@ -76,6 +76,7 @@ INSTALLED_APPS = (
     'geekdom.userena',
     'guardian',
     'bootstrapform',
+    'mailchimp',
 )
 
 AUTH_PROFILE_MODULE = 'manager.UserProfile'
@@ -132,9 +133,13 @@ FOURSQUARE_REDIRECT_URL = "http://members.geekdom.com"
 # userless auth code
 # &client_id=YLKQCPEJCFMQPAQ3TRZQNBJV4HVNFLGLIFNNE5UO2QZRRL2T&client_secret=UHF0P1MOEKEJQGYDVWWUNERERFODWMFG3WIL2LLR2DSHGV4Y&v=20120101
 
-
-
-
 # userena settings
 USERENA_DEFAULT_PRIVACY = "open"
 USERENA_WITHOUT_USERNAMES = True
+
+# mailchimp stuff
+MAILCHIMP_API_KEY = "f8e85e3bf25a7ec2b8ed98a06cf7dada-us4"
+MAILCHIMP_LIST_ID = "8bd90b528f"
+
+
+
