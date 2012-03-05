@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
+import mailchimp
 
 @login_required
 def all_members(request): 
