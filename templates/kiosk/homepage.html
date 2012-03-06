@@ -2,7 +2,24 @@
 
 {% extends "kiosk/base.html" %}
 
-{% block custom_headings %}{% if kiosk %}<meta http-equiv="refresh" content="300;url=http://members.geekdom.com/kiosk/"/>{% endif %}{% endblock %}
+{% block custom_headings %}{% if kiosk %}
+    <script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      // Enable pusher logging - don't include this in production
+      Pusher.log = function(message) {
+        if (window.console && window.console.log) window.console.log(message);
+      };
+
+      // Flash fallback logging - don't include this in production
+      WEB_SOCKET_DEBUG = true;
+
+      var pusher = new Pusher('67d69cb806cd4c1db8b7');
+      var channel = pusher.subscribe('geekdom');
+      channel.bind('checkin', function(data) {
+        location.reload(true);
+      });
+    </script> 
+{% endif %}{% endblock %}
 
 {% block content %}
 

@@ -1,8 +1,12 @@
-from userena.models import UserenaBaseProfile
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
+
+from userena.models import UserenaBaseProfile
 from easy_thumbnails.fields import *
+
+from manager.helpers import pusher_call
 
 class UserProfile(UserenaBaseProfile):
   user = models.OneToOneField(User, unique=True, verbose_name=('user'), related_name='my_profile')
@@ -70,6 +74,7 @@ class UserProfile(UserenaBaseProfile):
         expires_at = datetime.datetime.now() + datetime.timedelta(hours = 8),
         method = method,
         )
+      pusher_call(channel="geekdom", event="checkin", payload=self.user.id)
       return True
     else:
       return False
@@ -81,6 +86,7 @@ class UserProfile(UserenaBaseProfile):
       for checkin in checkins:
         checkin.expires_at = now - datetime.timedelta(minutes = 1)
         checkin.save()
+      pusher_call(channel="geekdom", event="checkout", payload=self.user.id)
       return True
     else:
       return False
@@ -94,7 +100,6 @@ class UserProfile(UserenaBaseProfile):
       else:
           self.check_out()
           return "User is now checked out"
-          
 
 
 class MembershipType(models.Model):
