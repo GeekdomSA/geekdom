@@ -18,6 +18,11 @@
       channel.bind('checkin', function(data) {
         location.reload(true);
       });
+
+      channel.bind('checkout', function(data) {
+        location.reload(true);
+      });
+
     </script> 
 {% endif %}{% endblock %}
 
