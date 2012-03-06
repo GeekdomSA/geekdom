@@ -200,5 +200,14 @@ def flomio_toggle_check_in(request):
     ''' Toggles the check-in status for the given user (via tag UUID) '''
     
     tag_uuid = request.POST.get('tag_uuid')
-    user = User.objects.filter(my_profile__flomio_tag_uuid=tag_uuid)
-    user.my_profile.togle_check_in(method=3)
+
+    try:
+      user = User.objects.get(my_profile__flomio_tag_uuid=tag_uuid)
+      user.my_profile.togle_check_in(method=3)
+
+      response = HttpResponse()
+      response.status_code = 200
+      return response
+
+    except:
+      return HttpResponseNotFound()

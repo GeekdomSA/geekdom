@@ -47,8 +47,7 @@ urlpatterns = patterns('',
     url(r'^kiosk/search/$', search, {'kiosk':True}),
     
     # flomio callback views
-    url(r'^flomio-checkin/$', all_members),
-    
+    url(r'^flomio-checkin/$', flomio_toggle_check_in),    
 
     ###############
     # admin views #
