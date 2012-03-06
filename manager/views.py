@@ -7,6 +7,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.template.defaultfilters import date as django_date_filter
+from django.views.decorators.csrf import csrf_exempt
 
 from manager.admin_views import *
 
@@ -192,3 +193,12 @@ def kiosk_user_view(request, user_id):
       }, 
       context_instance=RequestContext(request)
   )
+  
+
+@csrf_exempt
+def flomio_toggle_check_in(request):
+    ''' Toggles the check-in status for the given user (via tag UUID) '''
+    
+    tag_uuid = request.POST.get('tag_uuid')
+    user = User.objects.filter(my_profile__flomio_tag_uuid=tag_uuid)
+    user.my_profile.togle_check_in(method=3)

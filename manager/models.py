@@ -37,6 +37,9 @@ class UserProfile(UserenaBaseProfile):
   custom_membership_price = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2)
 
   notes = models.TextField(blank=True, help_text="These notes are not visible to members.")
+  
+  # Flomio fields
+  flomio_tag_uuid = models.CharField(max_length=200, blank=True)
 
   def __str__(self): return self.user.get_full_name()
   def __unicode__(self): return u'%s' % (self.user.get_full_name())  
@@ -81,8 +84,14 @@ class UserProfile(UserenaBaseProfile):
       return True
     else:
       return False
-
-
+  
+  def toggle_check_in(self, check_in_method=1):
+      ''' Toggles the check_in status of the user '''
+      if self.is_checked_in():
+          self.check_in(check_in_method)
+      else:
+          self.check_out()
+          
 
 
 class MembershipType(models.Model):

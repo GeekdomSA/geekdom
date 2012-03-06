@@ -45,6 +45,10 @@ urlpatterns = patterns('',
     url(r'^kiosk/(?P<user_id>[\d]+)/$', kiosk_user_view),
     url(r'^kiosk/events/$', all_events, {'kiosk':True,}),
     url(r'^kiosk/search/$', search, {'kiosk':True}),
+    
+    # flomio callback views
+    url(r'^flomio-checkin/$', all_members),
+    
 
     ###############
     # admin views #
