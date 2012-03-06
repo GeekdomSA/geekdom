@@ -87,10 +87,13 @@ class UserProfile(UserenaBaseProfile):
   
   def toggle_check_in(self, check_in_method=1):
       ''' Toggles the check_in status of the user '''
-      if self.is_checked_in():
-          self.check_in(check_in_method)
+      # import pdb;pdb.set_trace()
+      if not self.is_checked_in():
+          self.check_in(method = check_in_method)
+          return "User is now checked in"
       else:
           self.check_out()
+          return "User is now checked out"
           
 
 
