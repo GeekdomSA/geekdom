@@ -90,7 +90,7 @@ ul, li {
 	margin: 10px 10px 0 0;
 	width: 275px;
 	height: 60px;
-	padding: 10px;
+	padding: 0px;
 	overflow: hidden;
 	border-radius: 5px;
 }
@@ -101,6 +101,8 @@ ul, li {
 	width : 60px;
 	margin-right : 10px;
 	border-radius: 5px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 
 .bigmembergrid li span {
@@ -108,14 +110,14 @@ ul, li {
 }
 
 .bigmembergrid li span.membername {
-	font-size : 1.3em;
+	font-size : 1.2em;
 	font-weight: bold;
 	letter-spacing: -1px;
-	margin-bottom : 5px;
+	margin-top : 2px;
 }
 
 .bigmembergrid li span.membercompanyname {
-	color : red;
+	color : #ccc;
 	display: block;
 	font-style: italic;
 	word-wrap: normal;
@@ -123,7 +125,7 @@ ul, li {
 	font-weight: bold;
 	font-size : 1em;
 	line-height: 1em;
-	margin-bottom : 3px;
+	margin-bottom : 1px;
 }
 
 .bigmembergrid li span.memberofficenum {
@@ -132,11 +134,12 @@ ul, li {
 	font-weight: bold;
 	text-transform: uppercase;
 	color: red;
+	margin-right: 5px;
 }
 
 .bigmembergrid li span.memberskills {
 	color: #999;
-	font-size: .9em;
+	font-size: .8em;
 	line-height: 1em;
 	font-style: italic;
 }
@@ -634,3 +637,6 @@ hr.spacer { border : none; }
     clear: both;
     visibility: hidden;
 }
+
+
+
