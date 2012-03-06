@@ -86,7 +86,7 @@ def all_events(request, kiosk=False):
   today = datetime.date.today()
   now = datetime.datetime.now()
 
-  twitterfeed = feedparser.parse("http://search.twitter.com/search.atom?q=geekdomsa")
+  twitterfeed = feedparser.parse("http://search.twitter.com/search.atom?q=geekdom")
   tweets = []
   for tweet in twitterfeed.entries: tweets.append(tweet)
   for tweet in tweets: tweet.pp = parser.parse(tweet.published).strftime("%m/%d/%y %H:%M:%S")
