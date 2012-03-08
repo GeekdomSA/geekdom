@@ -150,6 +150,7 @@ class Event(models.Model):
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)
+  class Meta: ordering = ["-starts_at"]
 
 
 
