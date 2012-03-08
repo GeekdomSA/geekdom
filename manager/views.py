@@ -91,26 +91,10 @@ def all_events(request, kiosk=False):
   for tweet in twitterfeed.entries: tweets.append(tweet)
   for tweet in tweets: tweet.pp = parser.parse(tweet.published).strftime("%m/%d/%y %H:%M:%S")
 
-  events_now = Event.objects.filter(ends_at__gte = now).filter(starts_at__lte = now)
-  
-  # # event right now?
-  # if kiosk and events_now.count() == 1:
-
-  #   event = events_now[0]
-
-  #   return render_to_response(
-  #     'kiosk/event_welcome.html',
-  #     { 
-  #       'event': event, 
-  #       'tweets':tweets, 
-  #       'kiosk':kiosk, 
-  #       'title': '<em>Welcome to:</em>',
-  #     }, 
-  #     context_instance=RequestContext(request))
-  
-  # else:
-
-  events = Event.objects.filter(ends_at__gte = now).order_by('starts_at')
+  if request.user.is_superuser:
+    events = Event.objects.filter(ends_at__gte = now).order_by('starts_at')
+  else:
+    events = Event.objects.filter(ends_at__gte = now).order_by('starts_at').filter(private_event = False)
 
   return render_to_response(
     'kiosk/all_events.html',

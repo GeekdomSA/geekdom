@@ -145,8 +145,8 @@ class Event(models.Model):
   ends_at = models.DateTimeField()
   added_by = models.ForeignKey(User)
   link = models.URLField(max_length=200, blank=True)
-
-  publish_to_site = models.BooleanField()
+  private_event = models.BooleanField()
+  location = models.TextField()
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)

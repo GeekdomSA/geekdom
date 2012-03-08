@@ -452,6 +452,12 @@ ul#pageactions .spacer {
 	list-style: none;
 }
 
+.bigeventgrid .event.private {
+	opacity: .5;
+	-moz-opacity: .5;
+	filter:alpha(opacity=.55);
+}
+
 .bigeventgrid .event .name {
 	font-weight: bold;
 	letter-spacing: -1px;

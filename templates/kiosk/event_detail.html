@@ -3,6 +3,9 @@
 {% block content %}
 
 <span class="description">{{ event.description|urlize|linebreaks }}</span>
+
+{% if event.link %}<p>More info at: <a href="{{ event.link }}" target="_blank">{{ event.link }}</a></p>{% endif %}
+
 <p><span class="hosted_by">Hosted by <a href="/accounts/{{ event.added_by.username }}">{{ event.added_by.get_full_name }}</a></span></p>
 
 {% endblock content %}
