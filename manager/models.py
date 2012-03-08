@@ -146,7 +146,7 @@ class Event(models.Model):
   added_by = models.ForeignKey(User)
   link = models.URLField(max_length=200, blank=True)
   private_event = models.BooleanField()
-  location = models.TextField()
+  location = models.CharField(max_length=200)
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)
