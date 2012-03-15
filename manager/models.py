@@ -14,6 +14,7 @@ class UserProfile(UserenaBaseProfile):
   office_num = models.CharField(max_length=200, blank=True)
 
   bio = models.TextField(blank=True)
+  skills = models.CharField(max_length=200, blank=True)
 
   address = models.CharField(max_length=200, blank=True)
   city = models.CharField(max_length=200, blank=True)
@@ -28,7 +29,6 @@ class UserProfile(UserenaBaseProfile):
   linkedin = models.CharField(max_length=200, blank=True)
   website = models.CharField(max_length=200, blank=True)
   
-  skills = models.CharField(max_length=200, blank=True)
 
   available_for_office_hours = models.CharField(max_length=200, blank=True)
   available_for_workshops = models.CharField(max_length=200, blank=True)

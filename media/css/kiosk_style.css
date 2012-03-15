@@ -135,6 +135,7 @@ ul, li {
 	text-transform: uppercase;
 	color: red;
 	margin-right: 5px;
+	line-height: 2.5em;
 }
 
 .bigmembergrid li span.memberskills {
@@ -643,6 +644,16 @@ hr.spacer { border : none; }
     clear: both;
     visibility: hidden;
 }
+
+
+
+.memberofficenum.herenow {
+	padding-right : 20px;
+	background: url(http://members.geekdom.com/media/img/layout/tinycrown.png) no-repeat center right;
+}
+
+
+
 
 
 
