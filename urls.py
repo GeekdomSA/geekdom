@@ -18,14 +18,15 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
+
+    # homepage
+    url(r'^$', homepage, {'kiosk':False}),
+
     url(r'^accounts/', include('userena.urls')),
 
     url(r'^accounts/(?P<username>[\.\w]+)/edit/$',
        profile_edit,
        {'edit_profile_form' : HackedProfileForm}),
-
-    # homepage
-    url(r'^$', homepage, {'kiosk':False}),
 
     # member views
     url(r'^members/$', homepage),
@@ -76,6 +77,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin_tools/', include('admin_tools.urls')),
 
+    # makes sure that if a flatpage exists, you're able to grab it
+    (r'^', include('django.contrib.flatpages.urls')),
 
 
 )

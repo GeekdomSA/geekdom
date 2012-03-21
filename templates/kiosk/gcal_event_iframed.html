@@ -1,0 +1,38 @@
+{# event_welcome.html #}
+
+{% extends "kiosk/base.html" %}
+
+{% block custom_headings %}
+	<meta http-equiv="refresh" content="60" />
+{% endblock %}
+
+{% block content %}
+
+
+	<iframe 
+		src="http://awesomemonster.com/gcalendar-wrapper.php?src=rf7rqbbigun4pm1dc6443u5o3s%40group.calendar.google.com&amp;ctz=America%2FChicago&amp;bgcolor=%23000000&amp;color=%23711616&amp;" 
+		style="border-width:0;" 
+		width="620" 
+		height="500" 
+		frameborder="0" 
+		scrolling="no">
+	</iframe>
+		
+
+{% endblock content %}
+
+
+{% block sidebar %}
+
+<h2><em>tweet</em>@geekdom</h2>
+
+<ul class="tweetfeed">{% for tweet in tweets %}
+
+	<li class="tweet">
+		<span class="content">{{ tweet.title }}</span>
+		<span class="meta">{{ tweet.author }} @ {{ tweet.pp }}</span>
+	</li>
+
+{% endfor %}</li>
+
+{% endblock sidebar %}

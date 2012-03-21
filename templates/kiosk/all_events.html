@@ -30,7 +30,7 @@
 <ul class="tweetfeed">{% for tweet in tweets %}
 
 	<li class="tweet">
-		<span class="content">{{ tweet.title }}</span>
+		<span class="content">{{ tweet.title|urlize }}</span>
 		<span class="meta">{{ tweet.author }} @ {{ tweet.pp }}</span>
 	</li>
 

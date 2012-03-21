@@ -1,0 +1,13 @@
+{% extends "kiosk/base.html" %}
+ 
+{% block content %}
+
+<h1>{{ flatpage.title }}</h1>
+
+{{ flatpage.content }}	
+
+{% endblock %}
+
+{% block sidebar %}
+	{% include "kiosk/member_sidebar.html" %}
+{% endblock sidebar %}

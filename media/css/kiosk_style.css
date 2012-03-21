@@ -65,6 +65,10 @@ body.desktop #content_sidebar {
 	letter-spacing : -1px;
 }
 
+h1 { 
+	line-height: 1em;
+}
+
 h2 {
 	color : #ccc;
 }
@@ -425,6 +429,11 @@ ul#pageactions .spacer {
 	font-weight: bold;
 	color: white;
 	font-size : 1em;
+}
+
+.tweet a {
+	color : #eee;
+	text-decoration: underline;
 }
 
 .tweet .meta {
