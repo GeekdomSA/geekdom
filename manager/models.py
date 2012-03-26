@@ -22,13 +22,12 @@ class UserProfile(UserenaBaseProfile):
   zipcode = models.CharField(max_length=200, blank=True)
 
   phone_number = models.CharField(max_length=200, blank=True)
-  twitter = models.CharField(max_length=200, blank=True)
-  facebook = models.CharField(max_length=200, blank=True)
+  twitter = models.URLField(max_length=200, blank=True)
+  facebook = models.URLField(max_length=200, blank=True)
+  linkedin = models.URLField(max_length=200, blank=True)
+  website = models.URLField(max_length=200, blank=True)
   gchat = models.CharField(max_length=200, blank=True)
-  skype = models.CharField(max_length=200, blank=True)
-  linkedin = models.CharField(max_length=200, blank=True)
-  website = models.CharField(max_length=200, blank=True)
-  
+  skype = models.CharField(max_length=200, blank=True)  
 
   available_for_office_hours = models.CharField(max_length=200, blank=True)
   available_for_workshops = models.CharField(max_length=200, blank=True)

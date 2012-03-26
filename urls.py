@@ -37,8 +37,8 @@ urlpatterns = patterns('',
     url(r'^search/$', search),
 
     # event views
-    url(r'^events/$', all_events),
-    url(r'^events/(?P<event_id>[\d]+)/$', view_event),
+    url(r'^events_old/$', all_events),
+    url(r'^events_old/(?P<event_id>[\d]+)/$', view_event),
 
 
     # kiosk views

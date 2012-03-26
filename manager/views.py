@@ -114,18 +114,27 @@ def search(request, kiosk=False):
   try: query = request.GET['query']
   except: query = ""
 
-  users = User.objects.filter(
+  users_unsorted = User.objects.filter(
     Q(first_name__icontains = query) | 
     Q(last_name__icontains = query) | 
     Q(my_profile__skills__icontains = query) |
     Q(my_profile__company_name__icontains = query)
   )
 
+  users = []
+
+  for user in users_unsorted:
+    if user.my_profile.is_checked_in():
+      users.insert(0, user)
+    else:
+      users.append(user)
+
+
   return render_to_response(
       'kiosk/homepage.html',
       {
           'title': "Search: " + query,
-          'subtitle': str(users.count()) + " members found.",
+          'subtitle': str(len(users)) + " members found.",
           'users' : users,
           'kiosk': kiosk,
       }, 

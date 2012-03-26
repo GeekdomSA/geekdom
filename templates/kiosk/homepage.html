@@ -31,9 +31,9 @@
 <ul class="bigmembergrid clearfix">{% for user in users %}
 	<li class="member">
 		<a href="{% if kiosk %}/kiosk/{{ user.id }}{% else %}/accounts/{{ user.username }}{% endif %}">
-		{% if user.get_profile.office_num %}
-			<span class="memberofficenum{% if user.get_profile.is_checked_in %} herenow{% endif %}">Office {{ user.get_profile.office_num }}</span>
-		{% endif %}
+		
+			<span class="memberofficenum{% if user.get_profile.is_checked_in %} herenow{% endif %}">{% if user.get_profile.office_num %}Office {{ user.get_profile.office_num }}{% endif %}</span>
+		
 		<img class="user_profilepic floatleft" src="{{ user.my_profile.get_mugshot_url }}" alt="{{ user.get_full_name }}" />
 		<span class="membername">{{ user.get_full_name }}</span>
 
