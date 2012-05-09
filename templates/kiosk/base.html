@@ -95,11 +95,7 @@
 {% if not request.user.is_authenticated %}
 
   <div id="cta-banner">
-    <p>
-      {% if random_banner.link %}<a href="{{ random_banner.link }}">{% endif %}
-        {{ random_banner.text }}
-      {% if random_banner.link %}</a>{% endif %}
-    </p>
+    <p><a href="http://geekdom.com">Not a member? Sign up at geekdom.com!</a></p>
   </div>
 
 {% endif %}

@@ -16,11 +16,6 @@ class UserProfile(UserenaBaseProfile):
   bio = models.TextField(blank=True)
   skills = models.CharField(max_length=200, blank=True)
 
-  address = models.CharField(max_length=200, blank=True)
-  city = models.CharField(max_length=200, blank=True)
-  state = models.CharField(max_length=200, blank=True)
-  zipcode = models.CharField(max_length=200, blank=True)
-
   phone_number = models.CharField(max_length=200, blank=True)
   twitter = models.URLField(max_length=200, blank=True)
   facebook = models.URLField(max_length=200, blank=True)
@@ -28,20 +23,8 @@ class UserProfile(UserenaBaseProfile):
   website = models.URLField(max_length=200, blank=True)
   gchat = models.CharField(max_length=200, blank=True)
   skype = models.CharField(max_length=200, blank=True)  
-
-  available_for_office_hours = models.CharField(max_length=200, blank=True)
-  available_for_workshops = models.CharField(max_length=200, blank=True)
-
-  has_parking_pass = models.BooleanField()
-  has_office_key = models.BooleanField()
-  has_elevator_fob = models.BooleanField()
   
   membership_type = models.ForeignKey("MembershipType", blank=True, null=True)
-  custom_membership_price = models.DecimalField(blank=True, null=True, max_digits=5, decimal_places=2)
-
-  notes = models.TextField(blank=True, help_text="These notes are not visible to members.")
-  
-  # Flomio fields
   flomio_tag_uuid = models.CharField(max_length=200, blank=True)
 
   def __str__(self): return self.user.get_full_name()
@@ -114,11 +97,6 @@ class MembershipType(models.Model):
 
 
 
-class BackgroundImage(models.Model):
-    url = models.CharField(max_length=200, blank=True)
-
-
-
 class Checkin(models.Model):
   userprofile = models.ForeignKey(UserProfile)
   expires_at = models.DateTimeField()
@@ -150,12 +128,4 @@ class Event(models.Model):
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)
   class Meta: ordering = ["-starts_at"]
-
-
-
-
-class CtaBanner(models.Model):
-  text = models.CharField(max_length=200)
-  link = models.URLField(max_length=200, blank=True)
-
 

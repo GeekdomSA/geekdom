@@ -34,10 +34,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
-    # 'geekdom.manager.processors.flickr_background',
     'geekdom.manager.processors.all_users',
     'geekdom.manager.processors.check_for_checkin_cookie',
-    'geekdom.manager.processors.cta_banner',
 )
 
 MIDDLEWARE_CLASSES = (

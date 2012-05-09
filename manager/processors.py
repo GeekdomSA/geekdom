@@ -1,5 +1,4 @@
 from django.template import Context
-from manager.models import BackgroundImage
 from django.contrib.auth.models import User
 from manager.models import *
 
@@ -29,8 +28,3 @@ def check_for_checkin_cookie(request):
 				needs_to_check_in = True
 	
 	return { "needs_to_check_in" : needs_to_check_in }
-
-
-def cta_banner(request):
-	random_banner = CtaBanner.objects.order_by("?")[0]
-	return { "random_banner" : random_banner }
