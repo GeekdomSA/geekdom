@@ -120,12 +120,40 @@ class Event(models.Model):
   description = models.TextField()
   starts_at = models.DateTimeField()
   ends_at = models.DateTimeField()
-  added_by = models.ForeignKey(User)
-  link = models.URLField(max_length=200, blank=True)
+  link = models.URLField(max_length=200)
+  added_by = models.ForeignKey(User, blank=True, null=True)
+  location = models.CharField(max_length=200, blank=True)
   private_event = models.BooleanField()
-  location = models.CharField(max_length=200)
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)
   class Meta: ordering = ["-starts_at"]
+
+
+from django.conf import settings
+
+from djangogcal.adapter import CalendarAdapter, CalendarEventData
+from djangogcal.observer import CalendarObserver
+
+class EventCalendarAdapter(CalendarAdapter):
+    """
+    A calendar adapter for the Showing model.
+    """
+    
+    def get_event_data(self, instance):
+        """
+        Returns a CalendarEventData object filled with data from the adaptee.
+        """
+        return CalendarEventData(
+            start=instance.starts_at,
+            end=instance.ends_at,
+            title=instance.name,
+            content=instance.description + '<br /><br /><a href="' + instance.link + '">Register Here</a>'
+        )
+
+observer = CalendarObserver(email=settings.CALENDAR_EMAIL,
+                            password=settings.CALENDAR_PASSWORD)
+observer.observe(Event, EventCalendarAdapter())
+
+
 

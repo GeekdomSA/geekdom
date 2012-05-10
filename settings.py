@@ -76,6 +76,7 @@ INSTALLED_APPS = (
     'guardian',
     'bootstrapform',
     'mailchimp',
+    'gdata', 'atom', 'djangogcal',
 
 )
 
@@ -144,7 +145,6 @@ MAILCHIMP_LIST_ID = "8bd90b528f"
 PUSHER_APP_ID = '16525'
 PUSHER_APP_KEY = '67d69cb806cd4c1db8b7'
 PUSHER_APP_SECRET = '727492d0668b0a2ef5bb'
-
 
 
 
