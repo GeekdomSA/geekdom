@@ -30,10 +30,6 @@ def view_member(request, user_id):
 
   user = User.objects.get(id = user_id)
 
-  if request.user.is_superuser and user.get_profile().notes:
-    message = "Admin Note: " + user.get_profile().notes
-    messages.add_message(request, messages.INFO, message)
-      
   return render_to_response(
     'manager/view_member.html',
     {
