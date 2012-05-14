@@ -206,3 +206,43 @@ def flomio_toggle_check_in(request):
       return HttpResponseNotFound()
 
 
+# @login_required
+# def new_event(request):
+#   pass
+
+
+
+# def new_member(request): 
+#   if not request.user.is_superuser: return HttpResponseNotForbidden()
+
+#   if request.method == "POST":
+#     uform = UserForm(request.POST, request.FILES)
+#     pform = AdminUserProfileForm(request.POST)
+
+#     if uform.is_valid() and pform.is_valid():
+#       user = uform.save()
+#       profile = pform.save(commit = False)
+#       profile.user = user
+#       profile.save()
+
+#       # add member to mailchimp list
+#       list = mailchimp.utils.get_connection().get_list_by_id("8bd90b528f")
+#       list.subscribe(profile.user.email, {'EMAIL':profile.user.email})
+
+#       message = "User successfully created!"
+#       messages.add_message(request, messages.SUCCESS, message)
+#       return HttpResponseRedirect('/manager/members/' + str(user.id))
+
+#   else:
+#     uform = UserForm()
+#     pform = AdminUserProfileForm()
+
+#   return render_to_response(
+#     'manager/admin_user_form.html',
+#     {
+#       'title': "New Member",
+#       'uform' : uform,
+#       'pform' : pform,
+#       'tabsection':'newmember',
+#     }, 
+#     context_instance=RequestContext(request))
