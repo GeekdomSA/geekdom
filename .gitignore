@@ -2,3 +2,4 @@
 *.pyc
 media/img/profile_images/*
 local_settings.py
+build

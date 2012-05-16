@@ -145,10 +145,10 @@ class EventCalendarAdapter(CalendarAdapter):
         Returns a CalendarEventData object filled with data from the adaptee.
         """
         return CalendarEventData(
-            start=instance.starts_at,
-            end=instance.ends_at,
-            title=instance.name,
-            content=instance.description + '<br /><br /><a href="' + instance.link + '">Register Here</a>'
+            start   =instance.starts_at,
+            end     =instance.ends_at,
+            title   =instance.name,
+            content =((instance.description[:200] + '...') if len(instance.description) > 200 else instance.description) + ' Register Here:' + instance.link
         )
 
 observer = CalendarObserver(email=settings.CALENDAR_EMAIL,
