@@ -18,7 +18,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-
+    (r'^my_admin/jsi18n', 'django.views.i18n.javascript_catalog'),
+    
     # homepage
     url(r'^$', homepage, {'kiosk':False}),
 
@@ -38,6 +39,7 @@ urlpatterns = patterns('',
 
     # event views
     url(r'^events/$', all_events),
+    url(r'^events/new$', new_event),
     url(r'^events/(?P<event_id>[\d]+)/$', view_event),
 
 
@@ -60,9 +62,6 @@ urlpatterns = patterns('',
     url(r'^manager/members/(?P<user_id>[\d]+)/edit/$', edit_member),
     url(r'^manager/members/new$', new_member),
 
-    url(r'^manager/members/incomplete/$', members_with_incomplete_profiles),
-    url(r'^manager/members/missing_stuff/$', members_who_are_missing_stuff),
-    url(r'^manager/members/office_num/$', members_missing_office_num),
     url(r'^manager/members/email_list/$', member_email_list),
     url(r'^manager/members/email_list/(?P<mt_id>[\d]+)/$', member_email_list),
     url(r'^manager/members/by_room/$', members_by_room),

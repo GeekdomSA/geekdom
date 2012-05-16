@@ -25,23 +25,7 @@
 
 {% block sidebar %}
 
-{% if request.user.is_authenticated %}
+<h2>Add your event</h2>
 
-<a href="/events/new" class="btn btn-danger btn-large">Add your own event</a>
-
-<hr />
-
-{% endif %}
-
-<h2><em>tweet</em>@geekdom</h2>
-
-<ul class="tweetfeed">{% for tweet in tweets %}
-
-	<li class="tweet">
-		<span class="content">{{ tweet.title|urlize }}</span>
-		<span class="meta">{{ tweet.author }} @ {{ tweet.pp }}</span>
-	</li>
-
-{% endfor %}</ul>
  
 {% endblock sidebar %}

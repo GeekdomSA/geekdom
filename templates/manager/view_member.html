@@ -47,27 +47,6 @@
 
 </div>
 
-{% if request.user.is_superuser %}
-	
-	<hr />
-
-	{% if user.get_profile.available_for_workshops %}<p><strong>Available for workshops:</strong> {{ user.get_profile.available_for_workshops }}</p>{% endif %}
-
-	<h3>Mailing Address</h3>
-	<p>
-		{{ user.get_full_name }}<br />
-		{{ user.get_profile.address }}<br />
-		{{ user.get_profile.city }}, {{ user.get_profile.state }} {{ user.get_profile.zipcode }}<br />
-	</p>
-
-	<h3>Misc</h3>
-	
-	<p>
-		Has parking pass: {{ user.get_profile.has_parking_pass }}<br />
-		Has office key: {{ user.get_profile.has_office_key }}<br />
-		Has elevator fob: {{ user.get_profile.has_elevator_fob }}
-	</p>
-
 {% endif %}
 
 {% endblock %}

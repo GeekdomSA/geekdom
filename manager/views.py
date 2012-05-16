@@ -1,15 +1,16 @@
-from manager.forms import *
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, Http404, HttpResponseNotFound, HttpResponseForbidden
-from django.shortcuts import render_to_response
-from django.template import Context, RequestContext
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.db.models import Q
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, Http404, HttpResponseNotFound, HttpResponseForbidden
+from django.shortcuts import render_to_response
+from django.template import Context, RequestContext
 from django.template.defaultfilters import date as django_date_filter
 from django.views.decorators.csrf import csrf_exempt
 
 from manager.admin_views import *
+from manager.forms import *
 
 import datetime
 
@@ -103,7 +104,7 @@ def all_events(request, kiosk=False):
       'today': today, 
       'tweets':tweets, 
       'kiosk':kiosk, 
-      'title': 'Upcoming events at <em>Geekdom</em>',
+      'title': 'Upcoming events @ <em>Geekdom</em>',
     }, 
     context_instance=RequestContext(request))
 
@@ -206,43 +207,37 @@ def flomio_toggle_check_in(request):
       return HttpResponseNotFound()
 
 
-# @login_required
-# def new_event(request):
-#   pass
+@login_required
+def new_event(request):
+  if not request.user.is_authenticated: return HttpResponseNotForbidden()
+  pass
 
+  if request.method == "POST":
+    form = EventForm(request.POST, request.FILES)
 
+    if form.is_valid():
+      event = form.save(commit = False)
+      event.added_by = request.user
+      event.save()
 
-# def new_member(request): 
-#   if not request.user.is_superuser: return HttpResponseNotForbidden()
+      # send_mail(
+      #     '[geekdom] Event Added - ' + event.name + 'A new event has been added to members.geekdom.com by ' + event.added_by.get_full_name() + '\n Name: ' + event.name + '\nDescription: ' + event.description + '\nStarts at: ' + event.starts_at.strftime("%c") + '\nEnds at: ' + event.ends_at.strftime("%c") + '\nLink: ' + event.link,
+      #     'server@geekdom.com',
+      #     ['patrick@geekdom.com'], 
+      #     fail_silently=False
+      # )
 
-#   if request.method == "POST":
-#     uform = UserForm(request.POST, request.FILES)
-#     pform = AdminUserProfileForm(request.POST)
+      message = "Event successfully created!"
+      messages.add_message(request, messages.SUCCESS, message)
+      return HttpResponseRedirect('/events/' + str(event.id))
 
-#     if uform.is_valid() and pform.is_valid():
-#       user = uform.save()
-#       profile = pform.save(commit = False)
-#       profile.user = user
-#       profile.save()
+  else:
+    form = EventForm()
 
-#       # add member to mailchimp list
-#       list = mailchimp.utils.get_connection().get_list_by_id("8bd90b528f")
-#       list.subscribe(profile.user.email, {'EMAIL':profile.user.email})
-
-#       message = "User successfully created!"
-#       messages.add_message(request, messages.SUCCESS, message)
-#       return HttpResponseRedirect('/manager/members/' + str(user.id))
-
-#   else:
-#     uform = UserForm()
-#     pform = AdminUserProfileForm()
-
-#   return render_to_response(
-#     'manager/admin_user_form.html',
-#     {
-#       'title': "New Member",
-#       'uform' : uform,
-#       'pform' : pform,
-#       'tabsection':'newmember',
-#     }, 
-#     context_instance=RequestContext(request))
+  return render_to_response(
+    'member_views/event_form.html',
+    {
+      'title': "New Event",
+      'form' : form,
+    }, 
+    context_instance=RequestContext(request))

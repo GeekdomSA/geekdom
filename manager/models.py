@@ -118,12 +118,11 @@ class Checkin(models.Model):
 class Event(models.Model):
   name = models.CharField(max_length=200)
   description = models.TextField()
-  starts_at = models.DateTimeField()
-  ends_at = models.DateTimeField()
+  starts_at = models.DateTimeField(help_text="Needs to be in military time")
+  ends_at = models.DateTimeField(help_text="Needs to be in military time")
   link = models.URLField(max_length=200)
-  added_by = models.ForeignKey(User, blank=True, null=True)
   location = models.CharField(max_length=200, blank=True)
-  private_event = models.BooleanField()
+  added_by = models.ForeignKey(User, blank=True, null=True)
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)

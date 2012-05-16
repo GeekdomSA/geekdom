@@ -11,19 +11,13 @@
 
   <li class="nav-header">Admin Pages</li>
   <li{% ifequal tabsection "allmembers" %} class="active"{% endifequal%}>
-  	<a href="/manager/members/"><i class="icon-list"></i> All Members</a></li>
+  	<a href="/manager/"><i class="icon-list"></i> All Members</a></li>
   <li{% ifequal tabsection "newmember" %} class="active"{% endifequal%}>
   	<a href="/manager/members/new"><i class="icon-plus-sign"></i> New Member</a></li>
   <li><a href="/admin"><i class="icon-cog"></i> Django Admin</a></li>
 
 
   <li class="nav-header">Member Reports</li>
-	<li{% ifequal tabsection "membersincompleteprofiles" %} class="active"{% endifequal%}>
-		<a href="/manager/members/incomplete"><i class="icon-list-alt"></i> Members with incomplete profiles</a></li>
-	<li{% ifequal tabsection "membersmissingstuff" %} class="active"{% endifequal%}>
-		<a href="/manager/members/missing_stuff"><i class="icon-list-alt"></i> Members who are missing stuff</a></li>
-	<li{% ifequal tabsection "membersofficenum" %} class="active"{% endifequal%}>
-		<a href="/manager/members/office_num"><i class="icon-list-alt"></i> Members w/blank office</a></li>
   <li{% ifequal tabsection "membersgeneralstats" %} class="active"{% endifequal%}>
     <a href="/manager/members/general_stats"><i class="icon-list-alt"></i> Member general stats</a></li>
   <li{% ifequal tabsection "membersbyroom" %} class="active"{% endifequal%}>

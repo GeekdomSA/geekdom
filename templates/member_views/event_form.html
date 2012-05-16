@@ -4,26 +4,27 @@
 
 {% load uni_form_tags %}
 
-{% block custom_js %}
+{% block custom_headings %}
 
 <script type="text/javascript">
 window.__admin_media_prefix__ = "{% filter escapejs %}{% admin_media_prefix %}{% endfilter %}";
 </script>
+
+<script type="text/javascript" src="/my_admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css"/>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css"/>
 
 {% endblock %}
 
 {% block content %}
 
     {{ form.errors }}
-    {{ uform.errors }}
-    {{ pform.errors }}
 	
     <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
 		
 		<fieldset class="control-group">
 			{{ form|bootstrap }}
-			{{ uform|bootstrap  }}
-			{{ pform|bootstrap  }}
 		</fieldset>
 	
     	{% csrf_token %}

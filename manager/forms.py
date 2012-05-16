@@ -10,6 +10,18 @@ class UserForm(ModelForm):
         model = User
         fields = ["username", "email", 'first_name', 'last_name']
 
+class EventForm(ModelForm):
+    class Meta:
+        model = Event
+        exclude = (
+            'added_by',
+        )
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+        self.fields['starts_at'].widget = widgets.AdminSplitDateTime()
+        self.fields['ends_at'].widget = widgets.AdminSplitDateTime()
+
+
 # form for non-admin users to edit their own profile
 class UserProfileForm(ModelForm):
     class Meta:

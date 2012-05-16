@@ -59,7 +59,7 @@ def new_member(request):
 
       message = "User successfully created!"
       messages.add_message(request, messages.SUCCESS, message)
-      return HttpResponseRedirect('/manager/members/' + str(user.id))
+      return HttpResponseRedirect('/accounts/' + user.username)
 
   else:
     uform = UserForm()
@@ -92,7 +92,7 @@ def edit_member(request, user_id):
       profile.save()
       message = "User " + user.get_full_name() + " has been updated."
       messages.add_message(request, messages.SUCCESS, message)
-      return HttpResponseRedirect('/manager/members/' + str(user.id))
+      return HttpResponseRedirect('/accounts/' + user.username)
 
   else:
     uform = UserForm(instance = user)
@@ -106,94 +106,6 @@ def edit_member(request, user_id):
       'pform' : pform,
     }, 
     context_instance=RequestContext(request))
-
-
-@login_required
-def members_with_incomplete_profiles(request):
-    if not request.user.is_superuser: return HttpResponseNotFound()
-    users = User.objects.filter(
-        Q(my_profile__skills = "") | 
-        Q(my_profile__phone_number = "") | 
-        Q(my_profile__address = "") |
-        Q(my_profile__available_for_office_hours = "") |
-        Q(my_profile__available_for_workshops = "")
-    )
-
-    return render_to_response(
-      'manager/list_members.html',
-      {
-        'title': "Incomplete profiles",
-        'subtitle': str(users.count()) + " profiles have missing information.",
-        'users': users,
-        'tabsection':'membersincompleteprofiles',
-      }, 
-      context_instance=RequestContext(request))
-
-
-@login_required
-def members_who_are_missing_stuff(request):
-    if not request.user.is_superuser: return HttpResponseNotFound()
-    users = User.objects.filter(
-        (
-            # community members
-            Q(my_profile__membership_type = 1) & 
-            Q(my_profile__has_elevator_fob = 0)
-        )|(
-            # dedicated
-            Q(my_profile__membership_type = 2) & 
-            Q(my_profile__has_parking_pass = 0) & 
-            Q(my_profile__has_elevator_fob = 0) & 
-            Q(my_profile__has_office_key = 0)
-        )|(
-            # student
-            Q(my_profile__membership_type = 3) & 
-            Q(my_profile__has_elevator_fob = 0)
-        )|(
-            # business
-            Q(my_profile__membership_type = 4) & 
-            Q(my_profile__has_parking_pass = 0) & 
-            Q(my_profile__has_elevator_fob = 0) & 
-            Q(my_profile__has_office_key = 0)
-        )|(
-            # startup
-            Q(my_profile__membership_type = 5) & 
-            Q(my_profile__has_elevator_fob = 0) & 
-            Q(my_profile__has_parking_pass = 0) & 
-            Q(my_profile__has_office_key = 0)
-        )
-    )
-
-    return render_to_response(
-      'manager/list_members.html',
-      {
-        'title': "Members missing stuff",
-        'subtitle': str(users.count()) + " members are missing a fob, a key or a parking pass.",
-        'users': users,
-        'tabsection':'membersmissingstuff',
-      }, 
-      context_instance=RequestContext(request))
-
-
-@login_required
-def members_missing_office_num(request):
-    if not request.user.is_superuser: return HttpResponseNotFound()
-    users = User.objects.filter(
-        (
-            Q(my_profile__membership_type = 2)|
-            Q(my_profile__membership_type = 4)|
-            Q(my_profile__membership_type = 5)
-        ) & Q(my_profile__office_num = "")        
-    )
-
-    return render_to_response(
-      'manager/list_members.html',
-      {
-        'title': "Members w/blank office",
-        'subtitle': str(users.count()) + " office-bound members don't have office letters.",
-        'users': users,
-        'tabsection':'membersofficenum',
-      }, 
-      context_instance=RequestContext(request))
 
 
 @login_required

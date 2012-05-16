@@ -661,7 +661,34 @@ hr.spacer { border : none; }
 }
 
 
+.form-horizontal .controls {
+	margin-bottom : 20px;
+}
 
+.form-horizontal input,
+.form-horizontal textarea {
+	width: 100%;
+}
 
+.form-horizontal .datetime input,
+.form-horizontal .datetime textarea {
+	width: 8em;
+	margin-bottom : 5px;
+}
+
+.form-horizontal .datetime * {
+}
+
+.calendar caption {
+	color : #333;
+}
+
+.clockbox h2 {
+	background: #C00;
+	font-size: 1.2em;
+	padding: 0px 10px;
+	color: white;
+	margin: 0;
+}
 
 
