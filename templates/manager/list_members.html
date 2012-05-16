@@ -22,7 +22,7 @@
     {% for user in users %}
         <tr>
             <td><a href="/manager/members/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a></td>
-            <td>{{ user.my_profile.company_name }}</td>
+            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
             <td>{{ user.my_profile.office_num }}</td>
             <td>{{ user.get_profile.membership_type }}</td>
             <td><a href="/manager/members/{{ user.id }}">View</a> / <a href="/manager/members/{{ user.id }}/edit">Edit</a></td>
