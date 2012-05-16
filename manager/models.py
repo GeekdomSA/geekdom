@@ -148,7 +148,7 @@ class EventCalendarAdapter(CalendarAdapter):
             start   =instance.starts_at,
             end     =instance.ends_at,
             title   =instance.name,
-            content =((instance.description[:200] + '...') if len(instance.description) > 200 else instance.description) + ' Register Here:' + instance.link
+            content =((instance.description[:200] + '...') if len(instance.description) > 200 else instance.description) + ' Register Here: ' + instance.link
         )
 
 observer = CalendarObserver(email=settings.CALENDAR_EMAIL,
