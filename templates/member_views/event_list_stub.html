@@ -1,0 +1,9 @@
+		<span class="name"><a href="/events/{{ event.id }}">{{ event.name }}</a></span>
+		<span class="dateinfo1">{{ event.starts_at|date:"l, F jS" }}</span>
+		<span class="dateinfo2">from {{ event.starts_at|date:"P" }} - {{ event.ends_at|date:"P" }}</span>
+		{% if kiosk %}
+			<span class="description">{{ event.description|truncatewords:60 }}</span>
+		{% else %}
+			<span class="description">{{ event.description|truncatewords:200 }}</span>
+		{% endif %}
+		{% if event.added_by %}<span class="hosted_by">Hosted by {{ event.added_by.get_full_name }}</span>{% endif %}

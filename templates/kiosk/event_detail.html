@@ -6,7 +6,19 @@
 
 {% if event.link %}<p>More info at: <a href="{{ event.link }}" target="_blank">{{ event.link }}</a></p>{% endif %}
 
-<p><span class="hosted_by">Hosted by <a href="/accounts/{{ event.added_by.username }}">{{ event.added_by.get_full_name }}</a></span></p>
+{% if event.added_by %}<p><span class="hosted_by">Hosted by <a href="/accounts/{{ event.added_by.username }}">{{ event.added_by.get_full_name }}</a></span></p>{% endif %}
+
+{% if member_events %}
+
+<hr />
+
+<h2>Other events hosted by {{ event.added_by.get_full_name }}</h2>
+
+<ul class="bigeventgrid">{% for event in member_events %}
+	<li class="event">{% include "member_views/event_list_stub.html" %}</li>
+{% endfor %}</ul>
+
+{% endif %}
 
 {% endblock content %}
 

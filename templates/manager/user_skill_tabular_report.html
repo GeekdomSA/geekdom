@@ -1,0 +1,65 @@
+<html>
+
+<head>
+
+	<style>
+
+		body {
+			font-family : sans-serif;
+			padding : 1in .5in;	
+		}
+
+		h1 {
+			letter-spacing : -1px;
+		}
+
+		table {
+			border-top : 1px solid #ccc;
+			border-left : 1px solid #ccc;
+			font-size : 10pt;
+			text-align: left;
+		}
+
+		th {
+			border-bottom : 2px solid #ccc;
+		}
+
+		td {
+			border-right : 1px solid #ccc;
+			border-bottom : 1px solid #ccc;
+			padding : 10px;
+		}
+
+		span.name {
+			width : 12em;
+			display: block;
+			font-weight: bold;
+		}
+
+	</style>
+
+</head>
+
+<body>
+
+	<h1>Member Skills Report - {{ today }}</h1>
+
+	<table>
+
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Skills</th>
+	</tr>
+
+	{% for member in members|dictsort:'first_name' %}<tr>
+		<td><span class="name">{{ member.get_full_name }}</span></td>
+		<td>{{ member.email }}</th>
+		<td>{{ member.my_profile.skills }}</td>
+	</tr>{% endfor %}
+
+	</table>
+
+</body>
+
+</html>

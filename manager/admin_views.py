@@ -7,11 +7,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
+import datetime
 import mailchimp
 
 @login_required
 def all_members(request): 
-  if not request.user.is_superuser: return HttpResponseNotForbidden()
+  if not request.user.is_superuser: return HttpResponseForbidden()
 
   users = User.objects.filter(is_active = True)
   return render_to_response(
@@ -26,7 +27,7 @@ def all_members(request):
 
 @login_required
 def view_member(request, user_id): 
-  if not request.user.is_superuser: return HttpResponseNotForbidden()
+  if not request.user.is_superuser: return HttpResponseForbidden()
 
   user = User.objects.get(id = user_id)
 
@@ -41,7 +42,7 @@ def view_member(request, user_id):
 
 @login_required
 def new_member(request): 
-  if not request.user.is_superuser: return HttpResponseNotForbidden()
+  if not request.user.is_superuser: return HttpResponseForbidden()
 
   if request.method == "POST":
     uform = UserForm(request.POST, request.FILES)
@@ -78,7 +79,7 @@ def new_member(request):
 
 @login_required
 def edit_member(request, user_id):
-  if not request.user.is_superuser: return HttpResponseNotForbidden()
+  if not request.user.is_superuser: return HttpResponseForbidden()
   user = User.objects.get(id = user_id)
 
   if request.method == "POST":
@@ -110,7 +111,7 @@ def edit_member(request, user_id):
 
 @login_required
 def member_email_list(request, mt_id = False):
-  if not request.user.is_superuser: return HttpResponseNotForbidden()
+  if not request.user.is_superuser: return HttpResponseForbidden()
   if mt_id:
     mt = MembershipType.objects.get(id = mt_id)
     users = User.objects.filter(my_profile__membership_type__id = mt_id)
@@ -136,7 +137,7 @@ def member_email_list(request, mt_id = False):
 
 @login_required
 def members_by_room(request):
-  if not request.user.is_superuser: return HttpResponseNotForbidden()
+  if not request.user.is_superuser: return HttpResponseForbidden()
   users = User.objects.exclude(my_profile__office_num = "").order_by('my_profile__office_num')
 
   return render_to_response(
@@ -151,7 +152,7 @@ def members_by_room(request):
 
 
 def general_member_stats(request):
-  if not request.user.is_superuser: return HttpResponseNotForbidden()
+  if not request.user.is_superuser: return HttpResponseForbidden()
   total_members = User.objects.all()
   mts = MembershipType.objects.all()
   total_revenue = 0
@@ -168,6 +169,19 @@ def general_member_stats(request):
     context_instance=RequestContext(request))
 
 
+
+def tabular_member_report(request):
+  if not request.user.is_superuser: return HttpResponseForbidden()
+
+  members = User.objects.filter(is_active=True)
+  today = datetime.date.today()
+
+  return render_to_response(
+    'manager/user_skill_tabular_report.html',
+    { 
+      'members': members, 'today':today,
+    }, 
+    context_instance=RequestContext(request))
 
 
 

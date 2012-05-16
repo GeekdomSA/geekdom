@@ -69,12 +69,23 @@
 
 {% endif %}
 
+{% if profile.user.my_profile.upcoming_hosted_events %}
+
+<hr />
+
+<h2>Other events hosted by {{ event.added_by.get_full_name }}</h2>
+
+<ul class="bigeventgrid">{% for event in profile.user.my_profile.upcoming_hosted_events %}
+  <li class="event">{% include "member_views/event_list_stub.html" %}</li>
+{% endfor %}</ul>
+
+{% endif %}
+
 
 {% if request.user.username == profile.user.username %}
   {% include "userena/user_actions.html" %}
 {% else %}
-  <hr />
-  <ul id="pageactions">
+<hr />  <ul id="pageactions">
     <li><a href="{% if kiosk %}/kiosk/{% else %}/{% endif %}" class="btn btn-primary"><i class="icon-white icon-arrow-left"></i> Back to the member list</a>
   </ul>
 {% endif %}

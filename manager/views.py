@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, Http404, HttpResponseNotFound, HttpResponseForbidden
 from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
@@ -57,6 +57,7 @@ def homepage(request, kiosk=False):
 
 
 
+
 def user_checkin(request):
   if request.user.my_profile.check_in(method = "desktop"):
     message = "Thanks for checking in, " + request.user.first_name + "! Welcome to Geekdom."
@@ -81,6 +82,7 @@ def user_checkout(request):
 
 
 
+
 from dateutil import parser
 import feedparser
 def all_events(request, kiosk=False):
@@ -92,11 +94,8 @@ def all_events(request, kiosk=False):
   for tweet in twitterfeed.entries: tweets.append(tweet)
   for tweet in tweets: tweet.pp = parser.parse(tweet.published).strftime("%m/%d/%y %H:%M:%S")
 
-  if request.user.is_superuser:
-    events = Event.objects.filter(ends_at__gte = now).order_by('starts_at')
-  else:
-    events = Event.objects.filter(ends_at__gte = now).order_by('starts_at').filter(private_event = False)
-
+  events = Event.objects.filter(ends_at__gte = now).order_by('starts_at')
+  
   return render_to_response(
     'kiosk/all_events.html',
     { 
@@ -143,6 +142,8 @@ def search(request, kiosk=False):
   )
 
 
+
+
 def logout_user(request):
   message = "See you later, " + request.user.first_name + "!"
   messages.add_message(request, messages.SUCCESS, message)
@@ -159,6 +160,7 @@ def view_event(request, event_id):
 
   event = Event.objects.get(id=event_id)
   events = Event.objects.filter(ends_at__gte = now).order_by('starts_at').exclude(id = event.id)
+  member_events = Event.objects.filter(ends_at__gte = now).filter(added_by = event.added_by).order_by('starts_at').exclude(id = event.id)
 
   return render_to_response(
       'kiosk/event_detail.html',
@@ -168,11 +170,15 @@ def view_event(request, event_id):
             django_date_filter(event.starts_at, 'l, F jS') + 
             " from " + django_date_filter(event.starts_at, ("P")) + 
             " until " + django_date_filter(event.ends_at, ("P")),
+          
           'event' : event,
           'events':events,
+          'member_events':member_events,
       }, 
       context_instance=RequestContext(request)
   )
+
+
 
 
 def kiosk_user_view(request, user_id):
@@ -188,6 +194,8 @@ def kiosk_user_view(request, user_id):
       context_instance=RequestContext(request)
   )
   
+
+
 
 @csrf_exempt
 def flomio_toggle_check_in(request):
@@ -205,6 +213,8 @@ def flomio_toggle_check_in(request):
 
     except:
       return HttpResponseNotFound()
+
+
 
 
 @login_required
@@ -241,3 +251,38 @@ def new_event(request):
       'form' : form,
     }, 
     context_instance=RequestContext(request))
+
+
+
+def all_leaderboards(request):
+    return render_to_response(
+    'member_views/leaderboard_list.html',
+    {
+      'title': "Leaderboards",
+      'subtitle': "Find out who is on top!"
+    }, 
+    context_instance=RequestContext(request))
+
+
+
+def checkin_leaderboard(request):
+
+  users = User.objects.annotate(num_checkins=Count('my_profile__checkin')).order_by('-num_checkins')[:10]
+
+  return render_to_response(
+    'member_views/checkin_leaderboard.html',
+    {
+      'title': "Leaderboards",
+      'subtitle': "Find out who is on top!",
+      'users':users,
+    }, 
+  context_instance=RequestContext(request))
+
+
+
+
+
+
+
+
+

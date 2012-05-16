@@ -83,6 +83,14 @@ class UserProfile(UserenaBaseProfile):
           self.check_out()
           return "User is now checked out"
 
+  def upcoming_hosted_events(self):
+    now = datetime.datetime.now()
+    member_events = Event.objects.filter(ends_at__gte = now).filter(added_by = self).order_by('starts_at')
+    return member_events
+
+
+
+
 
 class MembershipType(models.Model):
   name = models.CharField(max_length=200)
@@ -94,6 +102,7 @@ class MembershipType(models.Model):
   def __unicode__(self): return u'%s' % (self.name)
   def total_membership(self): return self.userprofile_set.all().count()
   def total_revenue(self): return self.userprofile_set.all().count() * self.price
+
 
 
 

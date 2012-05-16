@@ -1,0 +1,16 @@
+{% extends "member_views/base.html" %}
+
+{% block content %}
+
+<ul class="leaderboard_list">
+	{% for user in users %}<li class="event">
+		{{ forloop.counter }} - <span class="name"><a href="/accounts/user.username">{{ user.get_full_name }}</a> ({{ user.num_checkins }})</span>
+	</li>{% endfor %}
+</ul>
+
+{% endblock content %}
+
+
+{% block sidebar %}
+ 
+{% endblock sidebar %}
