@@ -133,9 +133,9 @@ class Event(models.Model):
   location = models.CharField(max_length=200, blank=True)
   added_by = models.ForeignKey(User, blank=True, null=True)
 
-  def __str__(self): return self.name
-  def __unicode__(self): return u'%s' % (self.name)
-  class Meta: ordering = ["-starts_at"]
+  def __str__(self): return self.starts_at.strftime("%m/%d/%y") + " - " + self.name
+  def __unicode__(self): return u'%s' % (self.starts_at.strftime("%m/%d/%y") + " - " + self.name)
+  class Meta: ordering = ["starts_at"].reverse()
 
 
 from django.conf import settings
