@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us" >
 <head>
-<title>Member Skills Report - {{ today }}</title>
+<title>Membership Type Report - {{ today }}</title>
 
 	<style>
 
@@ -45,20 +45,23 @@
 
 <body>
 
-	<h1>Member Skills Report - {{ today }}</h1>
+	<h1>Membership Type Report - {{ today }}</h1>
+	<p><em>Active members only</em></p>
 
 	<table>
 
 	<tr>
+		<th>ID</th>
 		<th>Name</th>
-		<th>Email</th>
-		<th>Skills</th>
+		<th>Membership Type</th>
+		<th>Office Num</th>
 	</tr>
 
 	{% for member in members|dictsort:'first_name' %}<tr>
+		<td>{{ member.id }}</td>
 		<td><span class="name">{{ member.get_full_name }}</span></td>
-		<td>{{ member.email }}</th>
-		<td>{{ member.my_profile.skills }}</td>
+		<td>{{ member.my_profile.membership_type.name }}</td>
+		<td>{{ member.my_profile.office_num }}</td>
 	</tr>{% endfor %}
 
 	</table>

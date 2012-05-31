@@ -185,6 +185,22 @@ def tabular_member_report(request):
 
 
 
+def tabular_member_report_member_types(request):
+  if not request.user.is_superuser: return HttpResponseForbidden()
+
+  members = User.objects.filter(is_active=True)
+  today = datetime.date.today()
+
+  return render_to_response(
+    'manager/user_type_tabular_report.html',
+    { 
+      'members': members, 'today':today,
+    }, 
+    context_instance=RequestContext(request))
+
+
+
+
 
   
 

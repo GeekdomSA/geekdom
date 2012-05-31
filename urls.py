@@ -80,7 +80,10 @@ urlpatterns = patterns('',
     url(r'^manager/members/by_room/$', members_by_room),
     url(r'^manager/members/general_stats/$', general_member_stats),
 
-    url(r'^manager/tabular_report/$', tabular_member_report),
+    url(r'^manager/reports/skills$', tabular_member_report),
+    url(r'^manager/reports/membertypes$', tabular_member_report_member_types),
+
+    
 
 
 
