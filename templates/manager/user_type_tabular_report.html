@@ -53,6 +53,7 @@
 	<tr>
 		<th>ID</th>
 		<th>Name</th>
+		<th>Company Name</th>
 		<th>Membership Type</th>
 		<th>Office Num</th>
 	</tr>
@@ -60,6 +61,7 @@
 	{% for member in members|dictsort:'first_name' %}<tr>
 		<td>{{ member.id }}</td>
 		<td><span class="name">{{ member.get_full_name }}</span></td>
+		<td>{{ member.my_profile.company_name }}</td>
 		<td>{{ member.my_profile.membership_type.name }}</td>
 		<td>{{ member.my_profile.office_num }}</td>
 	</tr>{% endfor %}
