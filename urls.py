@@ -83,9 +83,10 @@ urlpatterns = patterns('',
     url(r'^manager/reports/skills$', tabular_member_report),
     url(r'^manager/reports/membertypes$', tabular_member_report_member_types),
 
-    
-
-
+    ######################
+    # django api views #
+    ######################
+    url(r'^api/', include('geekdom.api.urls')),
 
     ######################
     # django admin views #
