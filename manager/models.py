@@ -49,7 +49,8 @@ class UserProfile(UserenaBaseProfile):
     if method == "foursquare": method = 2
     if method == "flomio": method = 3
     if method == "desktop": method = 4
-
+    if method == "api" : method = 5
+    
     if checkins.count() == 0:
       checkin = Checkin.objects.get_or_create(
         userprofile = self, 

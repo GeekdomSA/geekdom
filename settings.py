@@ -77,7 +77,7 @@ INSTALLED_APPS = (
     'bootstrapform',
     'mailchimp',
     'gdata', 'atom', 'djangogcal',
-
+    'api',
 )
 
 AUTH_PROFILE_MODULE = 'manager.UserProfile'
