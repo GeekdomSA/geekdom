@@ -62,20 +62,43 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
       <a class="brand" href="/">members.geekdom.com</a>
       <div class="nav-collapse">
         <ul class="nav">
           <li><a href="/">Members</a></li>
           <li><a href="/events">Events</a></li>
-          <li><a href="http://www.facebook.com/GeekdomSA" target="blank">Discuss on Facebook</a></li>
-          {% if request.user.is_superuser %}
-            <li><a href="/manager/">Admin</a></li>
+
+  
+          {% if request.user.is_authenticated %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community Links <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="https://groups.google.com/forum/#!forum/geekdomcommunity" target="blank">Geekdom Google Group</a></li>
+                <li><a href="http://www.facebook.com/GeekdomSA" target="blank">Geekdom Facebook Page</a></li>
+                <li><a href="/office_hours/">Mentor Office Hours</a></li>
+                <li class="divider"></li>
+                <li><a href="http://goo.gl/XiadN" target="_blank">Berners-Lee Reservations</a></li>
+                <li><a href="http://goo.gl/nh4Vj" target="_blank">Licklider Reservations</a></li>
+              </ul>
+            </li>
           {% endif %}
+
+          {% if request.user.is_superuser %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li{% ifequal tabsection "allmembers" %} class="active"{% endifequal%}>
+                  <a href="/manager/"><i class="icon-list"></i> Geekdom Admin</a></li>
+                <li{% ifequal tabsection "newmember" %} class="active"{% endifequal%}>
+                  <a href="/manager/members/new"><i class="icon-plus-sign"></i> New Member</a></li>
+                <li{% ifequal tabsection "newevent" %} class="active"{% endifequal%}>
+                  <a href="/admin/manager/event/add/"><i class="icon-plus-sign"></i> New Event</a></li>
+                <li><a href="/admin"><i class="icon-cog"></i> Django Admin</a></li>
+              </ul>
+            </li>
+          {% endif %}
+
+
         </ul>
 
         <ul class="nav pull-right">

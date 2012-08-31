@@ -101,8 +101,8 @@ class MembershipType(models.Model):
 
   def __str__(self): return self.name
   def __unicode__(self): return u'%s' % (self.name)
-  def total_membership(self): return self.userprofile_set.all().count()
-  def total_revenue(self): return self.userprofile_set.all().count() * self.price
+  def total_membership(self): return self.userprofile_set.filter(user__is_active = True).count()
+  def total_revenue(self): return self.userprofile_set.filter(user__is_active = True).count() * self.price
 
 
 

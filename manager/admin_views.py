@@ -58,6 +58,8 @@ def new_member(request):
       list = mailchimp.utils.get_connection().get_list_by_id("8bd90b528f")
       list.subscribe(profile.user.email, {'EMAIL':profile.user.email})
 
+      user.userena_signup = UserenaSignup(user_id = user.id, email_unconfirmed=user.email)
+
       message = "User successfully created!"
       messages.add_message(request, messages.SUCCESS, message)
       return HttpResponseRedirect('/accounts/' + user.username)
@@ -153,7 +155,7 @@ def members_by_room(request):
 
 def general_member_stats(request):
   if not request.user.is_superuser: return HttpResponseForbidden()
-  total_members = User.objects.all()
+  total_members = User.objects.filter(is_active = True).all()
   mts = MembershipType.objects.all()
   total_revenue = 0
   for mt in mts: total_revenue = total_revenue + mt.total_revenue()
