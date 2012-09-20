@@ -117,12 +117,12 @@ def member_email_list(request, mt_id = False):
   if not request.user.is_superuser: return HttpResponseForbidden()
   if mt_id:
     mt = MembershipType.objects.get(id = mt_id)
-    users = User.objects.filter(my_profile__membership_type__id = mt_id)
+    users = User.objects.filter(my_profile__membership_type__id = mt_id).exclude(is_active = False)
     title = mt.name + " email list"
     subtitle = "For sending out mass-emails to " + mt.name + "s!"
     tabsection = 'membersemaillist-' + str(mt_id)
   else:  
-    users = User.objects.all()
+    users = User.objects.filter(is_active = True)
     title = "All member email list"
     subtitle = "For sending out mass-emails to everybody!"
     tabsection = 'membersemaillist'
