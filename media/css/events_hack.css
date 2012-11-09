@@ -1,18 +1,18 @@
 /* Make header title bigger */
 #body_container .bigeventgrid .event span.name{
-	font-size: 30px;
+	font-size: 24px;
 	line-height: 125%;
 }
 
 /* Show date and time */
 /* date */
 #body_container .bigeventgrid .event span.dateinfo1 {
-	font-size: 25px;
+	font-size: 18px;
 	display: block;
 }
 /* time */
 #body_container .bigeventgrid .event span.dateinfo2 {
-	font-size: 20px;
+	font-size: 16px;
 }
 
 /* Remove description */
