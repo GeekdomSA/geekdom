@@ -1,26 +1,26 @@
 /* Make header title bigger */
-span.name{
+#body_container .bigeventgrid .event span.name{
 	font-size: 30px;
 	line-height: 125%;
 }
 
 /* Show date and time */
 /* date */
-span.dateinfo1{
+#body_container .bigeventgrid .event span.dateinfo1 {
 	font-size: 25px;
 	display: block;
 }
 /* time */
-span.dateinfo2{
+#body_container .bigeventgrid .event span.dateinfo2 {
 	font-size: 20px;
 }
 
 /* Remove description */
-span.description{
+#body_container .bigeventgrid .event span.description{
 	display: none;
 }
 
 /* Increase host name */
-span.hosted_by{
+#body_container .bigeventgrid .event span.hosted_by{
 	font-size: 16px;
 }
