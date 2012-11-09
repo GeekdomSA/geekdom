@@ -4,6 +4,22 @@
 	line-height: 125%;
 }
 
+/* position hosted_by bottom right corner of every block */
+#body_container .bigeventgrid .event {
+	position: relative;
+}
+#body_container .bigeventgrid .event span.hosted_by {
+	position: absolute;
+	bottom:10px;
+	right:10px;
+}
+
+/* updating font weight to lighter weight, but not name, to make name stand out more */
+#body_container .bigeventgrid .event span.dateinfo1, #body_container .bigeventgrid .event span.dateinfo2, #body_container .bigeventgrid .event span.hosted_by {
+	font-weight: 200;
+}
+
+
 /* Show date and time */
 /* date */
 #body_container .bigeventgrid .event span.dateinfo1 {
