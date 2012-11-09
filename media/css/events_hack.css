@@ -1,0 +1,26 @@
+/* Make header title bigger */
+span.name{
+	font-size: 30px;
+	line-height: 125%;
+}
+
+/* Show date and time */
+/* date */
+span.dateinfo1{
+	font-size: 25px;
+	display: block;
+}
+/* time */
+span.dateinfo2{
+	font-size: 20px;
+}
+
+/* Remove description */
+span.description{
+	display: none;
+}
+
+/* Increase host name */
+span.hosted_by{
+	font-size: 16px;
+}
